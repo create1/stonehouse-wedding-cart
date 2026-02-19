@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plan and price your dream wedding at Stone House. Interactive wedding package builder with real-time pricing.">
+  <title>Wedding Package Builder | Stone House Nevada City</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Open+Sans:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Flatpickr for date picker -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../src/css/styles.css">
+  <link rel="stylesheet" href="src/css/wedding-cart.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo">
+        STONE HOUSE
+      </a>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="spaces.html" class="nav-link">Spaces</a></li>
+        <li class="nav-item"><a href="/" class="nav-link">Weddings</a></li>
+        <li class="nav-item"><a href="corporate.html" class="nav-link">Corporate</a></li>
+        <li class="nav-item"><a href="social.html" class="nav-link">Social</a></li>
+        <li class="nav-item"><a href="nonprofit.html" class="nav-link">Nonprofit</a></li>
+        <li class="nav-item"><a href="catering.html" class="nav-link">Catering</a></li>
+        <li class="nav-item"><a href="booking.html" class="btn btn-primary">Book Now</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="cart-hero">
+    <div class="container">
+      <div class="text-center">
+        <p class="small-caps">Plan Your Wedding</p>
+        <h1>Wedding Package Builder</h1>
+        <p class="hero-subtitle">Create your perfect wedding package with real-time pricing</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Cart Container -->
+  <div class="cart-container">
+    <div class="cart-layout">
+      
+      <!-- Main Content Area -->
+      <main class="cart-main">
+        
+        <!-- Progress Indicator -->
+        <div class="progress-bar-container">
+          <div class="progress-steps">
+            <div class="progress-step active" data-step="1">
+              <div class="step-circle">1</div>
+              <div class="step-label">Event Details</div>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step" data-step="2">
+              <div class="step-circle">2</div>
+              <div class="step-label">Catering</div>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step" data-step="3">
+              <div class="step-circle">3</div>
+              <div class="step-label">Beverages</div>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step" data-step="4">
+              <div class="step-circle">4</div>
+              <div class="step-label">Add-Ons</div>
+            </div>
+            <div class="progress-line"></div>
+            <div class="progress-step" data-step="5">
+              <div class="step-circle">5</div>
+              <div class="step-label">Review</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 1: Event Details -->
+        <div class="cart-step active" data-step="1">
+          <h2>Event Details</h2>
+          <p class="step-description">Tell us about your wedding day</p>
+
+          <!-- Date Selection -->
+          <div class="form-section">
+            <label for="wedding-date" class="form-label">
+              <i class="fas fa-calendar"></i>
+              Wedding Date *
+            </label>
+            <input 
+              type="text" 
+              id="wedding-date" 
+              class="form-input date-picker" 
+              placeholder="Select your wedding date"
+              required
+            >
+            <div class="season-badge" id="season-display"></div>
+          </div>
+
+          <!-- Guest Count -->
+          <div class="form-section">
+            <label for="guest-count" class="form-label">
+              <i class="fas fa-users"></i>
+              Number of Guests *
+            </label>
+            
+            <div class="guest-count-display">
+              <span id="guest-count-value">100</span>
+              <span class="label-text">Guests</span>
+            </div>
+
+            <div class="slider-container">
+              <button class="slider-btn" id="guest-decrease" aria-label="Decrease guest count">
+                <i class="fas fa-minus"></i>
+              </button>
+              
+              <input 
+                type="range" 
+                id="guest-count" 
+                class="slider" 
+                min="20" 
+                max="150" 
+                step="5" 
+                value="100"
+                aria-label="Guest count selector"
+                aria-valuemin="20"
+                aria-valuemax="150"
+                aria-valuenow="100"
+              >
+              
+              <button class="slider-btn" id="guest-increase" aria-label="Increase guest count">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+
+            <div class="slider-labels">
+              <span>20</span>
+              <span>150</span>
+            </div>
+
+            <input 
+              type="number" 
+              id="guest-count-input" 
+              class="form-input-small" 
+              min="20" 
+              max="150" 
+              value="100"
+              placeholder="Or type number"
+            >
+            
+            <p class="info-note" style="margin-top: 1rem; padding: 0.75rem; background: #FFF8DC; border-left: 4px solid var(--cart-primary); border-radius: 4px;">
+              <i class="fas fa-info-circle" style="color: var(--cart-primary);"></i>
+              <strong>Larger weddings?</strong> For weddings with more than 150 guests, please <a href="mailto:bookings@stonehouse.io" style="color: var(--cart-primary); text-decoration: underline;">contact us</a> for a custom quote.
+            </p>
+          </div>
+
+          <!-- Venue Selection -->
+          <div class="form-section">
+            <label class="form-label">
+              <i class="fas fa-building"></i>
+              Venue Selection *
+            </label>
+
+            <div class="venue-grid">
+              <div class="venue-card" data-venue="fullBuilding">
+                <div class="venue-card-header">
+                  <h3>Full Building</h3>
+                  <div class="venue-price" data-price-display="fullBuilding"></div>
+                </div>
+                <p class="venue-description">Hourly rental, 3-hour minimum</p>
+                <p class="venue-capacity">Up to 300 guests</p>
+                <div class="venue-duration" id="duration-fullBuilding" style="display: none;">
+                  <label>Duration (hours):</label>
+                  <input type="range" class="duration-slider" min="3" max="12" value="5" step="1">
+                  <span class="duration-display">5 hours</span>
+                </div>
+                <button class="venue-select-btn">Select</button>
+              </div>
+
+              <div class="venue-card recommended" data-venue="premiumEventCap">
+                <div class="recommended-badge">Best Value</div>
+                <div class="venue-card-header">
+                  <h3>Premium Event Cap</h3>
+                  <div class="venue-price" data-price-display="premiumEventCap"></div>
+                </div>
+                <p class="venue-description">All-day access, full building</p>
+                <p class="venue-capacity">Up to 300 guests, unlimited time</p>
+                <p class="venue-note">Perfect for 100+ guests</p>
+                <button class="venue-select-btn">Select</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-navigation">
+            <button class="btn btn-secondary" onclick="window.location.href="/"">
+              <i class="fas fa-arrow-left"></i> Back to Weddings
+            </button>
+            <button class="btn btn-primary" id="next-step-1">
+              Next: Catering <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Catering -->
+        <div class="cart-step" data-step="2">
+          <h2>Catering Selection</h2>
+          <p class="step-description">Choose 2 protein options for your reception (includes salad & dessert)</p>
+
+          <!-- Protein Selection -->
+          <div class="form-section">
+            <div class="section-header">
+              <label class="form-label">
+                <i class="fas fa-utensils"></i>
+                Select 1 or 2 Proteins *
+              </label>
+              <div class="selection-counter">
+                <span id="protein-count">0</span> of 1-2 selected
+              </div>
+            </div>
+
+            <div class="protein-grid">
+              <div class="protein-card" data-protein="vegetarian">
+                <img src="src/images/food/vegan-entree.avif" alt="Vegetarian Option" class="protein-img">
+                <div class="protein-content">
+                  <h3>Vegetarian</h3>
+                  <div class="protein-price">$70<span>/person</span></div>
+                  <p class="protein-description">Seasonal vegetable entrée</p>
+                  <p class="includes-note">Includes salad & dessert</p>
+                </div>
+                <div class="selection-indicator">
+                  <i class="fas fa-check"></i>
+                </div>
+              </div>
+
+              <div class="protein-card" data-protein="chicken">
+                <img src="src/images/food/Food1.avif" alt="Chicken" class="protein-img">
+                <div class="protein-content">
+                  <h3>Chicken</h3>
+                  <div class="protein-price">$80<span>/person</span></div>
+                  <p class="protein-description">Expertly prepared chicken</p>
+                  <p class="includes-note">Includes salad & dessert</p>
+                </div>
+                <div class="selection-indicator">
+                  <i class="fas fa-check"></i>
+                </div>
+              </div>
+
+              <div class="protein-card" data-protein="fish">
+                <img src="src/images/food/fish-plate.avif" alt="Fish" class="protein-img">
+                <div class="protein-content">
+                  <h3>Fish</h3>
+                  <div class="protein-price">$90<span>/person</span></div>
+                  <p class="protein-description">Fresh fish selection</p>
+                  <p class="includes-note">Includes salad & dessert</p>
+                </div>
+                <div class="selection-indicator">
+                  <i class="fas fa-check"></i>
+                </div>
+              </div>
+
+              <div class="protein-card" data-protein="steak">
+                <img src="src/images/food/steak-dish.avif" alt="Steak" class="protein-img">
+                <div class="protein-content">
+                  <h3>Steak</h3>
+                  <div class="protein-price">$100<span>/person</span></div>
+                  <p class="protein-description">Premium steak</p>
+                  <p class="includes-note">Includes salad & dessert</p>
+                </div>
+                <div class="selection-indicator">
+                  <i class="fas fa-check"></i>
+                </div>
+              </div>
+
+              <div class="protein-card outside-catering-card" data-protein="outside">
+                <div class="protein-content">
+                  <h3><i class="fas fa-utensils-alt"></i> Outside Catering</h3>
+                  <div class="protein-price">$1,000<span> flat fee</span></div>
+                  <p class="protein-description" style="color: var(--cart-secondary); font-weight: 600;">Approved vendors only</p>
+                  <p class="includes-note" style="font-size: 0.85rem;">Includes kitchen access & coordination</p>
+                </div>
+                <div class="selection-indicator">
+                  <i class="fas fa-check"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="average-display" id="average-meal-cost" style="display: none;">
+              <i class="fas fa-calculator"></i>
+              Average meal cost: <strong id="avg-price-display">$0</strong>/person
+            </div>
+          </div>
+
+          <!-- Additional Sides -->
+          <div class="form-section">
+            <div class="section-header">
+              <label class="form-label">
+                <i class="fas fa-leaf"></i>
+                Additional Sides
+              </label>
+              <label class="toggle-switch">
+                <input type="checkbox" id="sides-toggle">
+                <span class="toggle-slider"></span>
+                <span class="toggle-label">Add extra sides?</span>
+              </label>
+            </div>
+
+            <div class="options-grid" id="sides-grid" style="display: none;">
+              <button class="option-btn" data-side="roasted-veg">
+                <span class="option-name">Roasted Vegetables</span>
+                <span class="option-price">$8/person</span>
+              </button>
+              <button class="option-btn" data-side="garlic-mashed">
+                <span class="option-name">Garlic Mashed Potatoes</span>
+                <span class="option-price">$8/person</span>
+              </button>
+              <button class="option-btn" data-side="rice-pilaf">
+                <span class="option-name">Rice Pilaf</span>
+                <span class="option-price">$8/person</span>
+              </button>
+              <button class="option-btn" data-side="mac-cheese">
+                <span class="option-name">Truffle Mac & Cheese</span>
+                <span class="option-price">$8/person</span>
+              </button>
+              <button class="option-btn" data-side="asparagus">
+                <span class="option-name">Grilled Asparagus</span>
+                <span class="option-price">$8/person</span>
+              </button>
+              <button class="option-btn" data-side="sweet-potato">
+                <span class="option-name">Roasted Sweet Potatoes</span>
+                <span class="option-price">$8/person</span>
+              </button>
+            </div>
+            <div class="selection-summary" id="sides-summary" style="display: none;"></div>
+          </div>
+
+          <!-- Passed Appetizers -->
+          <div class="form-section">
+            <div class="section-header">
+              <label class="form-label">
+                <i class="fas fa-wine-glass"></i>
+                Passed Appetizers
+              </label>
+              <label class="toggle-switch">
+                <input type="checkbox" id="appetizers-toggle">
+                <span class="toggle-slider"></span>
+                <span class="toggle-label">Add passed appetizers?</span>
+              </label>
+            </div>
+
+            <div class="options-grid" id="appetizers-grid" style="display: none;">
+              <button class="option-btn" data-appetizer="bruschetta">
+                <span class="option-name">Bruschetta</span>
+                <span class="option-price">$6/person</span>
+              </button>
+              <button class="option-btn" data-appetizer="spring-rolls">
+                <span class="option-name">Spring Rolls</span>
+                <span class="option-price">$6/person</span>
+              </button>
+              <button class="option-btn" data-appetizer="meatballs">
+                <span class="option-name">Italian Meatballs</span>
+                <span class="option-price">$6/person</span>
+              </button>
+              <button class="option-btn" data-appetizer="shrimp">
+                <span class="option-name">Shrimp Cocktail</span>
+                <span class="option-price">$6/person</span>
+              </button>
+              <button class="option-btn" data-appetizer="sliders">
+                <span class="option-name">Mini Sliders</span>
+                <span class="option-price">$6/person</span>
+              </button>
+              <button class="option-btn" data-appetizer="caprese">
+                <span class="option-name">Caprese Skewers</span>
+                <span class="option-price">$6/person</span>
+              </button>
+              <button class="option-btn" data-appetizer="stuffed-mushrooms">
+                <span class="option-name">Stuffed Mushrooms</span>
+                <span class="option-price">$6/person</span>
+              </button>
+              <button class="option-btn" data-appetizer="crostini">
+                <span class="option-name">Crostini Assortment</span>
+                <span class="option-price">$6/person</span>
+              </button>
+            </div>
+            <div class="selection-summary" id="appetizers-summary" style="display: none;"></div>
+          </div>
+
+          <div class="step-navigation">
+            <button class="btn btn-secondary prev-step">
+              <i class="fas fa-arrow-left"></i> Previous
+            </button>
+            <button class="btn btn-primary next-step" id="next-step-2">
+              Next: Beverages <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Beverages -->
+        <div class="cart-step" data-step="3">
+          <h2>Bar Service</h2>
+          <p class="step-description">Choose your beverage package (optional but recommended)</p>
+
+          <div class="form-section">
+            <div class="beverage-grid">
+              <div class="beverage-card" data-package="beer-wine">
+                <img src="src/images/beverage/Beverage.avif" alt="Beer & Wine" class="beverage-img">
+                <div class="beverage-content">
+                  <h3>Beer & Wine</h3>
+                  <div class="beverage-price">$45<span>/person</span></div>
+                  <ul class="beverage-includes">
+                    <li><i class="fas fa-check"></i> Domestic & imported beer</li>
+                    <li><i class="fas fa-check"></i> Red & white wine</li>
+                    <li><i class="fas fa-check"></i> 4-hour bar service</li>
+                    <li><i class="fas fa-check"></i> Professional bartender</li>
+                  </ul>
+                </div>
+                <button class="package-select-btn">Select Package</button>
+              </div>
+
+              <div class="beverage-card" data-package="premium">
+                <img src="src/images/beverage/BeverageCatering.avif" alt="Premium Package" class="beverage-img">
+                <div class="beverage-content">
+                  <h3>Premium Beer, Wine & Liquor</h3>
+                  <div class="beverage-price">$55<span>/person</span></div>
+                  <ul class="beverage-includes">
+                    <li><i class="fas fa-check"></i> Premium beer selection</li>
+                    <li><i class="fas fa-check"></i> Premium wine selection</li>
+                    <li><i class="fas fa-check"></i> Full liquor bar</li>
+                    <li><i class="fas fa-check"></i> 4-hour bar service</li>
+                  </ul>
+                </div>
+                <button class="package-select-btn">Select Package</button>
+              </div>
+
+              <div class="beverage-card recommended" data-package="premium-liquor">
+                <div class="recommended-badge">Most Popular</div>
+                <img src="src/images/beverage/BeverageCatering2.avif" alt="Premium Liquor" class="beverage-img">
+                <div class="beverage-content">
+                  <h3>Premium Liquor</h3>
+                  <div class="beverage-price">$65<span>/person</span></div>
+                  <ul class="beverage-includes">
+                    <li><i class="fas fa-check"></i> Craft beer selection</li>
+                    <li><i class="fas fa-check"></i> Premium wine selection</li>
+                    <li><i class="fas fa-check"></i> Top-shelf liquor</li>
+                    <li><i class="fas fa-check"></i> 5-hour bar service</li>
+                  </ul>
+                </div>
+                <button class="package-select-btn">Select Package</button>
+              </div>
+
+              <div class="beverage-card skip-option" data-package="none">
+                <div class="beverage-content">
+                  <h3>No Bar Service</h3>
+                  <p>Skip beverage package</p>
+                  <p class="note-text">BYOB policy may apply</p>
+                </div>
+                <button class="package-select-btn">Skip Bar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-navigation">
+            <button class="btn btn-secondary prev-step">
+              <i class="fas fa-arrow-left"></i> Previous
+            </button>
+            <button class="btn btn-primary next-step" id="next-step-3">
+              Next: Add-Ons <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 4: Add-Ons -->
+        <div class="cart-step" data-step="4">
+          <h2>Add-On Services</h2>
+          <p class="step-description">Enhance your wedding with premium services</p>
+          
+          <div class="info-note" style="margin-bottom: 2rem; padding: 1rem; background: #FFF8DC; border-left: 4px solid var(--cart-primary); border-radius: 4px;">
+            <i class="fas fa-award" style="color: var(--cart-primary);"></i>
+            <strong>Preferred Vendor Pricing:</strong> The pricing below reflects our trusted preferred vendors. You may bring your own vendors, but these partnerships offer exclusive rates and seamless coordination.
+          </div>
+
+          <!-- Full Package Banner (shown when eligible) -->
+          <div class="full-package-banner" id="full-package-banner" style="display: none;">
+            <i class="fas fa-star"></i>
+            <div class="banner-content">
+              <h3>Full Package Discount Eligible!</h3>
+              <p>You're saving 10% on your total + FREE wedding planner service</p>
+              <p class="savings-amount">Estimated savings: <strong id="savings-display">$0</strong></p>
+            </div>
+          </div>
+
+          <!-- Floral Packages -->
+          <div class="form-section">
+            <label class="form-label">
+              <i class="fas fa-seedling"></i>
+              Floral Package
+            </label>
+
+            <div class="floral-grid">
+              <div class="floral-card" data-floral="intimate">
+                <div class="floral-header">
+                  <h3>Intimate</h3>
+                  <div class="floral-price">$1,500</div>
+                </div>
+                <ul class="floral-includes">
+                  <li>Bridal bouquet</li>
+                  <li>4 bridesmaid bouquets</li>
+                  <li>5 boutonnieres</li>
+                  <li>Centerpieces (10 tables)</li>
+                </ul>
+                <button class="floral-select-btn">Select</button>
+              </div>
+
+              <div class="floral-card" data-floral="classic">
+                <img src="src/images/floral/classic-wedding-floral.png" alt="Classic Wedding Floral" class="floral-img">
+                <div class="floral-header">
+                  <h3>Classic</h3>
+                  <div class="floral-price">$2,500</div>
+                </div>
+                <ul class="floral-includes">
+                  <li>Everything in Intimate</li>
+                  <li>Ceremony arch flowers</li>
+                  <li>Cocktail arrangements</li>
+                  <li>Centerpieces (15 tables)</li>
+                </ul>
+                <button class="floral-select-btn">Select</button>
+              </div>
+
+              <div class="floral-card recommended" data-floral="elegant">
+                <div class="recommended-badge">Popular</div>
+                <div class="floral-header">
+                  <h3>Elegant</h3>
+                  <div class="floral-price">$5,000</div>
+                </div>
+                <ul class="floral-includes">
+                  <li>Everything in Classic</li>
+                  <li>Premium flower varieties</li>
+                  <li>Large ceremony installations</li>
+                  <li>Centerpieces (25 tables)</li>
+                </ul>
+                <button class="floral-select-btn">Select</button>
+              </div>
+
+              <div class="floral-card luxury" data-floral="luxury">
+                <div class="luxury-badge">Luxury</div>
+                <div class="floral-header">
+                  <h3>Luxury</h3>
+                  <div class="floral-price">$10,000</div>
+                </div>
+                <ul class="floral-includes">
+                  <li>Everything in Elegant</li>
+                  <li>Premium imported flowers</li>
+                  <li>Room transformations</li>
+                  <li>Ceiling installations</li>
+                </ul>
+                <button class="floral-select-btn">Select</button>
+              </div>
+
+              <div class="floral-card skip-option" data-floral="none">
+                <div class="floral-content">
+                  <h3>Skip Floral</h3>
+                  <p>No floral package</p>
+                </div>
+                <button class="floral-select-btn">Skip</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Service Add-Ons -->
+          <div class="form-section">
+            <label class="form-label">
+              <i class="fas fa-plus-circle"></i>
+              Premium Services
+            </label>
+
+            <div class="services-grid">
+              <div class="service-card" data-service="photography">
+                <div class="service-icon">
+                  <i class="fas fa-camera"></i>
+                </div>
+                <div class="service-content">
+                  <h3>Professional Photography</h3>
+                  <div class="service-price">$3,500</div>
+                  <p class="tax-note">Tax-exempt service</p>
+                  <ul class="service-includes">
+                    <li>8 hours coverage</li>
+                    <li>2 photographers</li>
+                    <li>500+ edited images</li>
+                  </ul>
+                </div>
+                <button class="service-toggle-btn">Add to Package</button>
+              </div>
+
+              <div class="service-card" data-service="weddingPlanner" id="planner-card">
+                <div class="service-icon">
+                  <i class="fas fa-clipboard-list"></i>
+                </div>
+                <div class="service-content">
+                  <h3>Wedding Planning</h3>
+                  <div class="service-price">$2,500</div>
+                  <p class="tax-note">Tax-exempt service</p>
+                  <div class="free-badge" style="display: none;">FREE - Included!</div>
+                  <ul class="service-includes">
+                    <li>Day-of coordination</li>
+                    <li>Timeline creation</li>
+                    <li>Vendor management</li>
+                  </ul>
+                </div>
+                <button class="service-toggle-btn">Add to Package</button>
+              </div>
+
+              <div class="service-card" data-service="dj">
+                <div class="service-icon">
+                  <i class="fas fa-music"></i>
+                </div>
+                <div class="service-content">
+                  <h3>DJ Entertainment</h3>
+                  <div class="service-price">$2,500</div>
+                  <p class="tax-note">+ tax</p>
+                  <ul class="service-includes">
+                    <li>5 hours service</li>
+                    <li>Professional sound system</li>
+                    <li>Dance floor lighting</li>
+                  </ul>
+                </div>
+                <button class="service-toggle-btn">Add to Package</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-navigation">
+            <button class="btn btn-secondary prev-step">
+              <i class="fas fa-arrow-left"></i> Previous
+            </button>
+            <button class="btn btn-primary next-step" id="next-step-4">
+              Next: Review <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 5: Review & Quote -->
+        <div class="cart-step" data-step="5">
+          <h2>Review Your Wedding Package</h2>
+          <p class="step-description">Review your selections and submit your quote request</p>
+
+          <!-- Itemized Breakdown -->
+          <div class="review-section">
+            <h3>Package Details</h3>
+            <div id="itemized-breakdown"></div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="form-section">
+            <h3>Contact Information</h3>
+            <p>We'll send your personalized quote and follow up within 24 hours</p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="contact-name">Name *</label>
+                <input type="text" id="contact-name" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label for="contact-email">Email *</label>
+                <input type="email" id="contact-email" class="form-input" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="contact-phone">Phone *</label>
+                <input type="tel" id="contact-phone" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label for="preferred-contact">Preferred Contact</label>
+                <select id="preferred-contact" class="form-input">
+                  <option value="email">Email</option>
+                  <option value="phone">Phone</option>
+                  <option value="either">Either</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-message">Message / Special Requests</label>
+              <textarea id="contact-message" class="form-input" rows="4" placeholder="Tell us about your vision..."></textarea>
+            </div>
+          </div>
+
+          <div class="step-navigation">
+            <button class="btn btn-secondary prev-step">
+              <i class="fas fa-arrow-left"></i> Previous
+            </button>
+            <button class="btn btn-primary" id="submit-quote">
+              <i class="fas fa-paper-plane"></i> Request Quote
+            </button>
+          </div>
+        </div>
+
+        <!-- Success Message (hidden initially) -->
+        <div class="success-message" id="success-message" style="display: none;">
+          <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <h2>Quote Submitted Successfully!</h2>
+          <p>Your quote reference: <strong id="quote-reference"></strong></p>
+          <p>We've sent a copy to your email and our team will contact you within 24 hours.</p>
+          <div class="success-actions">
+            <button class="btn btn-primary" id="download-quote">
+              <i class="fas fa-download"></i> Download PDF
+            </button>
+            <a href="/" class="btn btn-secondary">
+              <i class="fas fa-home"></i> Back to Weddings
+            </a>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- Price Summary Sidebar -->
+      <aside class="price-summary" id="price-summary">
+        <div class="summary-header">
+          <h3>Your Wedding Quote</h3>
+        </div>
+
+        <div class="summary-details">
+          <div class="summary-row event-info">
+            <span id="event-date-display">Select date</span>
+          </div>
+          <div class="summary-row event-info">
+            <i class="fas fa-users"></i>
+            <span id="guest-display">100 Guests</span>
+          </div>
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-line-items">
+          <div class="summary-row" id="venue-line" style="display: none;">
+            <span class="item-label">Venue</span>
+            <span class="item-amount" id="venue-amount">$0.00</span>
+          </div>
+
+          <div class="summary-row" id="catering-line" style="display: none;">
+            <span class="item-label">Catering</span>
+            <span class="item-amount" id="catering-amount">$0.00</span>
+          </div>
+
+          <div class="summary-row" id="beverages-line" style="display: none;">
+            <span class="item-label">Beverages</span>
+            <span class="item-amount" id="beverages-amount">$0.00</span>
+          </div>
+
+          <div class="summary-row" id="service-fee-line" style="display: none;">
+            <span class="item-label">Service Fee (20%)</span>
+            <span class="item-amount" id="service-fee-amount">$0.00</span>
+          </div>
+
+          <div class="summary-row" id="addons-line" style="display: none;">
+            <span class="item-label">Add-Ons</span>
+            <span class="item-amount" id="addons-amount">$0.00</span>
+          </div>
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-row">
+          <span class="item-label">Subtotal</span>
+          <span class="item-amount" id="subtotal-amount">$0.00</span>
+        </div>
+
+        <div class="summary-row tax-row">
+          <span class="item-label">
+            Sales Tax (7.75%)
+            <button class="info-btn" id="tax-info-btn" title="Tax information">
+              <i class="fas fa-info-circle"></i>
+            </button>
+          </span>
+          <span class="item-amount" id="tax-amount">$0.00</span>
+        </div>
+
+        <div class="summary-row discount-row" id="discount-line" style="display: none;">
+          <span class="item-label">
+            <i class="fas fa-star"></i>
+            Full Package Discount
+          </span>
+          <span class="item-amount discount" id="discount-amount">-$0.00</span>
+        </div>
+
+        <div class="summary-divider bold"></div>
+
+        <div class="summary-total">
+          <span class="total-label">Estimated Total</span>
+          <span class="total-amount" id="grand-total">$0.00</span>
+        </div>
+
+        <div class="summary-note">
+          <i class="fas fa-info-circle"></i>
+          <p>This is an estimate. Final quote subject to availability and confirmation.</p>
+        </div>
+      </aside>
+
+      <!-- Mobile Price Summary (Bottom Bar) -->
+      <div class="mobile-price-bar" id="mobile-price-bar">
+        <div class="mobile-price-content">
+          <span class="mobile-label">Estimated Total</span>
+          <span class="mobile-amount" id="mobile-total">$0.00</span>
+        </div>
+        <button class="mobile-expand-btn" id="mobile-expand">
+          <i class="fas fa-chevron-up"></i> View Details
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Tax Information Modal -->
+  <div class="modal" id="tax-info-modal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h3>Sales Tax Information</h3>
+      <p><strong>Nevada County, California</strong></p>
+      <p>Tax rate: <strong>7.75%</strong> (unincorporated areas)</p>
+      
+      <h4>What's Taxable:</h4>
+      <ul>
+        <li><i class="fas fa-check"></i> Venue rental</li>
+        <li><i class="fas fa-check"></i> Food & beverage services</li>
+        <li><i class="fas fa-check"></i> Service charges</li>
+        <li><i class="fas fa-check"></i> Floral arrangements</li>
+        <li><i class="fas fa-check"></i> DJ services</li>
+      </ul>
+
+      <h4>Tax-Exempt Services:</h4>
+      <ul>
+        <li><i class="fas fa-times"></i> Photography (professional service)</li>
+        <li><i class="fas fa-times"></i> Wedding planning (professional service)</li>
+      </ul>
+
+      <p class="modal-note">
+        Tax rates may vary by specific city location (7.75% - 9%). 
+        Final tax will be calculated based on venue address.
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h4>Stone House</h4>
+          <p>Historic elegance in the heart of Nevada City. Creating unforgettable celebrations since the 1800s.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Contact Us</h4>
+          <ul class="footer-links">
+            <li><i class="fas fa-map-marker-alt"></i> 107 Sacramento Street, Nevada City, CA 95959</li>
+            <li><i class="fas fa-phone"></i> <a href="tel:+15302655050">(530) 265-5050</a></li>
+            <li><i class="fas fa-envelope"></i> <a href="mailto:bookings@stonehouse.io">bookings@stonehouse.io</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Stone House. All rights reserved. | Nevada City, California</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="src/js/main.js"></script>
+  <script type="module" src="src/js/wedding-cart.js"></script>
+
+</body>
+</html>
