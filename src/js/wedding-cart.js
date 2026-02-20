@@ -1005,6 +1005,7 @@ class WeddingCart {
       const result = await response.json();
 
       if (response.ok) {
+        this.lastContact = { name, email, phone, preferredContact };
         this.showSuccessMessage(result.quoteNumber || 'WQ-' + Date.now());
       } else {
         throw new Error(result.error || 'Failed to submit quote');
@@ -1031,12 +1032,219 @@ class WeddingCart {
       successMsg.style.display = 'block';
     }
 
+    // Wire up download button now that we have the quote number
+    const downloadBtn = document.getElementById('download-quote');
+    if (downloadBtn) {
+      downloadBtn.onclick = () => this.downloadQuotePDF(quoteNumber);
+    }
+
     // Scroll to top of cart form
     const cartMain = document.querySelector('.cart-main');
     if (cartMain) {
       const offset = cartMain.getBoundingClientRect().top + window.scrollY - 24;
       window.scrollTo({ top: offset, behavior: 'smooth' });
     }
+  }
+
+  // ===================================
+  // PDF DOWNLOAD
+  // ===================================
+  downloadQuotePDF(quoteNumber) {
+    const { jsPDF } = window.jspdf;
+    if (!jsPDF) { alert('PDF library not loaded. Please try again.'); return; }
+
+    const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+    const quote = this.currentQuote;
+    const contact = this.lastContact || {};
+    const pageW = doc.internal.pageSize.getWidth();
+    const gold = [212, 175, 55];
+    const dark = [44, 62, 80];
+    const mid  = [127, 140, 141];
+    const fmt  = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n || 0);
+
+    // ── Header bar ──
+    doc.setFillColor(...dark);
+    doc.rect(0, 0, pageW, 80, 'F');
+
+    doc.setFillColor(...gold);
+    doc.rect(0, 80, pageW, 4, 'F');
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(26);
+    doc.setTextColor(212, 175, 55);
+    doc.text('STONE HOUSE', pageW / 2, 38, { align: 'center' });
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(11);
+    doc.setTextColor(200, 200, 200);
+    doc.text('Wedding Package Estimate  ·  Nevada City, California', pageW / 2, 58, { align: 'center' });
+
+    doc.setFontSize(10);
+    doc.setTextColor(212, 175, 55);
+    doc.text(`Quote #${quoteNumber}`, pageW / 2, 73, { align: 'center' });
+
+    // ── Event summary box ──
+    let y = 106;
+    doc.setFillColor(248, 249, 250);
+    doc.roundedRect(36, y, pageW - 72, 70, 6, 6, 'F');
+
+    const eventDate = quote.venue.date
+      ? new Date(quote.venue.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+      : 'Not selected';
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(...dark);
+
+    const col1 = 54, col2 = pageW / 2 + 18;
+    doc.text('Event Date', col1, y + 20);
+    doc.text('Guest Count', col2, y + 20);
+    doc.text('Venue', col1, y + 48);
+    doc.text('Season', col2, y + 48);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(...mid);
+    doc.text(eventDate, col1, y + 33);
+    doc.text(`${quote.catering.guestCount} guests`, col2, y + 33);
+    doc.text(quote.venue.typeName || '—', col1, y + 61);
+    doc.text(quote.venue.season?.name || '—', col2, y + 61);
+
+    // ── Contact info ──
+    y += 90;
+    if (contact.name) {
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10);
+      doc.setTextColor(...dark);
+      doc.text('Prepared for:', col1, y);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(...mid);
+      doc.text(`${contact.name}  ·  ${contact.email}  ·  ${contact.phone}`, col1, y + 14);
+      y += 30;
+    }
+
+    // ── Line items table ──
+    y += 6;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(11);
+    doc.setTextColor(...dark);
+    doc.text('Package Breakdown', col1, y);
+    y += 10;
+
+    const tableRows = [];
+
+    if (quote.venue.cost > 0) {
+      const hrs = quote.venue.hours ? ` · ${quote.venue.hours} hrs` : '';
+      tableRows.push(['Venue Rental', `${quote.venue.typeName}${hrs}`, fmt(quote.venue.cost), 'Non-taxable']);
+    }
+    if (quote.catering.total > 0) {
+      const desc = quote.catering.isOutsideCatering
+        ? 'Outside Catering (flat fee)'
+        : `${quote.catering.protein1Name || ''}${quote.catering.protein2Name ? ' + ' + quote.catering.protein2Name : ''}  ·  $${quote.catering.avgProteinPrice}/person avg`;
+      tableRows.push(['Catering', desc, fmt(quote.catering.total), '+ tax']);
+    }
+    if (quote.catering.sides?.cost > 0) {
+      tableRows.push(['Additional Sides', `${quote.catering.sides.count} selections × $8/person`, fmt(quote.catering.sides.cost), '+ tax']);
+    }
+    if (quote.catering.appetizers?.cost > 0) {
+      tableRows.push(['Passed Appetizers', `${quote.catering.appetizers.count} selections × $6/person`, fmt(quote.catering.appetizers.cost), '+ tax']);
+    }
+    if (quote.beverages.total > 0) {
+      tableRows.push(['Bar Service', `${quote.beverages.packageName}  ·  $${quote.beverages.pricePerPerson}/person`, fmt(quote.beverages.total), '+ tax']);
+    }
+    if (quote.serviceFee.amount > 0) {
+      tableRows.push(['Service Fee (20%)', 'Applied to food & beverage', fmt(quote.serviceFee.amount), '+ tax']);
+    }
+    if (quote.addOns.floral.cost > 0) {
+      tableRows.push(['Floral Package', quote.addOns.floral.packageName, fmt(quote.addOns.floral.cost), '+ tax']);
+    }
+    if (quote.addOns.photography.selected) {
+      tableRows.push(['Photography', 'Professional photography service', fmt(quote.addOns.photography.cost), 'Tax-exempt']);
+    }
+    if (quote.addOns.weddingPlanner.selected) {
+      const plannerFmt = quote.addOns.weddingPlanner.isFree ? 'FREE' : fmt(quote.addOns.weddingPlanner.cost);
+      tableRows.push(['Wedding Planning', quote.addOns.weddingPlanner.isFree ? 'Included with Full Package' : 'Day-of coordination', plannerFmt, 'Tax-exempt']);
+    }
+    if (quote.addOns.dj.selected) {
+      tableRows.push(['DJ Entertainment', 'Professional DJ & sound system', fmt(quote.addOns.dj.cost), '+ tax']);
+    }
+
+    doc.autoTable({
+      startY: y + 4,
+      head: [['Item', 'Description', 'Amount', 'Tax']],
+      body: tableRows,
+      theme: 'grid',
+      headStyles: {
+        fillColor: dark,
+        textColor: [212, 175, 55],
+        fontStyle: 'bold',
+        fontSize: 9,
+      },
+      bodyStyles: { fontSize: 9, textColor: dark },
+      alternateRowStyles: { fillColor: [248, 249, 250] },
+      columnStyles: {
+        0: { fontStyle: 'bold', cellWidth: 110 },
+        1: { cellWidth: 'auto' },
+        2: { halign: 'right', cellWidth: 80 },
+        3: { halign: 'center', cellWidth: 70, textColor: mid, fontSize: 8 }
+      },
+      margin: { left: 36, right: 36 },
+    });
+
+    // ── Totals section ──
+    let finalY = doc.lastAutoTable.finalY + 16;
+
+    // Check if we need a new page
+    if (finalY > doc.internal.pageSize.getHeight() - 160) {
+      doc.addPage();
+      finalY = 40;
+    }
+
+    const totalsX = pageW - 220;
+    const totalsW = 184;
+
+    doc.setFillColor(248, 249, 250);
+    doc.roundedRect(totalsX, finalY, totalsW, quote.fullPackage.eligible ? 136 : 110, 6, 6, 'F');
+
+    const addTotalRow = (label, value, bold = false, color = dark) => {
+      doc.setFont('helvetica', bold ? 'bold' : 'normal');
+      doc.setFontSize(bold ? 10 : 9);
+      doc.setTextColor(...color);
+      doc.text(label, totalsX + 12, finalY + 14);
+      doc.text(value, totalsX + totalsW - 12, finalY + 14, { align: 'right' });
+      finalY += 20;
+    };
+
+    const subtotal = quote.totals.taxableSubtotal + quote.totals.nonTaxableSubtotal;
+    addTotalRow('Subtotal', fmt(subtotal));
+    addTotalRow(`Sales Tax (${quote.tax.ratePercent})`, fmt(quote.totals.salesTax));
+    if (quote.fullPackage.eligible) {
+      addTotalRow('Full Package Discount (10%)', `-${fmt(quote.totals.discount)}`, false, [39, 174, 96]);
+    }
+
+    // Divider
+    doc.setDrawColor(...gold);
+    doc.setLineWidth(1);
+    doc.line(totalsX + 8, finalY + 2, totalsX + totalsW - 8, finalY + 2);
+    finalY += 10;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.setTextColor(...gold);
+    doc.text('ESTIMATED TOTAL', totalsX + 12, finalY + 14);
+    doc.text(fmt(quote.totals.grandTotal), totalsX + totalsW - 12, finalY + 14, { align: 'right' });
+
+    // ── Footer ──
+    const pageH = doc.internal.pageSize.getHeight();
+    doc.setFillColor(...dark);
+    doc.rect(0, pageH - 54, pageW, 54, 'F');
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(180, 180, 180);
+    doc.text('Stone House  ·  107 Sacramento Street, Nevada City, CA 95959', pageW / 2, pageH - 34, { align: 'center' });
+    doc.text('bookings@stonehouse.io  ·  (530) 265-5050  ·  This is an estimate subject to availability and confirmation.', pageW / 2, pageH - 20, { align: 'center' });
+
+    doc.save(`StoneHouse-Wedding-Quote-${quoteNumber}.pdf`);
   }
 
   // ===================================
