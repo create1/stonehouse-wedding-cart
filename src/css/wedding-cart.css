@@ -1070,8 +1070,20 @@ body {
   width: 100%;
   height: 220px;
   object-fit: cover;
-  object-position: center center;
+  object-position: center top;
   display: block;
+}
+
+.beverage-img--beerwine {
+  object-position: center 20%;
+}
+
+.beverage-img--premium {
+  object-position: center 15%;
+}
+
+.beverage-img--topshelf {
+  object-position: center 20%;
 }
 
 .beverage-content {
@@ -2320,11 +2332,7 @@ textarea.form-input {
   }
 
   .beverage-img {
-    height: 150px;
-  }
-
-  .beverage-img--topshelf {
-    object-position: center 30%;
+    height: 160px;
   }
 
   /* Tighter form sections */
