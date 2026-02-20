@@ -18,36 +18,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="../src/css/styles.css">
   <link rel="stylesheet" href="src/css/wedding-cart.css">
 </head>
 <body>
-
-  <!-- Navigation -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="../index.html" class="logo">
-        STONE HOUSE
-      </a>
-      <ul class="nav-menu">
-        <li class="nav-item"><a href="spaces.html" class="nav-link">Spaces</a></li>
-        <li class="nav-item"><a href="/" class="nav-link">Weddings</a></li>
-        <li class="nav-item"><a href="corporate.html" class="nav-link">Corporate</a></li>
-        <li class="nav-item"><a href="social.html" class="nav-link">Social</a></li>
-        <li class="nav-item"><a href="nonprofit.html" class="nav-link">Nonprofit</a></li>
-        <li class="nav-item"><a href="catering.html" class="nav-link">Catering</a></li>
-        <li class="nav-item"><a href="booking.html" class="btn btn-primary">Book Now</a></li>
-      </ul>
-      <button class="nav-toggle" aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
-      </button>
-    </div>
-  </nav>
 
   <!-- Hero Section -->
   <section class="cart-hero">
     <div class="container">
       <div class="text-center">
+        <img src="src/images/branding/logo.png" alt="Stone House" class="hero-logo">
         <p class="small-caps">Plan Your Wedding</p>
         <h1>Wedding Package Builder</h1>
         <p class="hero-subtitle">Create your perfect wedding package with real-time pricing</p>
@@ -96,6 +75,59 @@
         <div class="cart-step active" data-step="1">
           <h2>Event Details</h2>
           <p class="step-description">Tell us about your wedding day</p>
+
+          <!-- Inline Venue Rate Table -->
+          <div class="inline-pricing">
+            <div class="inline-pricing-top">
+              <div class="season-tabs">
+                <button class="season-tab active" data-season="offpeak">
+                  <span class="season-tab-name">Off-Peak</span>
+                  <span class="season-tab-dates">Jan–Feb</span>
+                </button>
+                <button class="season-tab" data-season="shoulder">
+                  <span class="season-tab-name">Shoulder</span>
+                  <span class="season-tab-dates">Mar–Apr, Nov</span>
+                </button>
+                <button class="season-tab" data-season="peak">
+                  <span class="season-tab-name">Peak</span>
+                  <span class="season-tab-dates">May–Oct, Dec</span>
+                </button>
+              </div>
+            </div>
+            <div class="pricing-table-wrap">
+              <table class="pricing-table">
+                <thead>
+                  <tr>
+                    <th class="col-day">Day</th>
+                    <th>Full Building <span>(hourly · 3-hr min)</span></th>
+                    <th class="col-featured">12 Hr Block <span>(all-day flat rate)</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="day-label">Mon–Thu</td>
+                    <td class="price-cell" data-offpeak="$900/hr" data-shoulder="$950/hr" data-peak="$1,000/hr">$900/hr</td>
+                    <td class="price-cell col-featured" data-offpeak="$5,000" data-shoulder="$6,500" data-peak="$7,500">$5,000</td>
+                  </tr>
+                  <tr>
+                    <td class="day-label">Friday</td>
+                    <td class="price-cell" data-offpeak="$950/hr" data-shoulder="$1,000/hr" data-peak="$1,100/hr">$950/hr</td>
+                    <td class="price-cell col-featured" data-offpeak="$6,000" data-shoulder="$8,000" data-peak="$9,000">$6,000</td>
+                  </tr>
+                  <tr class="saturday-row">
+                    <td class="day-label">Saturday <span class="sat-badge">Block only</span></td>
+                    <td class="na-cell">&mdash;</td>
+                    <td class="price-cell col-featured" data-offpeak="$7,000" data-shoulder="$9,000" data-peak="$10,000">$7,000</td>
+                  </tr>
+                  <tr>
+                    <td class="day-label">Sunday</td>
+                    <td class="price-cell" data-offpeak="$950/hr" data-shoulder="$1,000/hr" data-peak="$1,100/hr">$950/hr</td>
+                    <td class="price-cell col-featured" data-offpeak="$6,500" data-shoulder="$8,500" data-peak="$9,500">$6,500</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
           <!-- Date Selection -->
           <div class="form-section">
@@ -185,6 +217,7 @@
                 </div>
                 <p class="venue-description">Hourly rental, 3-hour minimum</p>
                 <p class="venue-capacity">Up to 300 guests</p>
+                <p class="venue-includes">Includes our Lounge, Great Hall, Show Room, Patio, Cavern and Parlour.</p>
                 <div class="venue-duration" id="duration-fullBuilding" style="display: none;">
                   <label>Duration (hours):</label>
                   <input type="range" class="duration-slider" min="3" max="12" value="5" step="1">
@@ -196,21 +229,18 @@
               <div class="venue-card recommended" data-venue="premiumEventCap">
                 <div class="recommended-badge">Best Value</div>
                 <div class="venue-card-header">
-                  <h3>Premium Event Cap</h3>
+                  <h3>Full Building 12 Hour Block</h3>
                   <div class="venue-price" data-price-display="premiumEventCap"></div>
                 </div>
                 <p class="venue-description">All-day access, full building</p>
-                <p class="venue-capacity">Up to 300 guests, unlimited time</p>
-                <p class="venue-note">Perfect for 100+ guests</p>
+                <p class="venue-capacity">Up to 300 guests</p>
+                <p class="venue-includes">Includes our Lounge, Great Hall, Show Room, Patio, Cavern and Parlour.</p>
                 <button class="venue-select-btn">Select</button>
               </div>
             </div>
           </div>
 
           <div class="step-navigation">
-            <button class="btn btn-secondary" onclick="window.location.href="/"">
-              <i class="fas fa-arrow-left"></i> Back to Weddings
-            </button>
             <button class="btn btn-primary" id="next-step-1">
               Next: Catering <i class="fas fa-arrow-right"></i>
             </button>
@@ -292,7 +322,6 @@
                   <h3><i class="fas fa-utensils-alt"></i> Outside Catering</h3>
                   <div class="protein-price">$1,000<span> flat fee</span></div>
                   <p class="protein-description" style="color: var(--cart-secondary); font-weight: 600;">Approved vendors only</p>
-                  <p class="includes-note" style="font-size: 0.85rem;">Includes kitchen access & coordination</p>
                 </div>
                 <div class="selection-indicator">
                   <i class="fas fa-check"></i>
@@ -527,7 +556,6 @@
               </div>
 
               <div class="floral-card" data-floral="classic">
-                <img src="src/images/floral/classic-wedding-floral.png" alt="Classic Wedding Floral" class="floral-img">
                 <div class="floral-header">
                   <h3>Classic</h3>
                   <div class="floral-price">$2,500</div>
@@ -723,9 +751,6 @@
             <button class="btn btn-primary" id="download-quote">
               <i class="fas fa-download"></i> Download PDF
             </button>
-            <a href="/" class="btn btn-secondary">
-              <i class="fas fa-home"></i> Back to Weddings
-            </a>
           </div>
         </div>
 
@@ -733,6 +758,8 @@
 
       <!-- Price Summary Sidebar -->
       <aside class="price-summary" id="price-summary">
+
+        <!-- Inline Venue Pricing Table -->
         <div class="summary-header">
           <h3>Your Wedding Quote</h3>
         </div>
@@ -858,32 +885,8 @@
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-section">
-          <h4>Stone House</h4>
-          <p>Historic elegance in the heart of Nevada City. Creating unforgettable celebrations since the 1800s.</p>
-        </div>
-        <div class="footer-section">
-          <h4>Contact Us</h4>
-          <ul class="footer-links">
-            <li><i class="fas fa-map-marker-alt"></i> 107 Sacramento Street, Nevada City, CA 95959</li>
-            <li><i class="fas fa-phone"></i> <a href="tel:+15302655050">(530) 265-5050</a></li>
-            <li><i class="fas fa-envelope"></i> <a href="mailto:bookings@stonehouse.io">bookings@stonehouse.io</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 Stone House. All rights reserved. | Nevada City, California</p>
-      </div>
-    </div>
-  </footer>
-
   <!-- JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="src/js/main.js"></script>
   <script type="module" src="src/js/wedding-cart.js"></script>
 
 </body>

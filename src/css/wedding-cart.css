@@ -3,6 +3,29 @@
  * Stone House Venue - Nevada City, CA
  */
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+  background: var(--cart-bg);
+  color: var(--cart-dark);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
 :root {
   --cart-primary: #D4AF37;
   --cart-secondary: #8B4053;
@@ -20,44 +43,257 @@
 }
 
 /* ===================================
+   BASE HELPERS (previously in styles.css)
+   =================================== */
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.small-caps {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* ===================================
    CART HERO
    =================================== */
 .cart-hero {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.92) 0%, rgba(139, 64, 83, 0.92) 100%),
-              url('src/images/branding/success-background.png');
-  background-size: cover;
-  background-position: center;
+  background:
+    linear-gradient(to bottom,
+      rgba(20, 12, 5, 0.55) 0%,
+      rgba(20, 12, 5, 0.45) 60%,
+      rgba(20, 12, 5, 0.62) 100%
+    ),
+    url('../images/branding/hero-bg.png') center center / cover no-repeat;
   color: white;
-  padding: 4rem 0 3rem;
+  padding: 5rem 1rem 4rem;
   text-align: center;
   position: relative;
+  width: 100%;
+}
+
+.hero-logo {
+  display: block;
+  margin: 0 auto 1.75rem;
+  max-height: 180px;
+  width: auto;
+  max-width: 360px;
+  object-fit: contain;
+  filter: brightness(0) invert(1) drop-shadow(0 2px 16px rgba(0, 0, 0, 0.35));
+}
+
+.cart-hero .small-caps {
+  letter-spacing: 0.2em;
+  font-size: 0.9rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  opacity: 0.9;
 }
 
 .cart-hero h1 {
-  font-size: 3rem;
-  margin: 1rem 0;
+  font-size: 3.2rem;
+  margin: 0.5rem 0 1rem;
   font-family: 'Playfair Display', serif;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
 }
 
 .cart-hero .hero-subtitle {
   font-size: 1.2rem;
-  opacity: 0.95;
+  opacity: 0.92;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* ===================================
+   INLINE VENUE PRICING TABLE (Step 1)
+   =================================== */
+.inline-pricing {
+  border: 1px solid var(--cart-light);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.inline-pricing-top {
+  background: var(--cart-bg);
+  border-bottom: 1px solid var(--cart-light);
+}
+
+/* Season tabs */
+.season-tabs {
+  display: flex;
+  overflow: hidden;
+}
+
+.season-tab {
+  flex: 1;
+  padding: 0.45rem 0.5rem;
+  background: var(--cart-bg);
+  border: none;
+  border-right: 1px solid var(--cart-light);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+  transition: all 0.2s;
+}
+
+.season-tab:last-child {
+  border-right: none;
+}
+
+.season-tab:hover {
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.season-tab.active {
+  background: var(--cart-primary);
+}
+
+.season-tab-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--cart-medium);
+  transition: color 0.2s;
+}
+
+.season-tab.active .season-tab-name {
+  color: white;
+}
+
+.season-tab-dates {
+  font-size: 0.65rem;
+  color: var(--cart-medium);
+  opacity: 0.8;
+}
+
+.season-tab.active .season-tab-dates {
+  color: rgba(255,255,255,0.8);
+  opacity: 1;
+}
+
+/* Table */
+.pricing-table-wrap {
+  overflow-x: auto;
+}
+
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pricing-table thead tr {
+  background: var(--cart-dark);
+}
+
+.pricing-table thead th {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+}
+
+.pricing-table thead th.col-day {
+  text-align: left;
+  width: 32%;
+}
+
+.pricing-table thead th span {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 400;
+  opacity: 0.6;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.pricing-table thead th.col-featured {
+  color: var(--cart-primary);
+}
+
+.pricing-table tbody tr {
+  border-bottom: 1px solid var(--cart-light);
+  transition: background 0.15s;
+}
+
+.pricing-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.pricing-table tbody tr:hover {
+  background: rgba(212, 175, 55, 0.03);
+}
+
+.pricing-table tbody td {
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cart-dark);
+}
+
+.pricing-table tbody td.day-label {
+  text-align: left;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--cart-dark);
+}
+
+.pricing-table tbody td.col-featured {
+  color: var(--cart-primary);
+  font-weight: 700;
+}
+
+.pricing-table tbody td.na-cell {
+  color: var(--cart-light);
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.saturday-row {
+  background: rgba(212, 175, 55, 0.04);
+}
+
+.saturday-row td.day-label {
+  color: var(--cart-primary);
+}
+
+.sat-badge {
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--cart-primary);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  margin-left: 0.3rem;
+  vertical-align: middle;
 }
 
 /* ===================================
    CART LAYOUT
    =================================== */
 .cart-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+  width: 100%;
+  padding: 2rem;
 }
 
 .cart-layout {
   display: grid;
-  grid-template-columns: 1fr 380px;
+  grid-template-columns: 1fr 460px;
   gap: 2rem;
   align-items: start;
+  width: 100%;
 }
 
 .cart-main {
@@ -388,6 +624,8 @@
   transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .venue-card:hover {
@@ -402,20 +640,26 @@
   box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
 }
 
-.venue-card.recommended {
+.venue-card.recommended,
+.beverage-card.recommended {
   border-color: var(--cart-primary);
+  padding-top: 3rem;
 }
 
 .recommended-badge {
   position: absolute;
-  top: -12px;
-  right: 20px;
+  top: 0;
+  left: 0;
+  right: 0;
   background: var(--cart-primary);
   color: white;
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  padding: 0.45rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 9px 9px 0 0;
 }
 
 .venue-card-header h3 {
@@ -438,6 +682,18 @@
   font-size: 0.95rem;
   color: var(--cart-medium);
   margin-bottom: 0.5rem;
+}
+
+.venue-description {
+  flex: 1;
+}
+
+.venue-includes {
+  font-size: 0.82rem;
+  color: var(--cart-medium);
+  font-style: italic;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
 }
 
 .venue-duration {
@@ -478,7 +734,8 @@
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s;
-  margin-top: 1rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
 }
 
 .venue-select-btn:hover {
@@ -788,6 +1045,8 @@
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .beverage-card:hover {
@@ -815,6 +1074,9 @@
 
 .beverage-content {
   padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .beverage-content h3 {
@@ -840,6 +1102,7 @@
   list-style: none;
   padding: 0;
   margin: 0 0 1rem 0;
+  flex: 1;
 }
 
 .beverage-includes li {
@@ -864,6 +1127,7 @@
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s;
+  margin-top: auto;
 }
 
 .package-select-btn:hover {
@@ -898,6 +1162,13 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.floral-card.recommended,
+.floral-card.luxury {
+  padding-top: 3rem;
 }
 
 .floral-img {
@@ -926,14 +1197,18 @@
 
 .luxury-badge {
   position: absolute;
-  top: -12px;
-  right: 20px;
-  background: linear-gradient(135deg, #C9A961, #D4AF37);
-  color: white;
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(90deg, #2C3E50, #4a5568);
+  color: #D4AF37;
+  padding: 0.45rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 9px 9px 0 0;
 }
 
 .floral-card.skip-option {
@@ -976,6 +1251,11 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  margin-top: auto;
+}
+
+.floral-includes {
+  flex: 1;
 }
 
 .floral-select-btn:hover {
@@ -1207,12 +1487,12 @@
    =================================== */
 .price-summary {
   position: sticky;
-  top: 100px;
+  top: 20px;
   background: white;
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 40px);
   overflow-y: auto;
 }
 
@@ -1531,7 +1811,7 @@ textarea.form-input {
   animation: fadeIn 0.5s ease;
   position: relative;
   background: linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.98)), 
-              url('src/images/branding/success-background.png');
+              url('../images/branding/success-background.png');
   background-size: cover;
   background-position: center;
   border-radius: 12px;
@@ -1657,6 +1937,10 @@ textarea.form-input {
 
 /* Tablet */
 @media (max-width: 1024px) {
+  .cart-container {
+    padding: 1.25rem;
+  }
+
   .cart-layout {
     grid-template-columns: 1fr;
   }
@@ -1664,6 +1948,7 @@ textarea.form-input {
   .price-summary {
     position: static;
     margin-top: 2rem;
+    max-height: none;
   }
 
   .mobile-price-bar {
@@ -1673,49 +1958,55 @@ textarea.form-input {
 
 /* Mobile */
 @media (max-width: 768px) {
+  .cart-container {
+    padding: 1rem;
+  }
+
   .cart-hero h1 {
     font-size: 2rem;
   }
 
   .cart-main {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
 
+  /* Keep progress bar horizontal, just shrink it */
   .progress-steps {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .progress-step {
-    flex-direction: row;
-    width: 100%;
-    justify-content: flex-start;
-  }
-
-  .progress-line {
-    display: none;
+    gap: 0;
   }
 
   .step-circle {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+
+  .step-label {
+    font-size: 0.7rem;
+  }
+
+  .progress-line {
+    margin: 0 2px;
+    top: -18px;
   }
 
   .cart-step h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 
   .venue-grid,
-  .protein-grid,
   .beverage-grid,
   .floral-grid,
   .services-grid {
     grid-template-columns: 1fr;
   }
 
+  .protein-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .options-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .step-navigation {
@@ -1766,11 +2057,11 @@ textarea.form-input {
 /* Small Mobile */
 @media (max-width: 480px) {
   .cart-container {
-    padding: 1rem 0.5rem;
+    padding: 0.75rem;
   }
 
   .cart-hero {
-    padding: 2rem 0 1.5rem;
+    padding: 2rem 1rem 1.5rem;
   }
 
   .cart-hero h1 {
@@ -1779,6 +2070,26 @@ textarea.form-input {
 
   .cart-main {
     padding: 1rem;
+    border-radius: 8px;
+  }
+
+  .protein-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Hide step labels on tiny screens, just show circles */
+  .step-label {
+    display: none;
+  }
+
+  .step-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
   }
 }
 

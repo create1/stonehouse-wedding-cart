@@ -49,7 +49,7 @@ export const WEDDING_PRICING_CONFIG = {
       },
       premiumEventCap: {
         id: 'premiumEventCap',
-        name: 'Premium Event Cap',
+        name: 'Full Building 12 Hour Block',
         description: 'All-day access, full building',
         isFlat: true,
         capacity: 300,

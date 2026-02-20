@@ -40,6 +40,7 @@ class WeddingCart {
   }
 
   init() {
+    this.setupSeasonTabs();
     this.setupDatePicker();
     this.setupGuestCountSlider();
     this.setupVenueSelection();
@@ -51,6 +52,22 @@ class WeddingCart {
     this.setupModals();
     this.setupMobileBar();
     this.updatePriceSummary();
+  }
+
+  // ===================================
+  // SEASON TAB SWITCHER
+  // ===================================
+  setupSeasonTabs() {
+    document.querySelectorAll('.season-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.season-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const season = tab.dataset.season;
+        document.querySelectorAll('.price-cell[data-offpeak]').forEach(cell => {
+          cell.textContent = cell.dataset[season];
+        });
+      });
+    });
   }
 
   // ===================================
@@ -77,8 +94,10 @@ class WeddingCart {
         if (selectedDates.length > 0) {
           this.cart.venue.date = selectedDates[0];
           this.updateSeasonDisplay(selectedDates[0]);
+          this.updateVenueAvailability(selectedDates[0]);
           this.updateVenuePricing();
           this.updatePriceSummary();
+          this.updatePricingTableSeason(selectedDates[0]);
         }
       }
     });
@@ -126,7 +145,7 @@ class WeddingCart {
       slider.setAttribute('aria-valuenow', guestCount);
       
       // Update slider fill
-      const percent = ((guestCount - 20) / (500 - 20)) * 100;
+      const percent = ((guestCount - 20) / (150 - 20)) * 100;
       slider.style.setProperty('--slider-percent', `${percent}%`);
       
       // Update summary display
@@ -140,7 +159,7 @@ class WeddingCart {
 
     slider.addEventListener('input', (e) => updateGuestCount(e.target.value));
     input.addEventListener('change', (e) => {
-      const value = Math.max(20, Math.min(500, parseInt(e.target.value) || 100));
+      const value = Math.max(20, Math.min(150, parseInt(e.target.value) || 100));
       updateGuestCount(value);
     });
 
@@ -150,12 +169,67 @@ class WeddingCart {
     });
 
     increaseBtn.addEventListener('click', () => {
-      const newValue = Math.min(500, this.cart.guestCount + 5);
+      const newValue = Math.min(150, this.cart.guestCount + 5);
       updateGuestCount(newValue);
     });
 
     // Initial update
     updateGuestCount(100);
+  }
+
+  updatePricingTableSeason(date) {
+    const season = WeddingPricingHelpers.getSeasonForDate(date);
+
+    // Map config season keys to tab data-season values
+    const seasonMap = { offPeak: 'offpeak', shoulder: 'shoulder', peak: 'peak' };
+    const tabSeason = seasonMap[season.key] || 'offpeak';
+
+    // Activate the matching tab
+    const tabs = document.querySelectorAll('.season-tab');
+    tabs.forEach(tab => {
+      tab.classList.toggle('active', tab.dataset.season === tabSeason);
+    });
+
+    // Update all price cells
+    document.querySelectorAll('.price-cell[data-offpeak]').forEach(cell => {
+      cell.textContent = cell.dataset[tabSeason];
+    });
+
+    // Scroll pricing table into view briefly to signal the update
+    const pricingCard = document.querySelector('.pricing-card');
+    if (pricingCard) {
+      pricingCard.style.transition = 'box-shadow 0.3s';
+      pricingCard.style.boxShadow = '0 0 0 3px rgba(212, 175, 55, 0.4)';
+      setTimeout(() => {
+        pricingCard.style.boxShadow = '';
+      }, 800);
+    }
+  }
+
+  // ===================================
+  // VENUE AVAILABILITY BY DAY
+  // ===================================
+  updateVenueAvailability(date) {
+    const isSaturday = date.getDay() === 6;
+
+    const fullBuildingCard = document.querySelector('.venue-card[data-venue="fullBuilding"]');
+    const premiumCapCard = document.querySelector('.venue-card[data-venue="premiumEventCap"]');
+
+    if (isSaturday) {
+      // Saturday: Full Building 12 Hour Block only — no hourly rentals
+      if (fullBuildingCard) {
+        fullBuildingCard.style.display = 'none';
+        if (this.cart.venue.type === 'fullBuilding') {
+          fullBuildingCard.classList.remove('selected');
+          this.cart.venue.type = null;
+        }
+      }
+      if (premiumCapCard) premiumCapCard.style.display = '';
+    } else {
+      // All other days: both options available
+      if (fullBuildingCard) fullBuildingCard.style.display = '';
+      if (premiumCapCard) premiumCapCard.style.display = '';
+    }
   }
 
   // ===================================
@@ -728,8 +802,12 @@ class WeddingCart {
         }
       });
 
-      // Scroll to top
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Scroll to top of cart form, not page top
+      const cartMain = document.querySelector('.cart-main');
+      if (cartMain) {
+        const offset = cartMain.getBoundingClientRect().top + window.scrollY - 24;
+        window.scrollTo({ top: offset, behavior: 'smooth' });
+      }
 
       // If step 5 (review), generate breakdown
       if (stepNumber === 5) {
@@ -952,8 +1030,12 @@ class WeddingCart {
       successMsg.style.display = 'block';
     }
 
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll to top of cart form
+    const cartMain = document.querySelector('.cart-main');
+    if (cartMain) {
+      const offset = cartMain.getBoundingClientRect().top + window.scrollY - 24;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    }
   }
 
   // ===================================

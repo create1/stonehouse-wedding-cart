@@ -213,7 +213,10 @@ async function sendAdminNotification(quoteRecord, quote) {
   const { Resend } = require('resend');
   const resend = new Resend(process.env.RESEND_API_KEY);
 
-  const adminEmail = process.env.ADMIN_EMAIL || 'bookings@stonehouse.io';
+  const adminEmail = [
+    process.env.ADMIN_EMAIL || 'bookings@stonehouse.io',
+    'jr@stonehouse.io'
+  ];
 
   const emailHtml = `
     <h2>New Wedding Quote Submitted</h2>
