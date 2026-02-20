@@ -994,7 +994,7 @@ class WeddingCart {
       };
 
       // Submit to API
-      const response = await fetch('/api/wedding-quote', {
+      const response = await fetch('/api/wedding/quote', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
