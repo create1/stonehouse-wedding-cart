@@ -1029,6 +1029,53 @@ body {
 }
 
 /* ===================================
+   SERVICE FEE NOTICE
+   =================================== */
+.service-fee-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-left: 4px solid var(--cart-primary);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.75rem;
+  font-size: 0.9rem;
+  color: var(--cart-dark);
+}
+
+.service-fee-notice i {
+  color: var(--cart-primary);
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+/* Service fee row in sidebar */
+.service-fee-row {
+  background: rgba(212, 175, 55, 0.06);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem !important;
+  margin: 0.25rem -0.75rem;
+}
+
+.service-fee-row .item-label {
+  color: var(--cart-secondary);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.service-fee-row .item-label i {
+  margin-right: 0.35rem;
+  color: var(--cart-secondary);
+}
+
+.service-fee-row .item-amount {
+  color: var(--cart-secondary);
+  font-weight: 700;
+}
+
+/* ===================================
    BEVERAGE CARDS
    =================================== */
 .beverage-grid {
