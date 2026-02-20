@@ -1496,12 +1496,45 @@ body {
   overflow-y: auto;
 }
 
+.summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
 .summary-header h3 {
   font-family: 'Playfair Display', serif;
   font-size: 1.8rem;
   color: var(--cart-dark);
-  margin-bottom: 1.5rem;
-  text-align: center;
+  margin: 0;
+}
+
+.summary-close-btn {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--cart-light);
+  background: white;
+  color: var(--cart-medium);
+  font-size: 1.1rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.summary-close-btn:hover {
+  background: var(--cart-light);
+  color: var(--cart-dark);
+}
+
+@media (max-width: 1024px) {
+  .summary-close-btn {
+    display: flex;
+  }
 }
 
 .summary-details {

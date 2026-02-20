@@ -1091,6 +1091,10 @@ class WeddingCart {
       sidebar.classList.contains('mobile-expanded') ? close() : open();
     });
 
+    // X button inside the panel
+    const closeBtn = document.getElementById('summary-close');
+    if (closeBtn) closeBtn.addEventListener('click', close);
+
     // Tap backdrop (the sidebar itself outside content) to close
     sidebar.addEventListener('click', (e) => {
       if (e.target === sidebar) close();
