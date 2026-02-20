@@ -1055,196 +1055,547 @@ class WeddingCart {
 
     const doc = new jsPDF({ unit: 'pt', format: 'letter' });
     const quote = this.currentQuote;
+    const cart  = this.cart;
     const contact = this.lastContact || {};
+    const config = WEDDING_PRICING_CONFIG;
     const pageW = doc.internal.pageSize.getWidth();
-    const gold = [212, 175, 55];
-    const dark = [44, 62, 80];
-    const mid  = [127, 140, 141];
-    const fmt  = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n || 0);
+    const pageH = doc.internal.pageSize.getHeight();
+    const marginL = 40, marginR = 40;
+    const contentW = pageW - marginL - marginR;
+    const gold  = [212, 175, 55];
+    const dark  = [44, 62, 80];
+    const mid   = [127, 140, 141];
+    const light = [236, 240, 241];
+    const green = [39, 174, 96];
+    const fmt   = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n || 0);
 
-    // ── Header bar ──
-    doc.setFillColor(...dark);
-    doc.rect(0, 0, pageW, 80, 'F');
+    let y = 0;
 
-    doc.setFillColor(...gold);
-    doc.rect(0, 80, pageW, 4, 'F');
+    // ─────────────────────────────────
+    // HELPERS
+    // ─────────────────────────────────
+    const checkPageBreak = (needed = 60) => {
+      if (y + needed > pageH - 70) {
+        addFooter();
+        doc.addPage();
+        y = 40;
+      }
+    };
 
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(26);
-    doc.setTextColor(212, 175, 55);
-    doc.text('STONE HOUSE', pageW / 2, 38, { align: 'center' });
-
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(11);
-    doc.setTextColor(200, 200, 200);
-    doc.text('Wedding Package Estimate  ·  Nevada City, California', pageW / 2, 58, { align: 'center' });
-
-    doc.setFontSize(10);
-    doc.setTextColor(212, 175, 55);
-    doc.text(`Quote #${quoteNumber}`, pageW / 2, 73, { align: 'center' });
-
-    // ── Event summary box ──
-    let y = 106;
-    doc.setFillColor(248, 249, 250);
-    doc.roundedRect(36, y, pageW - 72, 70, 6, 6, 'F');
-
-    const eventDate = quote.venue.date
-      ? new Date(quote.venue.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-      : 'Not selected';
-
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(10);
-    doc.setTextColor(...dark);
-
-    const col1 = 54, col2 = pageW / 2 + 18;
-    doc.text('Event Date', col1, y + 20);
-    doc.text('Guest Count', col2, y + 20);
-    doc.text('Venue', col1, y + 48);
-    doc.text('Season', col2, y + 48);
-
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(...mid);
-    doc.text(eventDate, col1, y + 33);
-    doc.text(`${quote.catering.guestCount} guests`, col2, y + 33);
-    doc.text(quote.venue.typeName || '—', col1, y + 61);
-    doc.text(quote.venue.season?.name || '—', col2, y + 61);
-
-    // ── Contact info ──
-    y += 90;
-    if (contact.name) {
+    const sectionHeader = (title, icon = '') => {
+      checkPageBreak(50);
+      doc.setFillColor(...dark);
+      doc.roundedRect(marginL, y, contentW, 28, 4, 4, 'F');
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(10);
-      doc.setTextColor(...dark);
-      doc.text('Prepared for:', col1, y);
-      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(...gold);
+      doc.text((icon + '  ' + title).trim(), marginL + 12, y + 18);
+      y += 36;
+    };
+
+    const labelValue = (label, value, indent = 0, valueColor = dark) => {
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
       doc.setTextColor(...mid);
-      doc.text(`${contact.name}  ·  ${contact.email}  ·  ${contact.phone}`, col1, y + 14);
-      y += 30;
-    }
+      doc.text(label, marginL + indent, y);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(...valueColor);
+      doc.text(String(value), marginL + indent + 130, y);
+      y += 15;
+    };
 
-    // ── Line items table ──
-    y += 6;
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(11);
-    doc.setTextColor(...dark);
-    doc.text('Package Breakdown', col1, y);
-    y += 10;
+    const bulletLine = (text, indent = 12) => {
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.setTextColor(...dark);
+      doc.text('•  ' + text, marginL + indent, y);
+      y += 13;
+    };
 
-    const tableRows = [];
+    const divider = (color = light) => {
+      doc.setDrawColor(...color);
+      doc.setLineWidth(0.5);
+      doc.line(marginL, y, marginL + contentW, y);
+      y += 10;
+    };
 
-    if (quote.venue.cost > 0) {
-      const hrs = quote.venue.hours ? ` · ${quote.venue.hours} hrs` : '';
-      tableRows.push(['Venue Rental', `${quote.venue.typeName}${hrs}`, fmt(quote.venue.cost), 'Non-taxable']);
-    }
-    if (quote.catering.total > 0) {
-      const desc = quote.catering.isOutsideCatering
-        ? 'Outside Catering (flat fee)'
-        : `${quote.catering.protein1Name || ''}${quote.catering.protein2Name ? ' + ' + quote.catering.protein2Name : ''}  ·  $${quote.catering.avgProteinPrice}/person avg`;
-      tableRows.push(['Catering', desc, fmt(quote.catering.total), '+ tax']);
-    }
-    if (quote.catering.sides?.cost > 0) {
-      tableRows.push(['Additional Sides', `${quote.catering.sides.count} selections × $8/person`, fmt(quote.catering.sides.cost), '+ tax']);
-    }
-    if (quote.catering.appetizers?.cost > 0) {
-      tableRows.push(['Passed Appetizers', `${quote.catering.appetizers.count} selections × $6/person`, fmt(quote.catering.appetizers.cost), '+ tax']);
-    }
-    if (quote.beverages.total > 0) {
-      tableRows.push(['Bar Service', `${quote.beverages.packageName}  ·  $${quote.beverages.pricePerPerson}/person`, fmt(quote.beverages.total), '+ tax']);
-    }
-    if (quote.serviceFee.amount > 0) {
-      tableRows.push(['Service Fee (20%)', 'Applied to food & beverage', fmt(quote.serviceFee.amount), '+ tax']);
-    }
-    if (quote.addOns.floral.cost > 0) {
-      tableRows.push(['Floral Package', quote.addOns.floral.packageName, fmt(quote.addOns.floral.cost), '+ tax']);
-    }
-    if (quote.addOns.photography.selected) {
-      tableRows.push(['Photography', 'Professional photography service', fmt(quote.addOns.photography.cost), 'Tax-exempt']);
-    }
-    if (quote.addOns.weddingPlanner.selected) {
-      const plannerFmt = quote.addOns.weddingPlanner.isFree ? 'FREE' : fmt(quote.addOns.weddingPlanner.cost);
-      tableRows.push(['Wedding Planning', quote.addOns.weddingPlanner.isFree ? 'Included with Full Package' : 'Day-of coordination', plannerFmt, 'Tax-exempt']);
-    }
-    if (quote.addOns.dj.selected) {
-      tableRows.push(['DJ Entertainment', 'Professional DJ & sound system', fmt(quote.addOns.dj.cost), '+ tax']);
-    }
-
-    doc.autoTable({
-      startY: y + 4,
-      head: [['Item', 'Description', 'Amount', 'Tax']],
-      body: tableRows,
-      theme: 'grid',
-      headStyles: {
-        fillColor: dark,
-        textColor: [212, 175, 55],
-        fontStyle: 'bold',
-        fontSize: 9,
-      },
-      bodyStyles: { fontSize: 9, textColor: dark },
-      alternateRowStyles: { fillColor: [248, 249, 250] },
-      columnStyles: {
-        0: { fontStyle: 'bold', cellWidth: 110 },
-        1: { cellWidth: 'auto' },
-        2: { halign: 'right', cellWidth: 80 },
-        3: { halign: 'center', cellWidth: 70, textColor: mid, fontSize: 8 }
-      },
-      margin: { left: 36, right: 36 },
-    });
-
-    // ── Totals section ──
-    let finalY = doc.lastAutoTable.finalY + 16;
-
-    // Check if we need a new page
-    if (finalY > doc.internal.pageSize.getHeight() - 160) {
-      doc.addPage();
-      finalY = 40;
-    }
-
-    const totalsX = pageW - 220;
-    const totalsW = 184;
-
-    doc.setFillColor(248, 249, 250);
-    doc.roundedRect(totalsX, finalY, totalsW, quote.fullPackage.eligible ? 136 : 110, 6, 6, 'F');
-
-    const addTotalRow = (label, value, bold = false, color = dark) => {
+    const amountRow = (label, amount, bold = false, color = dark, subtext = '') => {
+      checkPageBreak(20);
       doc.setFont('helvetica', bold ? 'bold' : 'normal');
       doc.setFontSize(bold ? 10 : 9);
       doc.setTextColor(...color);
-      doc.text(label, totalsX + 12, finalY + 14);
-      doc.text(value, totalsX + totalsW - 12, finalY + 14, { align: 'right' });
-      finalY += 20;
+      doc.text(label, marginL + 10, y);
+      doc.text(amount, marginL + contentW - 10, y, { align: 'right' });
+      if (subtext) {
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(...mid);
+        doc.text(subtext, marginL + 10, y + 11);
+        y += 10;
+      }
+      y += 16;
     };
 
-    const subtotal = quote.totals.taxableSubtotal + quote.totals.nonTaxableSubtotal;
-    addTotalRow('Subtotal', fmt(subtotal));
-    addTotalRow(`Sales Tax (${quote.tax.ratePercent})`, fmt(quote.totals.salesTax));
-    if (quote.fullPackage.eligible) {
-      addTotalRow('Full Package Discount (10%)', `-${fmt(quote.totals.discount)}`, false, [39, 174, 96]);
-    }
+    const addFooter = () => {
+      doc.setFillColor(...dark);
+      doc.rect(0, pageH - 48, pageW, 48, 'F');
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(180, 180, 180);
+      doc.text('Stone House  ·  107 Sacramento Street, Nevada City, CA 95959  ·  bookings@stonehouse.io  ·  (530) 265-5050', pageW / 2, pageH - 28, { align: 'center' });
+      doc.text('This is a preliminary estimate and is subject to availability and final confirmation.', pageW / 2, pageH - 15, { align: 'center' });
+    };
 
-    // Divider
-    doc.setDrawColor(...gold);
-    doc.setLineWidth(1);
-    doc.line(totalsX + 8, finalY + 2, totalsX + totalsW - 8, finalY + 2);
-    finalY += 10;
+    // ─────────────────────────────────
+    // PAGE 1 — HEADER
+    // ─────────────────────────────────
+    doc.setFillColor(...dark);
+    doc.rect(0, 0, pageW, 90, 'F');
+    doc.setFillColor(...gold);
+    doc.rect(0, 90, pageW, 3, 'F');
 
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(13);
+    doc.setFontSize(28);
     doc.setTextColor(...gold);
-    doc.text('ESTIMATED TOTAL', totalsX + 12, finalY + 14);
-    doc.text(fmt(quote.totals.grandTotal), totalsX + totalsW - 12, finalY + 14, { align: 'right' });
-
-    // ── Footer ──
-    const pageH = doc.internal.pageSize.getHeight();
-    doc.setFillColor(...dark);
-    doc.rect(0, pageH - 54, pageW, 54, 'F');
+    doc.text('STONE HOUSE', pageW / 2, 36, { align: 'center' });
 
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(9);
-    doc.setTextColor(180, 180, 180);
-    doc.text('Stone House  ·  107 Sacramento Street, Nevada City, CA 95959', pageW / 2, pageH - 34, { align: 'center' });
-    doc.text('bookings@stonehouse.io  ·  (530) 265-5050  ·  This is an estimate subject to availability and confirmation.', pageW / 2, pageH - 20, { align: 'center' });
+    doc.setFontSize(11);
+    doc.setTextColor(210, 210, 210);
+    doc.text('Wedding Package Proposal  ·  Nevada City, California', pageW / 2, 56, { align: 'center' });
 
-    doc.save(`StoneHouse-Wedding-Quote-${quoteNumber}.pdf`);
+    doc.setFontSize(9);
+    doc.setTextColor(...gold);
+    doc.text(`Quote #${quoteNumber}  ·  Generated ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`, pageW / 2, 74, { align: 'center' });
+
+    y = 108;
+
+    // ─────────────────────────────────
+    // CLIENT & EVENT OVERVIEW
+    // ─────────────────────────────────
+    const eventDate = quote.venue.date
+      ? new Date(quote.venue.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+      : 'Not selected';
+    const dayOfWeek = quote.venue.date ? new Date(quote.venue.date).toLocaleDateString('en-US', { weekday: 'long' }) : '';
+
+    // Two-column overview box
+    doc.setFillColor(248, 249, 250);
+    doc.roundedRect(marginL, y, contentW, contact.name ? 100 : 72, 6, 6, 'F');
+    doc.setDrawColor(...light);
+    doc.setLineWidth(1);
+    doc.roundedRect(marginL, y, contentW, contact.name ? 100 : 72, 6, 6, 'S');
+
+    const leftX = marginL + 14, rightX = marginL + contentW / 2 + 10;
+    let boxY = y + 16;
+
+    const twoColRow = (l1, v1, l2, v2) => {
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(...mid);
+      doc.text(l1.toUpperCase(), leftX, boxY);
+      if (l2) doc.text(l2.toUpperCase(), rightX, boxY);
+      boxY += 12;
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(...dark);
+      doc.text(v1, leftX, boxY);
+      if (v2) doc.text(v2, rightX, boxY);
+      boxY += 18;
+    };
+
+    twoColRow('Event Date', eventDate, 'Guest Count', `${quote.catering.guestCount} Guests`);
+    twoColRow('Venue Package', quote.venue.typeName || '—', 'Season', `${quote.venue.season?.name || '—'} Season`);
+    if (contact.name) {
+      doc.setDrawColor(...light); doc.line(leftX, boxY - 6, leftX + contentW - 28, boxY - 6);
+      boxY += 4;
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(...mid);
+      doc.text('PREPARED FOR', leftX, boxY); boxY += 12;
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(...dark);
+      doc.text(contact.name, leftX, boxY);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(...mid);
+      doc.text(`${contact.email}   ·   ${contact.phone}`, leftX + 100, boxY);
+    }
+
+    y += contact.name ? 108 : 80;
+    y += 10;
+
+    // ─────────────────────────────────
+    // SECTION 1 — VENUE
+    // ─────────────────────────────────
+    sectionHeader('VENUE RENTAL');
+
+    const venueConfig = config.venue.options[cart.venue.type];
+    const season = quote.venue.season;
+    const dayTier = WeddingPricingHelpers.getDayTier(new Date(quote.venue.date));
+    const dayTierName = { monThu: 'Monday–Thursday', friday: 'Friday', saturday: 'Saturday', sunday: 'Sunday' }[dayTier] || dayTier;
+
+    if (venueConfig?.isFlat) {
+      labelValue('Package', quote.venue.typeName);
+      labelValue('Includes', 'Lounge, Great Hall, Show Room, Patio, Cavern & Parlour');
+      labelValue('Duration', '12-Hour Block (all-day access)');
+      labelValue('Day', dayOfWeek + ` (${dayTierName} rate)`);
+      labelValue('Season', `${season?.name} Season (${season?.description})`);
+      y += 4;
+      doc.setFillColor(248, 249, 250);
+      doc.roundedRect(marginL, y, contentW, 26, 4, 4, 'F');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(...dark);
+      doc.text('Flat Rate — 12 Hour Block', marginL + 12, y + 17);
+      doc.setTextColor(...gold);
+      doc.text(fmt(quote.venue.cost), marginL + contentW - 12, y + 17, { align: 'right' });
+      y += 34;
+    } else {
+      const hourlyRate = venueConfig?.pricing?.[season?.key]?.[dayTier] || 0;
+      const hours = cart.venue.hours || 5;
+      labelValue('Package', quote.venue.typeName);
+      labelValue('Includes', 'Lounge, Great Hall, Show Room, Patio, Cavern & Parlour');
+      labelValue('Day', dayOfWeek + ` (${dayTierName} rate)`);
+      labelValue('Season', `${season?.name} Season (${season?.description})`);
+      labelValue('Hourly Rate', `${fmt(hourlyRate)}/hour`);
+      labelValue('Duration', `${hours} hours (3-hour minimum)`);
+      y += 4;
+      doc.setFillColor(248, 249, 250);
+      doc.roundedRect(marginL, y, contentW, 26, 4, 4, 'F');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(...dark);
+      doc.text(`${fmt(hourlyRate)}/hr  ×  ${hours} hours`, marginL + 12, y + 17);
+      doc.setTextColor(...gold);
+      doc.text(fmt(quote.venue.cost), marginL + contentW - 12, y + 17, { align: 'right' });
+      y += 34;
+    }
+
+    // ─────────────────────────────────
+    // SECTION 2 — CATERING
+    // ─────────────────────────────────
+    checkPageBreak(80);
+    sectionHeader('CATERING  —  Includes Salad & Dessert');
+
+    if (quote.catering.isOutsideCatering) {
+      labelValue('Type', 'Outside Catering (approved vendors only)');
+      labelValue('Fee', fmt(config.catering.outsideCateringFee) + ' flat fee');
+    } else {
+      // Entrees
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
+      doc.text('ENTRÉE SELECTIONS', marginL, y); y += 14;
+
+      const proteins = config.catering.proteins;
+      const p1 = proteins.find(p => p.id === cart.catering.protein1);
+      const p2 = proteins.find(p => p.id === cart.catering.protein2);
+
+      // Entree table rows
+      const entreeRows = [];
+      if (p1) entreeRows.push([p1.name, p1.description, `$${p1.pricePerPerson}/person`, fmt(p1.pricePerPerson * quote.catering.guestCount)]);
+      if (p2) entreeRows.push([p2.name, p2.description, `$${p2.pricePerPerson}/person`, fmt(p2.pricePerPerson * quote.catering.guestCount)]);
+      if (p1 && p2) {
+        entreeRows.push(['', `Average of both entrées × ${quote.catering.guestCount} guests`, `$${quote.catering.avgProteinPrice}/person avg`, fmt(quote.catering.baseCost)]);
+      }
+
+      doc.autoTable({
+        startY: y,
+        head: [['Entrée', 'Description', 'Per Person', `Total (${quote.catering.guestCount} guests)`]],
+        body: entreeRows,
+        theme: 'grid',
+        headStyles: { fillColor: [60, 78, 96], textColor: 255, fontStyle: 'bold', fontSize: 8 },
+        bodyStyles: { fontSize: 9, textColor: dark },
+        alternateRowStyles: { fillColor: [248, 249, 250] },
+        columnStyles: {
+          0: { fontStyle: 'bold', cellWidth: 90 },
+          1: { cellWidth: 'auto' },
+          2: { halign: 'center', cellWidth: 80 },
+          3: { halign: 'right', cellWidth: 90, fontStyle: 'bold' }
+        },
+        margin: { left: marginL, right: marginR },
+        didParseCell: (data) => {
+          if (data.row.index === entreeRows.length - 1 && p1 && p2) {
+            data.cell.styles.fillColor = [255, 252, 235];
+            data.cell.styles.fontStyle = 'bold';
+          }
+        }
+      });
+      y = doc.lastAutoTable.finalY + 12;
+    }
+
+    // Additional Sides
+    if (quote.catering.sides?.count > 0) {
+      checkPageBreak(40 + quote.catering.sides.count * 14);
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
+      doc.text('ADDITIONAL SIDES  —  $8/person each', marginL, y); y += 12;
+
+      const sideOptions = config.catering.sides.options;
+      const sideRows = cart.catering.sides.map(id => {
+        const s = sideOptions.find(o => o.id === id);
+        return [s?.name || id, `$8/person`, fmt(8 * quote.catering.guestCount)];
+      });
+      sideRows.push([`${quote.catering.sides.count} sides × $8 × ${quote.catering.guestCount} guests`, '', fmt(quote.catering.sides.cost)]);
+
+      doc.autoTable({
+        startY: y,
+        head: [['Side Dish', 'Per Person', 'Total']],
+        body: sideRows,
+        theme: 'grid',
+        headStyles: { fillColor: [60, 78, 96], textColor: 255, fontStyle: 'bold', fontSize: 8 },
+        bodyStyles: { fontSize: 9, textColor: dark },
+        alternateRowStyles: { fillColor: [248, 249, 250] },
+        columnStyles: {
+          0: { cellWidth: 'auto' },
+          1: { halign: 'center', cellWidth: 80 },
+          2: { halign: 'right', cellWidth: 90, fontStyle: 'bold' }
+        },
+        margin: { left: marginL, right: marginR },
+        didParseCell: (data) => {
+          if (data.row.index === sideRows.length - 1) {
+            data.cell.styles.fillColor = [255, 252, 235];
+            data.cell.styles.fontStyle = 'bold';
+          }
+        }
+      });
+      y = doc.lastAutoTable.finalY + 12;
+    }
+
+    // Passed Appetizers
+    if (quote.catering.appetizers?.count > 0) {
+      checkPageBreak(40 + quote.catering.appetizers.count * 14);
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
+      doc.text('PASSED APPETIZERS  —  $6/person each', marginL, y); y += 12;
+
+      const appOptions = config.catering.appetizers.options;
+      const appRows = cart.catering.appetizers.map(id => {
+        const a = appOptions.find(o => o.id === id);
+        return [a?.name || id, '$6/person', fmt(6 * quote.catering.guestCount)];
+      });
+      appRows.push([`${quote.catering.appetizers.count} selections × $6 × ${quote.catering.guestCount} guests`, '', fmt(quote.catering.appetizers.cost)]);
+
+      doc.autoTable({
+        startY: y,
+        head: [['Appetizer', 'Per Person', 'Total']],
+        body: appRows,
+        theme: 'grid',
+        headStyles: { fillColor: [60, 78, 96], textColor: 255, fontStyle: 'bold', fontSize: 8 },
+        bodyStyles: { fontSize: 9, textColor: dark },
+        alternateRowStyles: { fillColor: [248, 249, 250] },
+        columnStyles: {
+          0: { cellWidth: 'auto' },
+          1: { halign: 'center', cellWidth: 80 },
+          2: { halign: 'right', cellWidth: 90, fontStyle: 'bold' }
+        },
+        margin: { left: marginL, right: marginR },
+        didParseCell: (data) => {
+          if (data.row.index === appRows.length - 1) {
+            data.cell.styles.fillColor = [255, 252, 235];
+            data.cell.styles.fontStyle = 'bold';
+          }
+        }
+      });
+      y = doc.lastAutoTable.finalY + 12;
+    }
+
+    // ─────────────────────────────────
+    // SECTION 3 — BAR SERVICE
+    // ─────────────────────────────────
+    if (quote.beverages.total > 0) {
+      checkPageBreak(80);
+      sectionHeader('BAR SERVICE');
+
+      const bevPkg = config.beverages.packages.find(p => p.id === cart.beverages.package);
+      labelValue('Package', quote.beverages.packageName);
+      labelValue('Duration', bevPkg?.duration || '4 hours');
+      labelValue('Rate', `$${quote.beverages.pricePerPerson}/person × ${quote.catering.guestCount} guests`);
+
+      if (bevPkg?.includes?.length) {
+        y += 4;
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
+        doc.text('Package Includes:', marginL, y); y += 13;
+        bevPkg.includes.forEach(item => { checkPageBreak(16); bulletLine(item); });
+      }
+
+      y += 4;
+      doc.setFillColor(248, 249, 250);
+      doc.roundedRect(marginL, y, contentW, 26, 4, 4, 'F');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(...dark);
+      doc.text(`$${quote.beverages.pricePerPerson}/person  ×  ${quote.catering.guestCount} guests`, marginL + 12, y + 17);
+      doc.setTextColor(...gold);
+      doc.text(fmt(quote.beverages.total), marginL + contentW - 12, y + 17, { align: 'right' });
+      y += 34;
+    }
+
+    // ─────────────────────────────────
+    // SECTION 4 — SERVICE FEE
+    // ─────────────────────────────────
+    if (quote.serviceFee.amount > 0) {
+      checkPageBreak(60);
+      sectionHeader('SERVICE FEE');
+
+      const foodBevTotal = quote.catering.total + quote.beverages.total;
+      labelValue('Rate', '20% of all food & beverage services');
+      labelValue('Applied to', `Catering + Bar Service = ${fmt(foodBevTotal)}`);
+      labelValue('Calculation', `${fmt(foodBevTotal)} × 20%`);
+
+      doc.setFillColor(248, 249, 250);
+      doc.roundedRect(marginL, y + 4, contentW, 26, 4, 4, 'F');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(...dark);
+      doc.text('Service Fee Total', marginL + 12, y + 21);
+      doc.setTextColor(...gold);
+      doc.text(fmt(quote.serviceFee.amount), marginL + contentW - 12, y + 21, { align: 'right' });
+      y += 40;
+    }
+
+    // ─────────────────────────────────
+    // SECTION 5 — ADD-ON SERVICES
+    // ─────────────────────────────────
+    const hasAddOns = quote.addOns.floral.cost > 0 || quote.addOns.photography.selected ||
+                      quote.addOns.weddingPlanner.selected || quote.addOns.dj.selected;
+
+    if (hasAddOns) {
+      checkPageBreak(60);
+      sectionHeader('ADD-ON SERVICES');
+
+      // Floral
+      if (quote.addOns.floral.cost > 0) {
+        checkPageBreak(50);
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
+        doc.text('FLORAL PACKAGE', marginL, y); y += 13;
+        const floralPkg = config.addOns.floral.packages.find(p => p.id === cart.addOns.floral);
+        labelValue('Package', floralPkg?.name || '');
+        if (floralPkg?.includes?.length) {
+          floralPkg.includes.forEach(item => { checkPageBreak(14); bulletLine(item); });
+        }
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...gold);
+        doc.text(fmt(quote.addOns.floral.cost), marginL + contentW, y - 2, { align: 'right' });
+        y += 8; divider();
+      }
+
+      // Photography
+      if (quote.addOns.photography.selected) {
+        checkPageBreak(50);
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
+        doc.text('PROFESSIONAL PHOTOGRAPHY', marginL, y); y += 13;
+        const photoConfig = config.addOns.services.photography;
+        photoConfig.includes.forEach(item => { checkPageBreak(14); bulletLine(item); });
+        doc.setFont('helvetica', 'italic'); doc.setFontSize(8); doc.setTextColor(...mid);
+        doc.text('Tax-exempt professional service', marginL + 12, y); y += 12;
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...gold);
+        doc.text(fmt(quote.addOns.photography.cost), marginL + contentW, y - 2, { align: 'right' });
+        y += 6; divider();
+      }
+
+      // Wedding Planner
+      if (quote.addOns.weddingPlanner.selected) {
+        checkPageBreak(50);
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
+        doc.text('WEDDING PLANNING & COORDINATION', marginL, y); y += 13;
+        const plannerConfig = config.addOns.services.weddingPlanner;
+        plannerConfig.includes.forEach(item => { checkPageBreak(14); bulletLine(item); });
+        doc.setFont('helvetica', 'italic'); doc.setFontSize(8); doc.setTextColor(...mid);
+        doc.text('Tax-exempt professional service', marginL + 12, y); y += 12;
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(9);
+        if (quote.addOns.weddingPlanner.isFree) {
+          doc.setTextColor(...green);
+          doc.text('COMPLIMENTARY — Included with Full Package', marginL + contentW, y - 2, { align: 'right' });
+        } else {
+          doc.setTextColor(...gold);
+          doc.text(fmt(quote.addOns.weddingPlanner.cost), marginL + contentW, y - 2, { align: 'right' });
+        }
+        y += 6; divider();
+      }
+
+      // DJ
+      if (quote.addOns.dj.selected) {
+        checkPageBreak(50);
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
+        doc.text('DJ ENTERTAINMENT', marginL, y); y += 13;
+        const djConfig = config.addOns.services.dj;
+        djConfig.includes.forEach(item => { checkPageBreak(14); bulletLine(item); });
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...gold);
+        doc.text(fmt(quote.addOns.dj.cost), marginL + contentW, y - 2, { align: 'right' });
+        y += 6; divider();
+      }
+    }
+
+    // ─────────────────────────────────
+    // SECTION 6 — FINANCIAL SUMMARY
+    // ─────────────────────────────────
+    checkPageBreak(180);
+    sectionHeader('FINANCIAL SUMMARY');
+
+    const subtotal = quote.totals.taxableSubtotal + quote.totals.nonTaxableSubtotal;
+
+    // Summary table
+    const summaryRows = [
+      ['Venue Rental', fmt(quote.venue.cost), 'Non-taxable'],
+    ];
+    if (quote.catering.total > 0) summaryRows.push(['Catering (entrées, salad & dessert)', fmt(quote.catering.total), 'Taxable']);
+    if (quote.catering.sides?.cost > 0) summaryRows.push([`Additional Sides (${quote.catering.sides.count} selections)`, fmt(quote.catering.sides.cost), 'Taxable']);
+    if (quote.catering.appetizers?.cost > 0) summaryRows.push([`Passed Appetizers (${quote.catering.appetizers.count} selections)`, fmt(quote.catering.appetizers.cost), 'Taxable']);
+    if (quote.beverages.total > 0) summaryRows.push([`Bar Service — ${quote.beverages.packageName}`, fmt(quote.beverages.total), 'Taxable']);
+    if (quote.serviceFee.amount > 0) summaryRows.push(['Service Fee (20% on food & beverage)', fmt(quote.serviceFee.amount), 'Taxable']);
+    if (quote.addOns.floral.cost > 0) summaryRows.push([`Floral — ${quote.addOns.floral.packageName}`, fmt(quote.addOns.floral.cost), 'Taxable']);
+    if (quote.addOns.photography.selected) summaryRows.push(['Professional Photography', fmt(quote.addOns.photography.cost), 'Tax-exempt']);
+    if (quote.addOns.weddingPlanner.selected) {
+      summaryRows.push(['Wedding Planning', quote.addOns.weddingPlanner.isFree ? 'COMPLIMENTARY' : fmt(quote.addOns.weddingPlanner.cost), 'Tax-exempt']);
+    }
+    if (quote.addOns.dj.selected) summaryRows.push(['DJ Entertainment', fmt(quote.addOns.dj.cost), 'Taxable']);
+
+    doc.autoTable({
+      startY: y,
+      head: [['Service', 'Amount', 'Tax Status']],
+      body: summaryRows,
+      theme: 'grid',
+      headStyles: { fillColor: dark, textColor: gold, fontStyle: 'bold', fontSize: 9 },
+      bodyStyles: { fontSize: 9, textColor: dark },
+      alternateRowStyles: { fillColor: [248, 249, 250] },
+      columnStyles: {
+        0: { cellWidth: 'auto' },
+        1: { halign: 'right', cellWidth: 90, fontStyle: 'bold' },
+        2: { halign: 'center', cellWidth: 80, fontSize: 8, textColor: mid }
+      },
+      margin: { left: marginL, right: marginR },
+    });
+
+    y = doc.lastAutoTable.finalY + 14;
+    checkPageBreak(120);
+
+    // Totals box
+    const totBoxH = 18 * (4 + (quote.fullPackage.eligible ? 1 : 0));
+    doc.setFillColor(44, 62, 80);
+    doc.roundedRect(marginL, y, contentW, totBoxH, 6, 6, 'F');
+
+    let ty = y + 18;
+    const totRow = (label, value, color = [220, 220, 220], size = 9) => {
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(size); doc.setTextColor(...color);
+      doc.text(label, marginL + 14, ty);
+      doc.text(value, marginL + contentW - 14, ty, { align: 'right' });
+      ty += 18;
+    };
+
+    totRow('Taxable Subtotal', fmt(quote.totals.taxableSubtotal));
+    totRow('Non-Taxable Subtotal', fmt(quote.totals.nonTaxableSubtotal));
+    totRow(`Sales Tax  (${quote.tax.ratePercent} — ${quote.tax.jurisdiction || 'Nevada County, CA'})`, fmt(quote.totals.salesTax));
+    if (quote.fullPackage.eligible) {
+      totRow('Full Package Discount (10%)', `-${fmt(quote.totals.discount)}`, [39, 174, 96]);
+    }
+
+    // Gold divider inside dark box
+    doc.setDrawColor(...gold); doc.setLineWidth(1);
+    doc.line(marginL + 10, ty - 4, marginL + contentW - 10, ty - 4);
+    ty += 8;
+
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(13); doc.setTextColor(...gold);
+    doc.text('ESTIMATED TOTAL', marginL + 14, ty);
+    doc.text(fmt(quote.totals.grandTotal), marginL + contentW - 14, ty, { align: 'right' });
+
+    y = ty + 20;
+    y += 10;
+
+    // ─────────────────────────────────
+    // DISCLAIMER NOTE
+    // ─────────────────────────────────
+    checkPageBreak(50);
+    doc.setFillColor(255, 252, 235);
+    doc.roundedRect(marginL, y, contentW, 36, 4, 4, 'F');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(...dark);
+    doc.text('IMPORTANT NOTE', marginL + 10, y + 13);
+    doc.setFont('helvetica', 'normal'); doc.setTextColor(...mid);
+    doc.text('This is a preliminary estimate. Final pricing is subject to date availability, guest count confirmation, and signed contract.', marginL + 10, y + 25, { maxWidth: contentW - 20 });
+    y += 46;
+
+    // Footer on last page
+    addFooter();
+
+    doc.save(`StoneHouse-Wedding-Proposal-${quoteNumber}.pdf`);
   }
 
   // ===================================
