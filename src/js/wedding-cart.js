@@ -86,10 +86,12 @@ class WeddingCart {
     flatpickr(dateInput, {
       minDate: minDate,
       maxDate: maxDate,
-      dateFormat: 'F j, Y',
-      disable: [
-        // You can add blocked dates here from API
-      ],
+      dateFormat: 'Y-m-d',
+      altInput: true,
+      altFormat: 'F j, Y',
+      disableMobile: false, // use native picker on iOS/Android
+      allowInput: false,
+      disable: [],
       onChange: (selectedDates) => {
         if (selectedDates.length > 0) {
           this.cart.venue.date = selectedDates[0];

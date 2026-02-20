@@ -2323,6 +2323,93 @@ textarea.form-input {
 }
 
 /* ===================================
+   FLATPICKR MOBILE OVERRIDES
+   =================================== */
+.flatpickr-calendar {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18) !important;
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+.flatpickr-day {
+  border-radius: 8px !important;
+  font-size: 0.9rem !important;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover {
+  background: var(--cart-primary) !important;
+  border-color: var(--cart-primary) !important;
+}
+
+.flatpickr-day:hover {
+  background: rgba(212, 175, 55, 0.15) !important;
+}
+
+.flatpickr-months .flatpickr-month {
+  background: var(--cart-dark) !important;
+  color: white !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+
+.flatpickr-current-month,
+.flatpickr-current-month .flatpickr-monthDropdown-months,
+.flatpickr-current-month input.cur-year {
+  color: white !important;
+  font-size: 1rem !important;
+}
+
+.flatpickr-weekday {
+  color: var(--cart-medium) !important;
+  font-weight: 700 !important;
+  font-size: 0.75rem !important;
+}
+
+.flatpickr-prev-month,
+.flatpickr-next-month {
+  color: white !important;
+  fill: white !important;
+}
+
+/* Larger touch targets on mobile */
+@media (max-width: 768px) {
+  .flatpickr-calendar {
+    width: calc(100vw - 2rem) !important;
+    max-width: 380px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    position: fixed !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 99999 !important;
+  }
+
+  .flatpickr-day {
+    height: 44px !important;
+    line-height: 44px !important;
+    font-size: 1rem !important;
+  }
+
+  .flatpickr-months .flatpickr-month {
+    height: 50px !important;
+  }
+
+  .flatpickr-current-month {
+    font-size: 1.1rem !important;
+    padding-top: 10px !important;
+  }
+
+  /* Dim background when calendar is open */
+  .flatpickr-calendar.open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: -1;
+  }
+}
+
+/* ===================================
    UTILITY CLASSES
    =================================== */
 .text-center {
