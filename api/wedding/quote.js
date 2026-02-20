@@ -42,10 +42,10 @@ module.exports = async (req, res) => {
       ? `Stone House Weddings <${process.env.FROM_EMAIL}>`
       : 'Stone House Weddings <onboarding@resend.dev>';
 
-    // Admin emails — use env var or fallback to account email
+    // Admin emails — use verified domain env var, or fall back to Resend account email
     const adminEmails = process.env.ADMIN_EMAILS
       ? process.env.ADMIN_EMAILS.split(',').map(e => e.trim())
-      : ['bookings@stonehouse.io'];
+      : ['jon@madronestudios.com'];
 
     // Build itemized summary for emails
     const itemLines = buildItemLines(cart, quote);
