@@ -45,7 +45,7 @@ module.exports = async (req, res) => {
     // Admin emails — use verified domain env var, or fall back to Resend account email
     const adminEmails = process.env.ADMIN_EMAILS
       ? process.env.ADMIN_EMAILS.split(',').map(e => e.trim())
-      : ['jon@madronestudios.com'];
+      : ['bookings@stonehouse.io'];
 
     // Build itemized summary for emails
     const itemLines = buildItemLines(cart, quote);

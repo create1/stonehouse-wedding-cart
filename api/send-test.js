@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
 
   const { data, error } = await resend.emails.send({
     from: 'onboarding@resend.dev',
-    to: 'jon@madronestudios.com',
+    to: 'bookings@stonehouse.io',
     subject: 'Stone House Cart — Email Test',
     html: '<p>If you received this, email sending is working correctly.</p>'
   });
