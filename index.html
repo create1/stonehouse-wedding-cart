@@ -355,33 +355,27 @@
               </label>
             </div>
 
-            <div class="options-grid" id="sides-grid" style="display: none;">
-              <button class="option-btn" data-side="roasted-veg">
-                <span class="option-name">Roasted Vegetables</span>
-                <span class="option-price">$8/person</span>
-              </button>
-              <button class="option-btn" data-side="garlic-mashed">
-                <span class="option-name">Garlic Mashed Potatoes</span>
-                <span class="option-price">$8/person</span>
-              </button>
-              <button class="option-btn" data-side="rice-pilaf">
-                <span class="option-name">Rice Pilaf</span>
-                <span class="option-price">$8/person</span>
-              </button>
-              <button class="option-btn" data-side="mac-cheese">
-                <span class="option-name">Truffle Mac & Cheese</span>
-                <span class="option-price">$8/person</span>
-              </button>
-              <button class="option-btn" data-side="asparagus">
-                <span class="option-name">Grilled Asparagus</span>
-                <span class="option-price">$8/person</span>
-              </button>
-              <button class="option-btn" data-side="sweet-potato">
-                <span class="option-name">Roasted Sweet Potatoes</span>
-                <span class="option-price">$8/person</span>
-              </button>
+            <div id="sides-qty-panel" style="display: none;">
+              <p class="qty-examples">
+                <strong>$8/person per side.</strong> Choose how many side dishes you'd like served with dinner.
+                Popular options include: Garlic Mashed Potatoes, Roasted Seasonal Vegetables, Truffle Mac &amp; Cheese, 
+                Rice Pilaf, Grilled Asparagus, Roasted Sweet Potatoes, and many more — 
+                <em>final selections made during planning.</em>
+              </p>
+              <div class="qty-selector">
+                <button class="qty-btn" id="sides-decrease" aria-label="Remove a side">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <div class="qty-display">
+                  <span class="qty-number" id="sides-qty">1</span>
+                  <span class="qty-label">Side Dish<span id="sides-plural">es</span></span>
+                </div>
+                <button class="qty-btn" id="sides-increase" aria-label="Add a side">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <div class="qty-cost-display" id="sides-cost-display"></div>
             </div>
-            <div class="selection-summary" id="sides-summary" style="display: none;"></div>
           </div>
 
           <!-- Passed Appetizers -->
@@ -398,41 +392,27 @@
               </label>
             </div>
 
-            <div class="options-grid" id="appetizers-grid" style="display: none;">
-              <button class="option-btn" data-appetizer="bruschetta">
-                <span class="option-name">Bruschetta</span>
-                <span class="option-price">$6/person</span>
-              </button>
-              <button class="option-btn" data-appetizer="spring-rolls">
-                <span class="option-name">Spring Rolls</span>
-                <span class="option-price">$6/person</span>
-              </button>
-              <button class="option-btn" data-appetizer="meatballs">
-                <span class="option-name">Italian Meatballs</span>
-                <span class="option-price">$6/person</span>
-              </button>
-              <button class="option-btn" data-appetizer="shrimp">
-                <span class="option-name">Shrimp Cocktail</span>
-                <span class="option-price">$6/person</span>
-              </button>
-              <button class="option-btn" data-appetizer="sliders">
-                <span class="option-name">Mini Sliders</span>
-                <span class="option-price">$6/person</span>
-              </button>
-              <button class="option-btn" data-appetizer="caprese">
-                <span class="option-name">Caprese Skewers</span>
-                <span class="option-price">$6/person</span>
-              </button>
-              <button class="option-btn" data-appetizer="stuffed-mushrooms">
-                <span class="option-name">Stuffed Mushrooms</span>
-                <span class="option-price">$6/person</span>
-              </button>
-              <button class="option-btn" data-appetizer="crostini">
-                <span class="option-name">Crostini Assortment</span>
-                <span class="option-price">$6/person</span>
-              </button>
+            <div id="appetizers-qty-panel" style="display: none;">
+              <p class="qty-examples">
+                <strong>$6/person per appetizer.</strong> Choose how many passed appetizers you'd like during cocktail hour.
+                Popular options include: Bruschetta, Shrimp Cocktail, Caprese Skewers, Italian Meatballs, 
+                Mini Sliders, Stuffed Mushrooms, Spring Rolls, and many more — 
+                <em>final selections made during planning.</em>
+              </p>
+              <div class="qty-selector">
+                <button class="qty-btn" id="apps-decrease" aria-label="Remove an appetizer">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <div class="qty-display">
+                  <span class="qty-number" id="apps-qty">1</span>
+                  <span class="qty-label">Appetizer<span id="apps-plural">s</span></span>
+                </div>
+                <button class="qty-btn" id="apps-increase" aria-label="Add an appetizer">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <div class="qty-cost-display" id="apps-cost-display"></div>
             </div>
-            <div class="selection-summary" id="appetizers-summary" style="display: none;"></div>
           </div>
 
           <div class="step-navigation">

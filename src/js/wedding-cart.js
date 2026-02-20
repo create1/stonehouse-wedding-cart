@@ -22,8 +22,8 @@ class WeddingCart {
       catering: {
         protein1: null,
         protein2: null,
-        sides: [],
-        appetizers: []
+        sidesQty: 0,
+        appetizersQty: 0
       },
       beverages: {
         package: null
@@ -154,6 +154,8 @@ class WeddingCart {
         guestDisplay.textContent = `${guestCount} Guests`;
       }
 
+      this.updateSidesCostDisplay();
+      this.updateAppsCostDisplay();
       this.updatePriceSummary();
     };
 
@@ -385,100 +387,101 @@ class WeddingCart {
   }
 
   // ===================================
-  // SIDES & APPETIZERS
+  // SIDES & APPETIZERS (quantity-based)
   // ===================================
   setupSidesAndAppetizers() {
-    // Sides toggle
+    // ── SIDES ──
     const sidesToggle = document.getElementById('sides-toggle');
-    const sidesGrid = document.getElementById('sides-grid');
-    const sidesSummary = document.getElementById('sides-summary');
-    const sideButtons = document.querySelectorAll('[data-side]');
+    const sidesPanel  = document.getElementById('sides-qty-panel');
 
     if (sidesToggle) {
       sidesToggle.addEventListener('change', (e) => {
-        sidesGrid.style.display = e.target.checked ? 'grid' : 'none';
-        sidesSummary.style.display = e.target.checked ? 'block' : 'none';
-        
+        sidesPanel.style.display = e.target.checked ? 'block' : 'none';
         if (!e.target.checked) {
-          // Clear all selections
-          sideButtons.forEach(btn => btn.classList.remove('selected'));
-          this.cart.catering.sides = [];
+          this.cart.catering.sidesQty = 0;
+          this.updatePriceSummary();
+        } else {
+          this.cart.catering.sidesQty = 1;
+          this.updateSidesCostDisplay();
           this.updatePriceSummary();
         }
       });
     }
 
-    sideButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const sideId = btn.dataset.side;
-        btn.classList.toggle('selected');
+    const sidesQtyEl   = document.getElementById('sides-qty');
+    const sidesPlural  = document.getElementById('sides-plural');
+    const sidesDecrBtn = document.getElementById('sides-decrease');
+    const sidesIncrBtn = document.getElementById('sides-increase');
 
-        if (btn.classList.contains('selected')) {
-          this.cart.catering.sides.push(sideId);
-        } else {
-          this.cart.catering.sides = this.cart.catering.sides.filter(id => id !== sideId);
-        }
+    const updateSidesQty = (val) => {
+      const qty = Math.max(1, Math.min(6, val));
+      this.cart.catering.sidesQty = qty;
+      sidesQtyEl.textContent = qty;
+      sidesPlural.textContent = qty === 1 ? '' : 'es';
+      sidesDecrBtn.disabled = qty <= 1;
+      sidesIncrBtn.disabled = qty >= 6;
+      this.updateSidesCostDisplay();
+      this.updatePriceSummary();
+    };
 
-        this.updateSidesSummary();
-        this.updatePriceSummary();
-      });
-    });
+    sidesDecrBtn?.addEventListener('click', () => updateSidesQty(this.cart.catering.sidesQty - 1));
+    sidesIncrBtn?.addEventListener('click', () => updateSidesQty(this.cart.catering.sidesQty + 1));
 
-    // Appetizers toggle
-    const appetizersToggle = document.getElementById('appetizers-toggle');
-    const appetizersGrid = document.getElementById('appetizers-grid');
-    const appetizersSummary = document.getElementById('appetizers-summary');
-    const appetizerButtons = document.querySelectorAll('[data-appetizer]');
+    // ── APPETIZERS ──
+    const appsToggle = document.getElementById('appetizers-toggle');
+    const appsPanel  = document.getElementById('appetizers-qty-panel');
 
-    if (appetizersToggle) {
-      appetizersToggle.addEventListener('change', (e) => {
-        appetizersGrid.style.display = e.target.checked ? 'grid' : 'none';
-        appetizersSummary.style.display = e.target.checked ? 'block' : 'none';
-        
+    if (appsToggle) {
+      appsToggle.addEventListener('change', (e) => {
+        appsPanel.style.display = e.target.checked ? 'block' : 'none';
         if (!e.target.checked) {
-          appetizerButtons.forEach(btn => btn.classList.remove('selected'));
-          this.cart.catering.appetizers = [];
+          this.cart.catering.appetizersQty = 0;
+          this.updatePriceSummary();
+        } else {
+          this.cart.catering.appetizersQty = 1;
+          this.updateAppsCostDisplay();
           this.updatePriceSummary();
         }
       });
     }
 
-    appetizerButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const appetizerId = btn.dataset.appetizer;
-        btn.classList.toggle('selected');
+    const appsQtyEl   = document.getElementById('apps-qty');
+    const appsPlural  = document.getElementById('apps-plural');
+    const appsDecrBtn = document.getElementById('apps-decrease');
+    const appsIncrBtn = document.getElementById('apps-increase');
 
-        if (btn.classList.contains('selected')) {
-          this.cart.catering.appetizers.push(appetizerId);
-        } else {
-          this.cart.catering.appetizers = this.cart.catering.appetizers.filter(id => id !== appetizerId);
-        }
+    const updateAppsQty = (val) => {
+      const qty = Math.max(1, Math.min(6, val));
+      this.cart.catering.appetizersQty = qty;
+      appsQtyEl.textContent = qty;
+      appsPlural.textContent = qty === 1 ? '' : 's';
+      appsDecrBtn.disabled = qty <= 1;
+      appsIncrBtn.disabled = qty >= 6;
+      this.updateAppsCostDisplay();
+      this.updatePriceSummary();
+    };
 
-        this.updateAppetizersSummary();
-        this.updatePriceSummary();
-      });
-    });
+    appsDecrBtn?.addEventListener('click', () => updateAppsQty(this.cart.catering.appetizersQty - 1));
+    appsIncrBtn?.addEventListener('click', () => updateAppsQty(this.cart.catering.appetizersQty + 1));
   }
 
-  updateSidesSummary() {
-    const summary = document.getElementById('sides-summary');
-    if (!summary) return;
-
-    const count = this.cart.catering.sides.length;
-    if (count > 0) {
-      const cost = count * 8 * this.cart.guestCount;
-      summary.innerHTML = `<i class="fas fa-check-circle"></i> ${count} sides selected × $8/person × ${this.cart.guestCount} guests = ${WeddingPricingHelpers.formatCurrency(cost)}`;
+  updateSidesCostDisplay() {
+    const el = document.getElementById('sides-cost-display');
+    if (!el) return;
+    const qty = this.cart.catering.sidesQty || 0;
+    if (qty > 0) {
+      const cost = qty * 8 * this.cart.guestCount;
+      el.innerHTML = `<i class="fas fa-check-circle"></i> ${qty} side dish${qty !== 1 ? 'es' : ''} × $8/person × ${this.cart.guestCount} guests = <strong>${WeddingPricingHelpers.formatCurrency(cost)}</strong>`;
     }
   }
 
-  updateAppetizersSummary() {
-    const summary = document.getElementById('appetizers-summary');
-    if (!summary) return;
-
-    const count = this.cart.catering.appetizers.length;
-    if (count > 0) {
-      const cost = count * 6 * this.cart.guestCount;
-      summary.innerHTML = `<i class="fas fa-check-circle"></i> ${count} appetizers selected × $6/person × ${this.cart.guestCount} guests = ${WeddingPricingHelpers.formatCurrency(cost)}`;
+  updateAppsCostDisplay() {
+    const el = document.getElementById('apps-cost-display');
+    if (!el) return;
+    const qty = this.cart.catering.appetizersQty || 0;
+    if (qty > 0) {
+      const cost = qty * 6 * this.cart.guestCount;
+      el.innerHTML = `<i class="fas fa-check-circle"></i> ${qty} passed appetizer${qty !== 1 ? 's' : ''} × $6/person × ${this.cart.guestCount} guests = <strong>${WeddingPricingHelpers.formatCurrency(cost)}</strong>`;
     }
   }
 
@@ -1311,76 +1314,30 @@ class WeddingCart {
 
     // Additional Sides
     if (quote.catering.sides?.count > 0) {
-      checkPageBreak(40 + quote.catering.sides.count * 14);
+      checkPageBreak(50);
       doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
-      doc.text('ADDITIONAL SIDES  —  $8/person each', marginL, y); y += 12;
-
-      const sideOptions = config.catering.sides.options;
-      const sideRows = cart.catering.sides.map(id => {
-        const s = sideOptions.find(o => o.id === id);
-        return [s?.name || id, `$8/person`, fmt(8 * quote.catering.guestCount)];
-      });
-      sideRows.push([`${quote.catering.sides.count} sides × $8 × ${quote.catering.guestCount} guests`, '', fmt(quote.catering.sides.cost)]);
-
-      doc.autoTable({
-        startY: y,
-        head: [['Side Dish', 'Per Person', 'Total']],
-        body: sideRows,
-        theme: 'grid',
-        headStyles: { fillColor: [60, 78, 96], textColor: 255, fontStyle: 'bold', fontSize: 8 },
-        bodyStyles: { fontSize: 9, textColor: dark },
-        alternateRowStyles: { fillColor: [248, 249, 250] },
-        columnStyles: {
-          0: { cellWidth: 'auto' },
-          1: { halign: 'center', cellWidth: 80 },
-          2: { halign: 'right', cellWidth: 90, fontStyle: 'bold' }
-        },
-        margin: { left: marginL, right: marginR },
-        didParseCell: (data) => {
-          if (data.row.index === sideRows.length - 1) {
-            data.cell.styles.fillColor = [255, 252, 235];
-            data.cell.styles.fontStyle = 'bold';
-          }
-        }
-      });
-      y = doc.lastAutoTable.finalY + 12;
+      doc.text('ADDITIONAL SIDES  —  $8/person each', marginL, y); y += 13;
+      labelValue('Quantity', `${quote.catering.sides.count} side dish${quote.catering.sides.count !== 1 ? 'es' : ''}`);
+      labelValue('Rate', `$8/person × ${quote.catering.guestCount} guests`);
+      doc.setFont('helvetica', 'italic'); doc.setFontSize(8); doc.setTextColor(...mid);
+      doc.text('Final side dish selections to be confirmed during event planning.', marginL, y); y += 12;
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...gold);
+      doc.text(fmt(quote.catering.sides.cost), marginL + contentW, y, { align: 'right' });
+      y += 10;
     }
 
     // Passed Appetizers
     if (quote.catering.appetizers?.count > 0) {
-      checkPageBreak(40 + quote.catering.appetizers.count * 14);
+      checkPageBreak(50);
       doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
-      doc.text('PASSED APPETIZERS  —  $6/person each', marginL, y); y += 12;
-
-      const appOptions = config.catering.appetizers.options;
-      const appRows = cart.catering.appetizers.map(id => {
-        const a = appOptions.find(o => o.id === id);
-        return [a?.name || id, '$6/person', fmt(6 * quote.catering.guestCount)];
-      });
-      appRows.push([`${quote.catering.appetizers.count} selections × $6 × ${quote.catering.guestCount} guests`, '', fmt(quote.catering.appetizers.cost)]);
-
-      doc.autoTable({
-        startY: y,
-        head: [['Appetizer', 'Per Person', 'Total']],
-        body: appRows,
-        theme: 'grid',
-        headStyles: { fillColor: [60, 78, 96], textColor: 255, fontStyle: 'bold', fontSize: 8 },
-        bodyStyles: { fontSize: 9, textColor: dark },
-        alternateRowStyles: { fillColor: [248, 249, 250] },
-        columnStyles: {
-          0: { cellWidth: 'auto' },
-          1: { halign: 'center', cellWidth: 80 },
-          2: { halign: 'right', cellWidth: 90, fontStyle: 'bold' }
-        },
-        margin: { left: marginL, right: marginR },
-        didParseCell: (data) => {
-          if (data.row.index === appRows.length - 1) {
-            data.cell.styles.fillColor = [255, 252, 235];
-            data.cell.styles.fontStyle = 'bold';
-          }
-        }
-      });
-      y = doc.lastAutoTable.finalY + 12;
+      doc.text('PASSED APPETIZERS  —  $6/person each', marginL, y); y += 13;
+      labelValue('Quantity', `${quote.catering.appetizers.count} passed appetizer${quote.catering.appetizers.count !== 1 ? 's' : ''}`);
+      labelValue('Rate', `$6/person × ${quote.catering.guestCount} guests`);
+      doc.setFont('helvetica', 'italic'); doc.setFontSize(8); doc.setTextColor(...mid);
+      doc.text('Final appetizer selections to be confirmed during event planning.', marginL, y); y += 12;
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...gold);
+      doc.text(fmt(quote.catering.appetizers.cost), marginL + contentW, y, { align: 'right' });
+      y += 10;
     }
 
     // ─────────────────────────────────
@@ -1518,8 +1475,8 @@ class WeddingCart {
       ['Venue Rental', fmt(quote.venue.cost), 'Non-taxable'],
     ];
     if (quote.catering.total > 0) summaryRows.push(['Catering (entrées, salad & dessert)', fmt(quote.catering.total), 'Taxable']);
-    if (quote.catering.sides?.cost > 0) summaryRows.push([`Additional Sides (${quote.catering.sides.count} selections)`, fmt(quote.catering.sides.cost), 'Taxable']);
-    if (quote.catering.appetizers?.cost > 0) summaryRows.push([`Passed Appetizers (${quote.catering.appetizers.count} selections)`, fmt(quote.catering.appetizers.cost), 'Taxable']);
+    if (quote.catering.sides?.cost > 0) summaryRows.push([`Additional Sides (${quote.catering.sides.count} dish${quote.catering.sides.count !== 1 ? 'es' : ''})`, fmt(quote.catering.sides.cost), 'Taxable']);
+    if (quote.catering.appetizers?.cost > 0) summaryRows.push([`Passed Appetizers (${quote.catering.appetizers.count})`, fmt(quote.catering.appetizers.cost), 'Taxable']);
     if (quote.beverages.total > 0) summaryRows.push([`Bar Service — ${quote.beverages.packageName}`, fmt(quote.beverages.total), 'Taxable']);
     if (quote.serviceFee.amount > 0) summaryRows.push(['Service Fee (20% on food & beverage)', fmt(quote.serviceFee.amount), 'Taxable']);
     if (quote.addOns.floral.cost > 0) summaryRows.push([`Floral — ${quote.addOns.floral.packageName}`, fmt(quote.addOns.floral.cost), 'Taxable']);

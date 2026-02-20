@@ -68,7 +68,7 @@ export class WeddingCalculator {
   /**
    * Calculate catering total
    */
-  calculateCateringTotal(guestCount, protein1Id, protein2Id, selectedSides = [], selectedAppetizers = []) {
+  calculateCateringTotal(guestCount, protein1Id, protein2Id, sidesQty = 0, appetizersQty = 0) {
     // Check if outside catering is selected
     if (protein1Id === 'outside' || protein2Id === 'outside') {
       return {
@@ -85,19 +85,16 @@ export class WeddingCalculator {
 
     const avgProteinPrice = this.calculateAverageProteinPrice(protein1Id, protein2Id);
     const baseCatering = avgProteinPrice * guestCount;
-    
-    const sidesConfig = WEDDING_PRICING_CONFIG.catering.sides;
-    const sidesTotal = selectedSides.length * sidesConfig.pricePerPerson * guestCount;
-    
-    const appetizersConfig = WEDDING_PRICING_CONFIG.catering.appetizers;
-    const appetizersTotal = selectedAppetizers.length * appetizersConfig.pricePerPerson * guestCount;
+
+    const sidesTotal = sidesQty * WEDDING_PRICING_CONFIG.catering.sides.pricePerPerson * guestCount;
+    const appetizersTotal = appetizersQty * WEDDING_PRICING_CONFIG.catering.appetizers.pricePerPerson * guestCount;
 
     return {
       avgProteinPrice,
       baseCatering,
-      sidesCount: selectedSides.length,
+      sidesCount: sidesQty,
       sidesCost: sidesTotal,
-      appetizersCount: selectedAppetizers.length,
+      appetizersCount: appetizersQty,
       appetizersCost: appetizersTotal,
       total: baseCatering + sidesTotal + appetizersTotal
     };
@@ -165,8 +162,8 @@ export class WeddingCalculator {
       cart.guestCount,
       cart.catering.protein1,
       cart.catering.protein2,
-      cart.catering.sides || [],
-      cart.catering.appetizers || []
+      cart.catering.sidesQty || 0,
+      cart.catering.appetizersQty || 0
     );
 
     // === BEVERAGES ===
@@ -239,12 +236,10 @@ export class WeddingCalculator {
         baseCost: catering.baseCatering,
         sides: {
           count: catering.sidesCount,
-          selections: cart.catering.sides || [],
           cost: catering.sidesCost
         },
         appetizers: {
           count: catering.appetizersCount,
-          selections: cart.catering.appetizers || [],
           cost: catering.appetizersCost
         },
         total: catering.total,
@@ -370,7 +365,7 @@ export class WeddingCalculator {
     if (quote.catering.sides.count > 0) {
       items.push({
         category: 'Additional Sides',
-        description: `${quote.catering.sides.count} selections × $8/person × ${quote.catering.guestCount} guests`,
+        description: `${quote.catering.sides.count} side dish${quote.catering.sides.count !== 1 ? 'es' : ''} × $8/person × ${quote.catering.guestCount} guests`,
         amount: quote.catering.sides.cost,
         taxable: true,
         formatted: WeddingPricingHelpers.formatCurrency(quote.catering.sides.cost)
@@ -381,7 +376,7 @@ export class WeddingCalculator {
     if (quote.catering.appetizers.count > 0) {
       items.push({
         category: 'Passed Appetizers',
-        description: `${quote.catering.appetizers.count} selections × $6/person × ${quote.catering.guestCount} guests`,
+        description: `${quote.catering.appetizers.count} passed appetizer${quote.catering.appetizers.count !== 1 ? 's' : ''} × $6/person × ${quote.catering.guestCount} guests`,
         amount: quote.catering.appetizers.cost,
         taxable: true,
         formatted: WeddingPricingHelpers.formatCurrency(quote.catering.appetizers.cost)
