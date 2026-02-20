@@ -1447,6 +1447,10 @@ body {
   gap: 1rem;
 }
 
+.step-navigation .btn:only-child {
+  margin-left: auto;
+}
+
 .btn {
   padding: 0.875rem 2rem;
   border-radius: 8px;
@@ -2039,7 +2043,7 @@ textarea.form-input {
 
   /* Layout */
   .cart-container {
-    padding: 0.75rem;
+    padding: 0.75rem 0.75rem 140px;
   }
 
   .cart-main {
@@ -2270,7 +2274,7 @@ textarea.form-input {
   }
 
   .cart-container {
-    padding: 0.5rem;
+    padding: 0.5rem 0.5rem 140px;
   }
 
   .cart-main {
