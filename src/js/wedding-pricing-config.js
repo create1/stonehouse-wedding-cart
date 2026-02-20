@@ -154,7 +154,7 @@ export const WEDDING_PRICING_CONFIG = {
       {
         id: 'beer-wine',
         name: 'Beer & Wine Package',
-        pricePerPerson: 45,
+        pricePerPerson: 40,
         duration: '4 hours',
         includes: [
           'Domestic and imported beer selection',
@@ -167,7 +167,7 @@ export const WEDDING_PRICING_CONFIG = {
       {
         id: 'premium',
         name: 'Premium Beer, Wine & Liquor',
-        pricePerPerson: 55,
+        pricePerPerson: 50,
         duration: '4 hours',
         includes: [
           'Premium beer selection',
@@ -181,7 +181,7 @@ export const WEDDING_PRICING_CONFIG = {
       {
         id: 'premium-liquor',
         name: 'Premium Liquor Package',
-        pricePerPerson: 65,
+        pricePerPerson: 60,
         duration: '5 hours',
         includes: [
           'Premium craft beer selection',

@@ -1002,16 +1002,17 @@ class WeddingCart {
         body: JSON.stringify(quoteData)
       });
 
+      const result = await response.json();
+
       if (response.ok) {
-        const result = await response.json();
         this.showSuccessMessage(result.quoteNumber || 'WQ-' + Date.now());
       } else {
-        throw new Error('Failed to submit quote');
+        throw new Error(result.error || 'Failed to submit quote');
       }
 
     } catch (error) {
       console.error('Error submitting quote:', error);
-      alert('There was an error submitting your quote. Please try again or contact us directly at (530) 265-5050.');
+      alert(`There was an error submitting your quote:\n\n${error.message}\n\nPlease try again or call us at (530) 265-5050.`);
       submitBtn.innerHTML = originalText;
       submitBtn.disabled = false;
     }
@@ -1072,20 +1073,28 @@ class WeddingCart {
     const expandBtn = document.getElementById('mobile-expand');
     const sidebar = document.getElementById('price-summary');
 
-    if (expandBtn && sidebar) {
-      expandBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('mobile-expanded');
-        const icon = expandBtn.querySelector('i');
-        
-        if (sidebar.classList.contains('mobile-expanded')) {
-          icon.className = 'fas fa-chevron-down';
-          expandBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Hide Details';
-        } else {
-          icon.className = 'fas fa-chevron-up';
-          expandBtn.innerHTML = '<i class="fas fa-chevron-up"></i> View Details';
-        }
-      });
-    }
+    if (!expandBtn || !sidebar) return;
+
+    const open = () => {
+      sidebar.classList.add('mobile-expanded');
+      expandBtn.innerHTML = '<i class="fas fa-times"></i> Close';
+      document.body.style.overflow = 'hidden';
+    };
+
+    const close = () => {
+      sidebar.classList.remove('mobile-expanded');
+      expandBtn.innerHTML = '<i class="fas fa-chevron-up"></i> View Quote';
+      document.body.style.overflow = '';
+    };
+
+    expandBtn.addEventListener('click', () => {
+      sidebar.classList.contains('mobile-expanded') ? close() : open();
+    });
+
+    // Tap backdrop (the sidebar itself outside content) to close
+    sidebar.addEventListener('click', (e) => {
+      if (e.target === sidebar) close();
+    });
   }
 }
 

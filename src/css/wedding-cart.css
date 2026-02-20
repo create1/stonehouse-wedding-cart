@@ -1627,38 +1627,61 @@ body {
   left: 0;
   right: 0;
   background: white;
-  box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
-  padding: 1rem;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.18);
+  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
   z-index: 999;
+  border-top: 2px solid var(--cart-light);
 }
 
 .mobile-price-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .mobile-label {
   font-weight: 600;
-  color: var(--cart-dark);
+  font-size: 0.85rem;
+  color: var(--cart-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .mobile-amount {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 800;
   color: var(--cart-primary);
+  font-family: 'Montserrat', sans-serif;
 }
 
 .mobile-expand-btn {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.8rem;
   background: var(--cart-primary);
   color: white;
   border: none;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.95rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.2s;
+  min-height: 48px;
+}
+
+.mobile-expand-btn:hover {
+  background: #C9A02C;
+}
+
+/* Ensure content isn't hidden under fixed mobile bar */
+@media (max-width: 1024px) {
+  .cart-container {
+    padding-bottom: 140px;
+  }
 }
 
 /* ===================================
@@ -1935,7 +1958,9 @@ textarea.form-input {
    RESPONSIVE DESIGN
    =================================== */
 
-/* Tablet */
+/* ===================================
+   TABLET (≤1024px)
+   =================================== */
 @media (max-width: 1024px) {
   .cart-container {
     padding: 1.25rem;
@@ -1947,7 +1972,7 @@ textarea.form-input {
 
   .price-summary {
     position: static;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     max-height: none;
   }
 
@@ -1956,44 +1981,97 @@ textarea.form-input {
   }
 }
 
-/* Mobile */
+/* ===================================
+   MOBILE (≤768px)
+   =================================== */
 @media (max-width: 768px) {
-  .cart-container {
-    padding: 1rem;
+
+  /* Hero */
+  .cart-hero {
+    padding: 2.5rem 1rem 2rem;
   }
 
   .cart-hero h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+  }
+
+  .cart-hero .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-logo {
+    max-height: 70px;
+    margin-bottom: 1rem;
+  }
+
+  /* Layout */
+  .cart-container {
+    padding: 0.75rem;
   }
 
   .cart-main {
-    padding: 1.25rem;
+    padding: 1.25rem 1rem;
+    border-radius: 10px;
   }
 
-  /* Keep progress bar horizontal, just shrink it */
+  /* Progress bar — stay horizontal, shrink */
   .progress-steps {
     gap: 0;
   }
 
   .step-circle {
-    width: 36px;
-    height: 36px;
-    font-size: 0.9rem;
+    width: 34px;
+    height: 34px;
+    font-size: 0.85rem;
   }
 
   .step-label {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
   }
 
   .progress-line {
     margin: 0 2px;
-    top: -18px;
+    top: -17px;
   }
 
   .cart-step h2 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 
+  .step-description {
+    font-size: 0.95rem;
+  }
+
+  /* Pricing table — horizontal scroll */
+  .inline-pricing {
+    margin-bottom: 1.25rem;
+  }
+
+  .pricing-table thead th,
+  .pricing-table tbody td {
+    padding: 0.55rem 0.6rem;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .pricing-table thead th span,
+  .sat-badge {
+    display: none;
+  }
+
+  .season-tab {
+    padding: 0.4rem 0.25rem;
+  }
+
+  .season-tab-name {
+    font-size: 0.72rem;
+  }
+
+  .season-tab-dates {
+    font-size: 0.6rem;
+  }
+
+  /* Cards — single column */
   .venue-grid,
   .beverage-grid,
   .floral-grid,
@@ -2009,19 +2087,59 @@ textarea.form-input {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  /* Section headers wrap on small screens */
+  .section-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Navigation buttons */
   .step-navigation {
     flex-direction: column-reverse;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
   }
 
   .step-navigation .btn {
     width: 100%;
     justify-content: center;
+    padding: 1rem;
+    font-size: 1rem;
   }
 
+  /* Forms */
   .form-row {
     grid-template-columns: 1fr;
   }
 
+  /* Prevent iOS zoom on input focus — must be 16px+ */
+  .form-input,
+  .form-input-small,
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Slider */
+  .slider {
+    height: 12px;
+  }
+
+  .slider::-webkit-slider-thumb,
+  .slider::-moz-range-thumb {
+    width: 44px;
+    height: 44px;
+  }
+
+  .guest-count-display #guest-count-value {
+    font-size: 2.5rem;
+  }
+
+  /* Sidebar — hide on mobile, use sticky bar instead */
   .price-summary {
     display: none;
   }
@@ -2036,60 +2154,134 @@ textarea.form-input {
     z-index: 9998;
     max-height: 100vh;
     border-radius: 0;
+    overflow-y: auto;
     padding-bottom: 6rem;
   }
 
-  .slider {
-    height: 12px;
+  /* Mobile price bar */
+  .mobile-price-bar {
+    padding: 0.75rem 1rem;
   }
 
-  .slider::-webkit-slider-thumb,
-  .slider::-moz-range-thumb {
-    width: 44px;
-    height: 44px;
+  .mobile-price-content {
+    margin-bottom: 0.5rem;
   }
 
-  .guest-count-display #guest-count-value {
-    font-size: 2.5rem;
+  .mobile-amount {
+    font-size: 1.4rem;
+  }
+
+  /* Review page */
+  .review-section {
+    padding: 1.25rem;
+  }
+
+  .item-row {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .full-package-banner {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .full-package-banner i {
+    font-size: 2rem;
+  }
+
+  .banner-content h3 {
+    font-size: 1.2rem;
+  }
+
+  /* Touch-friendly min heights */
+  .venue-select-btn,
+  .package-select-btn,
+  .floral-select-btn,
+  .service-toggle-btn,
+  .btn {
+    min-height: 48px;
+  }
+
+  .slider-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Success page */
+  .success-actions {
+    flex-direction: column;
+  }
+
+  .success-actions .btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 
-/* Small Mobile */
+/* ===================================
+   SMALL MOBILE (≤480px)
+   =================================== */
 @media (max-width: 480px) {
-  .cart-container {
-    padding: 0.75rem;
-  }
-
   .cart-hero {
-    padding: 2rem 1rem 1.5rem;
+    padding: 2rem 0.75rem 1.5rem;
   }
 
   .cart-hero h1 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+  }
+
+  .hero-logo {
+    max-height: 60px;
+  }
+
+  .cart-container {
+    padding: 0.5rem;
   }
 
   .cart-main {
-    padding: 1rem;
+    padding: 1rem 0.75rem;
     border-radius: 8px;
   }
 
-  .protein-grid {
-    grid-template-columns: 1fr;
-  }
-
+  /* Single column everything */
+  .protein-grid,
   .options-grid {
     grid-template-columns: 1fr;
   }
 
-  /* Hide step labels on tiny screens, just show circles */
+  /* Hide step labels, just circles */
   .step-label {
     display: none;
   }
 
   .step-circle {
-    width: 32px;
-    height: 32px;
-    font-size: 0.85rem;
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+
+  .cart-step h2 {
+    font-size: 1.3rem;
+  }
+
+  .form-label {
+    font-size: 1rem;
+  }
+
+  /* Protein images shorter */
+  .protein-img {
+    height: 130px;
+  }
+
+  .beverage-img {
+    height: 150px;
+  }
+
+  /* Tighter form sections */
+  .form-section {
+    margin-bottom: 1.75rem;
   }
 }
 

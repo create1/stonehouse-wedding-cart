@@ -31,26 +31,50 @@ module.exports = async (req, res) => {
       ? new Date(cart.venue.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
       : 'Not selected';
 
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY is not set');
+      return res.status(500).json({ error: 'Email service not configured. Missing RESEND_API_KEY.' });
+    }
+
     const resend = new Resend(process.env.RESEND_API_KEY);
+
+    // Use env var for from address, fallback to onboarding@resend.dev for testing
+    const fromAddress = process.env.FROM_EMAIL
+      ? `Stone House Weddings <${process.env.FROM_EMAIL}>`
+      : 'Stone House Weddings <onboarding@resend.dev>';
+
+    const adminEmails = ['bookings@stonehouse.io', 'jr@stonehouse.io'];
 
     // Build itemized summary for emails
     const itemLines = buildItemLines(cart, quote);
+    const emailArgs = { contact, quoteNumber, eventDate, guestCount: cart.guestCount, grandTotal, itemLines };
 
     // Email to admins
-    await resend.emails.send({
-      from: 'Stone House Weddings <weddings@stonehouse.io>',
-      to: ['bookings@stonehouse.io', 'jr@stonehouse.io'],
+    const adminResult = await resend.emails.send({
+      from: fromAddress,
+      to: adminEmails,
+      reply_to: contact.email,
       subject: `New Wedding Quote: ${contact.name} — ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(grandTotal)}`,
-      html: adminEmailHTML({ contact, quoteNumber, eventDate, guestCount: cart.guestCount, grandTotal, itemLines })
+      html: adminEmailHTML(emailArgs)
     });
 
+    if (adminResult.error) {
+      console.error('Admin email error:', adminResult.error);
+      return res.status(500).json({ error: `Email failed: ${adminResult.error.message}` });
+    }
+
     // Confirmation to customer
-    await resend.emails.send({
-      from: 'Stone House Weddings <weddings@stonehouse.io>',
+    const customerResult = await resend.emails.send({
+      from: fromAddress,
       to: contact.email,
       subject: `Your Wedding Quote #${quoteNumber} — Stone House`,
-      html: customerEmailHTML({ contact, quoteNumber, eventDate, guestCount: cart.guestCount, grandTotal, itemLines })
+      html: customerEmailHTML(emailArgs)
     });
+
+    if (customerResult.error) {
+      console.error('Customer email error:', customerResult.error);
+      // Don't fail the whole request if only the customer email fails
+    }
 
     return res.status(200).json({
       success: true,
@@ -59,9 +83,9 @@ module.exports = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Quote submission error:', error);
+    console.error('Quote submission error:', error.message, error);
     return res.status(500).json({
-      error: 'Failed to process quote. Please contact us directly at bookings@stonehouse.io'
+      error: error.message || 'Failed to process quote. Please contact us at bookings@stonehouse.io'
     });
   }
 };
