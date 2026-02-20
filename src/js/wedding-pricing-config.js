@@ -166,7 +166,7 @@ export const WEDDING_PRICING_CONFIG = {
       },
       {
         id: 'premium',
-        name: 'Premium Beer, Wine & Liquor',
+        name: 'Premium',
         pricePerPerson: 50,
         duration: '4 hours',
         includes: [
@@ -180,7 +180,7 @@ export const WEDDING_PRICING_CONFIG = {
       },
       {
         id: 'premium-liquor',
-        name: 'Premium Liquor Package',
+        name: 'Top Shelf',
         pricePerPerson: 60,
         duration: '5 hours',
         includes: [
