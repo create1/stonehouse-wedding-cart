@@ -271,8 +271,7 @@ export const WEDDING_PRICING_CONFIG = {
         id: 'weddingPlanner',
         name: 'Wedding Planning Service',
         price: 2500,
-        taxable: false, // Professional service
-        freeWithFullPackage: true,
+        taxable: false,
         includes: [
           'Day-of coordination',
           'Timeline creation',
@@ -285,7 +284,7 @@ export const WEDDING_PRICING_CONFIG = {
         id: 'dj',
         name: 'DJ Entertainment',
         price: 2500,
-        taxable: true, // Equipment rental
+        taxable: false,
         includes: [
           '5 hours of service',
           'Professional sound system',
@@ -339,42 +338,20 @@ export const WEDDING_PRICING_CONFIG = {
       }
     },
 
-    // What is taxable vs non-taxable per California law
+    // What is taxable vs non-taxable
     taxableCategories: [
       'catering',
       'beverages',
-      'serviceFee',
-      'floral',
-      'dj'
+      'serviceFee'
     ],
 
     nonTaxableCategories: [
       'venue',
+      'floral',
+      'dj',
       'photography',
       'weddingPlanner'
     ]
-  },
-
-  // ===================================
-  // FULL PACKAGE DISCOUNT
-  // ===================================
-  fullPackage: {
-    discountRate: 0.10, // 10% off
-    description: 'Save 10% on your complete wedding package',
-    
-    requirements: {
-      venueType: 'premiumEventCap',
-      mustHaveCatering: true,
-      mustHaveBeverage: true,
-      minimumAddOns: 3,
-      validAddOns: ['floral', 'photography', 'dj']
-    },
-    
-    benefits: {
-      freeWeddingPlanner: true,
-      discountLabel: '10% Full Package Discount',
-      savingsMessage: "You're saving with our Full Package!"
-    }
   },
 
   // ===================================

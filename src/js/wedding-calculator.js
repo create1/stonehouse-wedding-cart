@@ -121,32 +121,6 @@ export class WeddingCalculator {
   }
 
   /**
-   * Check if cart qualifies for full package discount
-   */
-  checkFullPackageEligibility(cart) {
-    const requirements = WEDDING_PRICING_CONFIG.fullPackage.requirements;
-
-    // Must have Premium Event Cap
-    if (cart.venue.type !== requirements.venueType) return false;
-
-    // Must have catering (2 proteins)
-    if (!cart.catering.protein1 || !cart.catering.protein2) return false;
-
-    // Must have beverage package
-    if (!cart.beverages.package) return false;
-
-    // Must have at least 3 valid add-ons
-    const addOnCount = requirements.validAddOns.filter(addOnKey => {
-      if (addOnKey === 'floral') return cart.addOns.floral !== null;
-      if (addOnKey === 'photography') return cart.addOns.photography === true;
-      if (addOnKey === 'dj') return cart.addOns.dj === true;
-      return false;
-    }).length;
-
-    return addOnCount >= requirements.minimumAddOns;
-  }
-
-  /**
    * Calculate complete wedding quote with all fees and taxes
    */
   calculateCompleteQuote(cart) {
@@ -183,34 +157,22 @@ export class WeddingCalculator {
     const photographyCost = cart.addOns.photography ? 3500 : 0;
     const djCost = cart.addOns.dj ? 2500 : 0;
 
-    // Check if full package eligible
-    const isFullPackage = this.checkFullPackageEligibility(cart);
-    
-    // Wedding planner is free with full package
-    const plannerCost = (cart.addOns.weddingPlanner && !isFullPackage) ? 2500 : 0;
+    const plannerCost = cart.addOns.weddingPlanner ? 2500 : 0;
 
     // === TAX CALCULATION ===
-    const taxableSubtotal = 
+    // Only food & beverage (including service fee) are taxable; all add-ons are tax-free
+    const taxableSubtotal =
       catering.total +
       beverageTotal +
-      serviceFee +
-      floralCost +
-      djCost;
+      serviceFee;
 
-    const nonTaxableSubtotal = venueCost + photographyCost + plannerCost;
+    const nonTaxableSubtotal = venueCost + floralCost + djCost + photographyCost + plannerCost;
 
     const salesTaxAmount = WeddingPricingHelpers.roundMoney(taxableSubtotal * this.taxRate);
 
-    // === SUBTOTAL WITH TAX ===
-    const subtotalWithTax = taxableSubtotal + nonTaxableSubtotal + salesTaxAmount;
-
-    // === FULL PACKAGE DISCOUNT ===
-    const discountAmount = isFullPackage 
-      ? WeddingPricingHelpers.roundMoney(subtotalWithTax * WEDDING_PRICING_CONFIG.fullPackage.discountRate)
-      : 0;
-
     // === GRAND TOTAL ===
-    const grandTotal = WeddingPricingHelpers.roundMoney(subtotalWithTax - discountAmount);
+    const subtotalWithTax = taxableSubtotal + nonTaxableSubtotal + salesTaxAmount;
+    const grandTotal = WeddingPricingHelpers.roundMoney(subtotalWithTax);
 
     // === RETURN COMPLETE BREAKDOWN ===
     return {
@@ -271,7 +233,7 @@ export class WeddingCalculator {
             ? WEDDING_PRICING_CONFIG.addOns.floral.packages.find(p => p.id === cart.addOns.floral)?.name
             : null,
           cost: floralCost,
-          taxable: true
+          taxable: false
         },
         photography: {
           selected: cart.addOns.photography,
@@ -281,13 +243,12 @@ export class WeddingCalculator {
         weddingPlanner: {
           selected: cart.addOns.weddingPlanner,
           cost: plannerCost,
-          isFree: isFullPackage,
           taxable: false
         },
         dj: {
           selected: cart.addOns.dj,
           cost: djCost,
-          taxable: true
+          taxable: false
         },
         total: floralCost + photographyCost + plannerCost + djCost
       },
@@ -301,14 +262,6 @@ export class WeddingCalculator {
         amount: salesTaxAmount
       },
 
-      fullPackage: {
-        eligible: isFullPackage,
-        discountRate: '10%',
-        discountAmount: discountAmount,
-        freePlannerValue: isFullPackage ? 2500 : 0,
-        totalSavings: isFullPackage ? discountAmount + 2500 : 0
-      },
-
       totals: {
         venueTotal: venueCost,
         foodBeverageSubtotal: catering.total + beverageTotal,
@@ -318,7 +271,6 @@ export class WeddingCalculator {
         nonTaxableSubtotal,
         salesTax: salesTaxAmount,
         subtotalWithTax,
-        discount: discountAmount,
         grandTotal
       },
 
@@ -330,7 +282,6 @@ export class WeddingCalculator {
         serviceFee: WeddingPricingHelpers.formatCurrency(serviceFee),
         addOns: WeddingPricingHelpers.formatCurrency(floralCost + photographyCost + plannerCost + djCost),
         salesTax: WeddingPricingHelpers.formatCurrency(salesTaxAmount),
-        discount: WeddingPricingHelpers.formatCurrency(discountAmount),
         grandTotal: WeddingPricingHelpers.formatCurrency(grandTotal)
       }
     };
@@ -411,7 +362,7 @@ export class WeddingCalculator {
         category: 'Floral Package',
         description: quote.addOns.floral.packageName,
         amount: quote.addOns.floral.cost,
-        taxable: true,
+        taxable: false,
         formatted: WeddingPricingHelpers.formatCurrency(quote.addOns.floral.cost)
       });
     }
@@ -449,7 +400,7 @@ export class WeddingCalculator {
         category: 'DJ Service',
         description: 'Professional DJ and sound system',
         amount: quote.addOns.dj.cost,
-        taxable: true,
+        taxable: false,
         formatted: WeddingPricingHelpers.formatCurrency(quote.addOns.dj.cost)
       });
     }
@@ -512,10 +463,7 @@ export class WeddingCalculator {
       addOns: quote.addOns.total,
       subtotal: quote.totals.taxableSubtotal + quote.totals.nonTaxableSubtotal,
       salesTax: quote.totals.salesTax,
-      discount: quote.totals.discount,
       total: quote.totals.grandTotal,
-      
-      // Formatted
       formatted: {
         venue: WeddingPricingHelpers.formatCurrency(quote.totals.venueTotal),
         catering: WeddingPricingHelpers.formatCurrency(quote.catering.total),
@@ -524,7 +472,6 @@ export class WeddingCalculator {
         addOns: WeddingPricingHelpers.formatCurrency(quote.addOns.total),
         subtotal: WeddingPricingHelpers.formatCurrency(quote.totals.taxableSubtotal + quote.totals.nonTaxableSubtotal),
         salesTax: WeddingPricingHelpers.formatCurrency(quote.totals.salesTax),
-        discount: WeddingPricingHelpers.formatCurrency(quote.totals.discount),
         total: WeddingPricingHelpers.formatCurrency(quote.totals.grandTotal)
       }
     };

@@ -505,16 +505,6 @@
             <strong>Preferred Vendor Pricing:</strong> The pricing below reflects our trusted preferred vendors. You may bring your own vendors, but these partnerships offer exclusive rates and seamless coordination.
           </div>
 
-          <!-- Full Package Banner (shown when eligible) -->
-          <div class="full-package-banner" id="full-package-banner" style="display: none;">
-            <i class="fas fa-star"></i>
-            <div class="banner-content">
-              <h3>Full Package Discount Eligible!</h3>
-              <p>You're saving 10% on your total + FREE wedding planner service</p>
-              <p class="savings-amount">Estimated savings: <strong id="savings-display">$0</strong></p>
-            </div>
-          </div>
-
           <!-- Floral Packages -->
           <div class="form-section">
             <label class="form-label">
@@ -616,7 +606,7 @@
                 <button class="service-toggle-btn">Add to Package</button>
               </div>
 
-              <div class="service-card" data-service="weddingPlanner" id="planner-card">
+              <div class="service-card" data-service="weddingPlanner">
                 <div class="service-icon">
                   <i class="fas fa-clipboard-list"></i>
                 </div>
@@ -624,7 +614,6 @@
                   <h3>Wedding Planning</h3>
                   <div class="service-price">$2,500</div>
                   <p class="tax-note">Tax-exempt service</p>
-                  <div class="free-badge" style="display: none;">FREE - Included!</div>
                   <ul class="service-includes">
                     <li>Day-of coordination</li>
                     <li>Timeline creation</li>
@@ -805,15 +794,7 @@
           <span class="item-amount" id="tax-amount">$0.00</span>
         </div>
 
-        <div class="summary-row discount-row" id="discount-line" style="display: none;">
-          <span class="item-label">
-            <i class="fas fa-star"></i>
-            Full Package Discount
-          </span>
-          <span class="item-amount discount" id="discount-amount">-$0.00</span>
-        </div>
-
-        <div class="summary-divider bold"></div>
+          <div class="summary-divider bold"></div>
 
         <div class="summary-total">
           <span class="total-label">Estimated Total</span>
@@ -850,17 +831,17 @@
       
       <h4>What's Taxable:</h4>
       <ul>
-        <li><i class="fas fa-check"></i> Venue rental</li>
         <li><i class="fas fa-check"></i> Food & beverage services</li>
-        <li><i class="fas fa-check"></i> Service charges</li>
-        <li><i class="fas fa-check"></i> Floral arrangements</li>
-        <li><i class="fas fa-check"></i> DJ services</li>
+        <li><i class="fas fa-check"></i> Service charges (20% on food & beverage)</li>
       </ul>
 
       <h4>Tax-Exempt Services:</h4>
       <ul>
-        <li><i class="fas fa-times"></i> Photography (professional service)</li>
-        <li><i class="fas fa-times"></i> Wedding planning (professional service)</li>
+        <li><i class="fas fa-times"></i> Venue rental</li>
+        <li><i class="fas fa-times"></i> Floral arrangements</li>
+        <li><i class="fas fa-times"></i> DJ entertainment</li>
+        <li><i class="fas fa-times"></i> Photography</li>
+        <li><i class="fas fa-times"></i> Wedding planning</li>
       </ul>
 
       <p class="modal-note">

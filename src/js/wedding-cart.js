@@ -537,7 +537,6 @@ class WeddingCart {
           this.cart.addOns.floral = null;
         }
 
-        this.checkFullPackageEligibility();
         this.updatePriceSummary();
       });
     });
@@ -554,7 +553,6 @@ class WeddingCart {
         
         if (isSelected) {
           card.classList.remove('selected');
-          toggleBtn.textContent = 'Add to Package';
           toggleBtn.innerHTML = '<i class="fas fa-plus"></i> Add to Package';
           this.cart.addOns[serviceId] = false;
         } else {
@@ -563,59 +561,9 @@ class WeddingCart {
           this.cart.addOns[serviceId] = true;
         }
 
-        this.checkFullPackageEligibility();
         this.updatePriceSummary();
       });
     });
-  }
-
-  // ===================================
-  // FULL PACKAGE CHECK
-  // ===================================
-  checkFullPackageEligibility() {
-    const isEligible = this.calculator.checkFullPackageEligibility(this.cart);
-    const banner = document.getElementById('full-package-banner');
-    const plannerCard = document.getElementById('planner-card');
-    const freeBadge = plannerCard?.querySelector('.free-badge');
-    const plannerPrice = plannerCard?.querySelector('.service-price');
-    const plannerBtn = plannerCard?.querySelector('.service-toggle-btn');
-
-    if (isEligible) {
-      // Show banner
-      if (banner) banner.style.display = 'flex';
-
-      // Update planner card
-      if (plannerCard) {
-        plannerCard.classList.add('free-service');
-        if (freeBadge) freeBadge.style.display = 'block';
-        if (plannerPrice) plannerPrice.style.display = 'none';
-        if (plannerBtn) {
-          plannerBtn.innerHTML = '<i class="fas fa-gift"></i> FREE - Included';
-          plannerBtn.disabled = true;
-        }
-        plannerCard.classList.add('selected');
-        this.cart.addOns.weddingPlanner = true;
-      }
-    } else {
-      // Hide banner
-      if (banner) banner.style.display = 'none';
-
-      // Reset planner card
-      if (plannerCard && plannerCard.classList.contains('free-service')) {
-        plannerCard.classList.remove('free-service');
-        if (freeBadge) freeBadge.style.display = 'none';
-        if (plannerPrice) plannerPrice.style.display = 'block';
-        if (plannerBtn) {
-          plannerBtn.disabled = false;
-          const isSelected = plannerCard.classList.contains('selected');
-          plannerBtn.innerHTML = isSelected 
-            ? '<i class="fas fa-check"></i> Added'
-            : '<i class="fas fa-plus"></i> Add to Package';
-        }
-      }
-    }
-
-    return isEligible;
   }
 
   // ===================================
@@ -699,22 +647,6 @@ class WeddingCart {
         }
       }
       document.getElementById('tax-amount').textContent = quote.formatted.salesTax;
-
-      // Update discount
-      const discountLine = document.getElementById('discount-line');
-      const discountAmount = document.getElementById('discount-amount');
-      if (quote.fullPackage.eligible) {
-        discountLine.style.display = 'flex';
-        discountAmount.textContent = '-' + quote.formatted.discount;
-        
-        // Update savings display
-        const savingsDisplay = document.getElementById('savings-display');
-        if (savingsDisplay) {
-          savingsDisplay.textContent = WeddingPricingHelpers.formatCurrency(quote.fullPackage.totalSavings);
-        }
-      } else {
-        discountLine.style.display = 'none';
-      }
 
       // Update grand total
       document.getElementById('grand-total').textContent = quote.formatted.grandTotal;
@@ -937,12 +869,6 @@ class WeddingCart {
           <span>Sales Tax (${quote.tax.ratePercent})</span>
           <span>${WeddingPricingHelpers.formatCurrency(quote.totals.salesTax)}</span>
         </div>
-        ${quote.fullPackage.eligible ? `
-          <div class="total-row discount-row">
-            <span><i class="fas fa-star"></i> Full Package Discount (10%)</span>
-            <span class="discount">-${WeddingPricingHelpers.formatCurrency(quote.totals.discount)}</span>
-          </div>
-        ` : ''}
         <div class="total-row grand-total">
           <span>GRAND TOTAL</span>
           <span>${WeddingPricingHelpers.formatCurrency(quote.totals.grandTotal)}</span>
@@ -1438,14 +1364,8 @@ class WeddingCart {
         plannerConfig.includes.forEach(item => { checkPageBreak(14); bulletLine(item); });
         doc.setFont('helvetica', 'italic'); doc.setFontSize(8); doc.setTextColor(...mid);
         doc.text('Tax-exempt professional service', marginL + 12, y); y += 12;
-        doc.setFont('helvetica', 'bold'); doc.setFontSize(9);
-        if (quote.addOns.weddingPlanner.isFree) {
-          doc.setTextColor(...green);
-          doc.text('COMPLIMENTARY — Included with Full Package', marginL + contentW, y - 2, { align: 'right' });
-        } else {
-          doc.setTextColor(...gold);
-          doc.text(fmt(quote.addOns.weddingPlanner.cost), marginL + contentW, y - 2, { align: 'right' });
-        }
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...gold);
+        doc.text(fmt(quote.addOns.weddingPlanner.cost), marginL + contentW, y - 2, { align: 'right' });
         y += 6; divider();
       }
 
@@ -1479,12 +1399,12 @@ class WeddingCart {
     if (quote.catering.appetizers?.cost > 0) summaryRows.push([`Passed Appetizers (${quote.catering.appetizers.count})`, fmt(quote.catering.appetizers.cost), 'Taxable']);
     if (quote.beverages.total > 0) summaryRows.push([`Bar Service — ${quote.beverages.packageName}`, fmt(quote.beverages.total), 'Taxable']);
     if (quote.serviceFee.amount > 0) summaryRows.push(['Service Fee (20% on food & beverage)', fmt(quote.serviceFee.amount), 'Taxable']);
-    if (quote.addOns.floral.cost > 0) summaryRows.push([`Floral — ${quote.addOns.floral.packageName}`, fmt(quote.addOns.floral.cost), 'Taxable']);
+    if (quote.addOns.floral.cost > 0) summaryRows.push([`Floral — ${quote.addOns.floral.packageName}`, fmt(quote.addOns.floral.cost), 'Tax-exempt']);
     if (quote.addOns.photography.selected) summaryRows.push(['Professional Photography', fmt(quote.addOns.photography.cost), 'Tax-exempt']);
     if (quote.addOns.weddingPlanner.selected) {
-      summaryRows.push(['Wedding Planning', quote.addOns.weddingPlanner.isFree ? 'COMPLIMENTARY' : fmt(quote.addOns.weddingPlanner.cost), 'Tax-exempt']);
+      summaryRows.push(['Wedding Planning', fmt(quote.addOns.weddingPlanner.cost), 'Tax-exempt']);
     }
-    if (quote.addOns.dj.selected) summaryRows.push(['DJ Entertainment', fmt(quote.addOns.dj.cost), 'Taxable']);
+    if (quote.addOns.dj.selected) summaryRows.push(['DJ Entertainment', fmt(quote.addOns.dj.cost), 'Tax-exempt']);
 
     doc.autoTable({
       startY: y,
@@ -1506,7 +1426,7 @@ class WeddingCart {
     checkPageBreak(120);
 
     // Totals box
-    const totBoxH = 18 * (4 + (quote.fullPackage.eligible ? 1 : 0));
+    const totBoxH = 18 * 3 + 30;
     doc.setFillColor(44, 62, 80);
     doc.roundedRect(marginL, y, contentW, totBoxH, 6, 6, 'F');
 
@@ -1521,9 +1441,6 @@ class WeddingCart {
     totRow('Taxable Subtotal', fmt(quote.totals.taxableSubtotal));
     totRow('Non-Taxable Subtotal', fmt(quote.totals.nonTaxableSubtotal));
     totRow(`Sales Tax  (${quote.tax.ratePercent} — ${quote.tax.jurisdiction || 'Nevada County, CA'})`, fmt(quote.totals.salesTax));
-    if (quote.fullPackage.eligible) {
-      totRow('Full Package Discount (10%)', `-${fmt(quote.totals.discount)}`, [39, 174, 96]);
-    }
 
     // Gold divider inside dark box
     doc.setDrawColor(...gold); doc.setLineWidth(1);
