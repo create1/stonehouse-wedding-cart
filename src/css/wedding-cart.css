@@ -1122,15 +1122,15 @@ body {
 }
 
 .beverage-img--beerwine {
-  object-position: center 20%;
+  object-position: center 40%;
 }
 
 .beverage-img--premium {
-  object-position: center 15%;
+  object-position: center 70%;
 }
 
 .beverage-img--topshelf {
-  object-position: center 20%;
+  object-position: center 65%;
 }
 
 .beverage-content {
@@ -2379,7 +2379,19 @@ textarea.form-input {
   }
 
   .beverage-img {
-    height: 160px;
+    height: 180px;
+  }
+
+  .beverage-img--beerwine {
+    object-position: center 40%;
+  }
+
+  .beverage-img--premium {
+    object-position: center 70%;
+  }
+
+  .beverage-img--topshelf {
+    object-position: center 65%;
   }
 
   /* Tighter form sections */
