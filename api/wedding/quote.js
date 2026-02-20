@@ -47,7 +47,7 @@ module.exports = async (req, res) => {
       ? process.env.ADMIN_EMAILS.split(',').map(e => e.trim())
       : process.env.RESEND_TEST_EMAIL
         ? [process.env.RESEND_TEST_EMAIL]
-        : ['bookings@stonehouse.io', 'jr@stonehouse.io'];
+        : ['jon@madronestudios.com'];
 
     // Build itemized summary for emails
     const itemLines = buildItemLines(cart, quote);
