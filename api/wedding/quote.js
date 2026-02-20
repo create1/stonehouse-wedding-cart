@@ -38,12 +38,16 @@ module.exports = async (req, res) => {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    // Use env var for from address, fallback to onboarding@resend.dev for testing
     const fromAddress = process.env.FROM_EMAIL
       ? `Stone House Weddings <${process.env.FROM_EMAIL}>`
       : 'Stone House Weddings <onboarding@resend.dev>';
 
-    const adminEmails = ['bookings@stonehouse.io', 'jr@stonehouse.io'];
+    // Admin emails — use env var or fallback to Resend account email for testing
+    const adminEmails = process.env.ADMIN_EMAILS
+      ? process.env.ADMIN_EMAILS.split(',').map(e => e.trim())
+      : process.env.RESEND_TEST_EMAIL
+        ? [process.env.RESEND_TEST_EMAIL]
+        : ['bookings@stonehouse.io', 'jr@stonehouse.io'];
 
     // Build itemized summary for emails
     const itemLines = buildItemLines(cart, quote);
@@ -59,8 +63,8 @@ module.exports = async (req, res) => {
     });
 
     if (adminResult.error) {
-      console.error('Admin email error:', adminResult.error);
-      return res.status(500).json({ error: `Email failed: ${adminResult.error.message}` });
+      console.error('Admin email error:', JSON.stringify(adminResult.error));
+      return res.status(500).json({ error: `Email failed: ${adminResult.error.message || JSON.stringify(adminResult.error)}` });
     }
 
     // Confirmation to customer
@@ -72,8 +76,7 @@ module.exports = async (req, res) => {
     });
 
     if (customerResult.error) {
-      console.error('Customer email error:', customerResult.error);
-      // Don't fail the whole request if only the customer email fails
+      console.error('Customer email error:', JSON.stringify(customerResult.error));
     }
 
     return res.status(200).json({
