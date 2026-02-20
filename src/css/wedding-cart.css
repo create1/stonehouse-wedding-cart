@@ -2371,41 +2371,61 @@ textarea.form-input {
   fill: white !important;
 }
 
-/* Larger touch targets on mobile */
+/* Touch-friendly calendar on mobile */
 @media (max-width: 768px) {
   .flatpickr-calendar {
     width: calc(100vw - 2rem) !important;
-    max-width: 380px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
+    max-width: 360px !important;
     position: fixed !important;
     top: 50% !important;
+    left: 50% !important;
     transform: translate(-50%, -50%) !important;
     z-index: 99999 !important;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.35) !important;
+  }
+
+  /* Backdrop overlay */
+  .flatpickr-calendar.open {
+    animation: none !important;
+  }
+
+  .flatpickr-calendar.open::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: -1;
+    pointer-events: none;
   }
 
   .flatpickr-day {
-    height: 44px !important;
-    line-height: 44px !important;
+    height: 46px !important;
+    line-height: 46px !important;
     font-size: 1rem !important;
+    border-radius: 8px !important;
   }
 
   .flatpickr-months .flatpickr-month {
-    height: 50px !important;
+    height: 52px !important;
   }
 
   .flatpickr-current-month {
     font-size: 1.1rem !important;
-    padding-top: 10px !important;
+    padding-top: 12px !important;
   }
 
-  /* Dim background when calendar is open */
-  .flatpickr-calendar.open::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: -1;
+  .flatpickr-prev-month,
+  .flatpickr-next-month {
+    padding: 12px !important;
+  }
+
+  .flatpickr-weekdays {
+    height: 36px !important;
+  }
+
+  .flatpickr-weekday {
+    font-size: 0.8rem !important;
+    line-height: 36px !important;
   }
 }
 

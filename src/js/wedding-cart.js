@@ -86,10 +86,8 @@ class WeddingCart {
     flatpickr(dateInput, {
       minDate: minDate,
       maxDate: maxDate,
-      dateFormat: 'Y-m-d',
-      altInput: true,
-      altFormat: 'F j, Y',
-      disableMobile: false, // use native picker on iOS/Android
+      dateFormat: 'F j, Y',
+      disableMobile: true, // always use our touch-friendly calendar
       allowInput: false,
       disable: [],
       onChange: (selectedDates) => {
