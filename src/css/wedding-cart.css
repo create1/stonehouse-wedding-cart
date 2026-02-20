@@ -640,10 +640,13 @@ body {
   box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
 }
 
-.venue-card.recommended,
-.beverage-card.recommended {
+.venue-card.recommended {
   border-color: var(--cart-primary);
   padding-top: 3rem;
+}
+
+.beverage-card.recommended {
+  border-color: var(--cart-primary);
 }
 
 .recommended-badge {
@@ -651,7 +654,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  background: var(--cart-primary);
+  background: rgba(180, 145, 20, 0.92);
   color: white;
   padding: 0.45rem 1rem;
   font-size: 0.78rem;
@@ -660,6 +663,7 @@ body {
   text-transform: uppercase;
   text-align: center;
   border-radius: 9px 9px 0 0;
+  z-index: 2;
 }
 
 .venue-card-header h3 {
