@@ -135,7 +135,7 @@ class WeddingCalculator {
     const serviceFee = (cateringTotal + beverageTotal) * 0.20;
 
     const floralCost = cart.addOns.floral ? [1500, 2500, 5000, 10000][['intimate', 'classic', 'elegant', 'luxury'].indexOf(cart.addOns.floral)] || 0 : 0;
-    const photographyCost = cart.addOns.photography ? 3500 : 0;
+    const photographyCost = cart.addOns.photography ? 2000 : 0;
     const djCost = cart.addOns.dj ? 2500 : 0;
 
     const isFullPackage = this.checkFullPackageEligibility(cart);

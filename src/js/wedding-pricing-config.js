@@ -257,7 +257,7 @@ export const WEDDING_PRICING_CONFIG = {
       photography: {
         id: 'photography',
         name: 'Professional Photography',
-        price: 3500,
+        price: 2000,
         taxable: false, // Professional service
         includes: [
           '8 hours of coverage',
