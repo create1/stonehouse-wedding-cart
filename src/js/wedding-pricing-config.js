@@ -49,7 +49,7 @@ export const WEDDING_PRICING_CONFIG = {
       },
       partialBuilding: {
         id: 'partialBuilding',
-        name: 'Single Floor Rental',
+        name: 'Partial Venue Rental',
         description: 'Hourly rental, 3-hour minimum',
         minimumHours: 3,
         maximumHours: 12,
@@ -62,7 +62,7 @@ export const WEDDING_PRICING_CONFIG = {
       },
       partialBuildingFlat: {
         id: 'partialBuildingFlat',
-        name: 'Single Floor — 12 Hour Block',
+        name: 'Partial Venue — 12 Hour Block',
         description: 'All-day flat rate, 40% off hourly',
         isFlat: true,
         capacity: 150,
@@ -396,7 +396,7 @@ export const WEDDING_PRICING_CONFIG = {
         partialBuildingFlat: { min: 20, max: 150, ideal: 80 },
         partialBuilding: {
         id: 'partialBuilding',
-        name: 'Single Floor Rental',
+        name: 'Partial Venue Rental',
         description: 'Hourly rental, 3-hour minimum',
         minimumHours: 3,
         maximumHours: 12,
@@ -409,7 +409,7 @@ export const WEDDING_PRICING_CONFIG = {
       },
       partialBuildingFlat: {
         id: 'partialBuildingFlat',
-        name: 'Single Floor — 12 Hour Block',
+        name: 'Partial Venue — 12 Hour Block',
         description: 'All-day flat rate, 40% off hourly',
         isFlat: true,
         capacity: 150,
