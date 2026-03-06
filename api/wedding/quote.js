@@ -191,7 +191,7 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
   rows += sh('🏛️ Venue');
   if (venueType) {
     const vName = VENUE_NAMES[venueType] || venueType;
-    const vSub  = venueType === 'partialBuildingFlat'      ? 'Full-day access (12 hours) · 30% off hourly rate · Lounge (upstairs bar), Dining Room, Patio & Cavern'      : venueType === 'partialBuilding'      ? `${venueHours || 5} hours · 3-hour minimum · Lounge (upstairs bar), Dining Room, Patio & Cavern`      : venueType === 'fullBuilding'
+    const vSub  = venueType === 'partialBuildingFlat'      ? 'Full-day access (12 hours) · 40% off hourly rate · Lounge (upstairs bar), Dining Room, Patio & Cavern'      : venueType === 'partialBuilding'      ? `${venueHours || 5} hours · 3-hour minimum · Lounge (upstairs bar), Dining Room, Patio & Cavern`      : venueType === 'fullBuilding'
       ? `${venueHours || 5} hours · 3-hour minimum · Lounge, Great Hall, Show Room, Patio, Cavern & Parlour`
       : 'Full-day access · Lounge, Great Hall, Show Room, Patio, Cavern & Parlour';
     rows += r(vName, fmt(venueCost), vSub);
