@@ -44,6 +44,7 @@ const FLORAL_INCLUDES = {
 };
 
 const VENUE_NAMES = {
+  partialBuilding:  'Single Floor Rental (Lounge, Dining Room, Patio & Cavern)',
   fullBuilding:    'Full Building (Hourly)',
   premiumEventCap: 'Full Building — 12-Hour Block',
 };
@@ -189,7 +190,7 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
   rows += sh('🏛️ Venue');
   if (venueType) {
     const vName = VENUE_NAMES[venueType] || venueType;
-    const vSub  = venueType === 'fullBuilding'
+    const vSub  = venueType === 'partialBuilding'      ? `${venueHours || 5} hours · 3-hour minimum · Lounge (upstairs bar), Dining Room, Patio & Cavern`      : venueType === 'fullBuilding'
       ? `${venueHours || 5} hours · 3-hour minimum · Lounge, Great Hall, Show Room, Patio, Cavern & Parlour`
       : 'Full-day access · Lounge, Great Hall, Show Room, Patio, Cavern & Parlour';
     rows += r(vName, fmt(venueCost), vSub);

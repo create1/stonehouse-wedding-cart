@@ -47,6 +47,19 @@ export const WEDDING_PRICING_CONFIG = {
           peak: { monThu: 1000, friday: 1100, saturday: 1200, sunday: 1100 }
         }
       },
+      partialBuilding: {
+        id: 'partialBuilding',
+        name: 'Single Floor Rental',
+        description: 'Hourly rental, 3-hour minimum',
+        minimumHours: 3,
+        maximumHours: 12,
+        capacity: 150,
+        pricing: {
+          offPeak: { monThu: 550, friday: 600, saturday: 650, sunday: 600 },
+          shoulder: { monThu: 600, friday: 650, saturday: 750, sunday: 700 },
+          peak: { monThu: 650, friday: 750, saturday: 850, sunday: 800 }
+        }
+      },
       premiumEventCap: {
         id: 'premiumEventCap',
         name: 'Full Building 12 Hour Block',
@@ -367,7 +380,21 @@ export const WEDDING_PRICING_CONFIG = {
       largeEventContact: 'bookings@stonehouse.io',
       recommendations: {
         fullBuilding: { min: 50, max: 150, ideal: 100 },
-        premiumEventCap: { min: 100, max: 150, ideal: 125 }
+        partialBuilding: { min: 20, max: 150, ideal: 80 },
+        partialBuilding: {
+        id: 'partialBuilding',
+        name: 'Single Floor Rental',
+        description: 'Hourly rental, 3-hour minimum',
+        minimumHours: 3,
+        maximumHours: 12,
+        capacity: 150,
+        pricing: {
+          offPeak: { monThu: 550, friday: 600, saturday: 650, sunday: 600 },
+          shoulder: { monThu: 600, friday: 650, saturday: 750, sunday: 700 },
+          peak: { monThu: 650, friday: 750, saturday: 850, sunday: 800 }
+        }
+      },
+      premiumEventCap: { min: 100, max: 150, ideal: 125 }
       }
     },
     
