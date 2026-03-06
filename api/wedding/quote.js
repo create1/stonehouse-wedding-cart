@@ -132,6 +132,8 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
   const protein1    = cart?.catering?.protein1;
   const protein2    = cart?.catering?.protein2;
   const sidesQty    = cart?.catering?.sidesQty || 0;
+  const serviceStyle = cart?.catering?.serviceStyle || 'buffet';
+  const hasDessert   = cart?.catering?.dessert || false;
   const appsQty     = cart?.catering?.appetizersQty || 0;
   const bevPackage  = cart?.beverages?.package;
   const floralPkg   = cart?.addOns?.floral;
@@ -142,6 +144,7 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
   const venueCost     = quote?.venue?.cost               || 0;
   const cateringTotal = quote?.catering?.total            || 0;
   const sidesTotal    = quote?.catering?.sides?.cost      || 0;
+  const dessertCost   = quote?.catering?.dessertCost       || 0;
   const appsTotal     = quote?.catering?.appetizers?.cost || 0;
   const bevTotal      = quote?.beverages?.total           || 0;
   const serviceFee    = quote?.serviceFee?.amount         || 0;
@@ -224,6 +227,17 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
         fmt(appsTotal),
         `${guestCount} guests × $6/person × ${appsQty} appetizer${appsQty > 1 ? 's' : ''} · Final selections confirmed during planning`
       );
+    }
+
+    // Service style
+    const styleLabels = { buffet: 'Buffet (included)', familyStyle: 'Family Style (+$5/person)', plated: 'Plated (+$10/person)' };
+    rows += r('Style of Service', styleLabels[serviceStyle] || serviceStyle, 'Buffet includes salad & entrée · Family Style +$5 · Plated +$10');
+
+    // Dessert
+    if (hasDessert) {
+      rows += r('Dessert Course', fmt(dessertCost), `${guestCount} guests × $12/person · Final selection confirmed during planning`);
+    } else {
+      rows += note('Dessert not included — can be added at $12/person');
     }
   }
 

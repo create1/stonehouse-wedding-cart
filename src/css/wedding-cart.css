@@ -2661,3 +2661,57 @@ textarea.form-input {
     page-break-inside: avoid;
   }
 }
+
+/* ─── Service Style Cards ─────────────────────────────────────────── */
+.service-style-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.service-style-card {
+  border: 2px solid var(--border-color, #e0e0e0);
+  border-radius: 12px;
+  padding: 16px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #fff;
+}
+
+.service-style-card:hover {
+  border-color: var(--cart-gold, #D4AF37);
+  background: #fffdf0;
+}
+
+.service-style-card.selected {
+  border-color: var(--cart-gold, #D4AF37);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.service-style-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.service-style-price {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cart-gold, #D4AF37);
+  margin-bottom: 4px;
+}
+
+.service-style-desc {
+  font-size: 0.78rem;
+  color: #888;
+  line-height: 1.3;
+}
+
+@media (max-width: 480px) {
+  .service-style-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -23,7 +23,9 @@ class WeddingCart {
         protein1: null,
         protein2: null,
         sidesQty: 0,
-        appetizersQty: 0
+        appetizersQty: 0,
+        serviceStyle: 'buffet',
+        dessert: false
       },
       beverages: {
         package: null
@@ -46,6 +48,8 @@ class WeddingCart {
     this.setupVenueSelection();
     this.setupProteinSelection();
     this.setupSidesAndAppetizers();
+    this.setupServiceStyle();
+    this.setupDessert();
     this.setupBeverageSelection();
     this.setupAddOnServices();
     this.setupNavigation();
@@ -156,6 +160,7 @@ class WeddingCart {
 
       this.updateSidesCostDisplay();
       this.updateAppsCostDisplay();
+      this.updateDessertCostDisplay();
       this.updatePriceSummary();
     };
 
@@ -497,6 +502,41 @@ class WeddingCart {
   // ===================================
   // BEVERAGE SELECTION
   // ===================================
+  setupServiceStyle() {
+    const cards = document.querySelectorAll('.service-style-card');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        cards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        this.cart.catering.serviceStyle = card.dataset.style;
+        this.updatePriceSummary();
+      });
+    });
+  }
+
+  setupDessert() {
+    const toggle = document.getElementById('dessert-toggle');
+    const panel  = document.getElementById('dessert-info');
+    if (!toggle) return;
+    toggle.addEventListener('change', () => {
+      this.cart.catering.dessert = toggle.checked;
+      if (panel) panel.style.display = toggle.checked ? 'block' : 'none';
+      this.updateDessertCostDisplay();
+      this.updatePriceSummary();
+    });
+  }
+
+  updateDessertCostDisplay() {
+    const el = document.getElementById('dessert-cost-display');
+    if (!el) return;
+    const qty = this.cart.guestCount || 0;
+    const cost = 12 * qty;
+    el.textContent = qty > 0
+      ? `+$${cost.toLocaleString()} (${qty} guests × $12/person)`
+      : '';
+  }
+
+
   setupBeverageSelection() {
     const beverageCards = document.querySelectorAll('.beverage-card');
 

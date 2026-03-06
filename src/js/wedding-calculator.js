@@ -68,7 +68,7 @@ export class WeddingCalculator {
   /**
    * Calculate catering total
    */
-  calculateCateringTotal(guestCount, protein1Id, protein2Id, sidesQty = 0, appetizersQty = 0) {
+  calculateCateringTotal(guestCount, protein1Id, protein2Id, sidesQty = 0, appetizersQty = 0, serviceStyle = 'buffet', includeDessert = false) {
     // Check if outside catering is selected
     if (protein1Id === 'outside' || protein2Id === 'outside') {
       return {
@@ -78,25 +78,42 @@ export class WeddingCalculator {
         sidesCost: 0,
         appetizersCount: 0,
         appetizersCost: 0,
+        serviceStyleName: 'N/A',
+        serviceStyleUpcharge: 0,
+        dessertCost: 0,
         total: WEDDING_PRICING_CONFIG.catering.outsideCateringFee,
         isOutsideCatering: true
       };
     }
 
     const avgProteinPrice = this.calculateAverageProteinPrice(protein1Id, protein2Id);
-    const baseCatering = avgProteinPrice * guestCount;
+
+    // Service style upcharge per person
+    const styleConfig = WEDDING_PRICING_CONFIG.catering.serviceStyles?.find(s => s.id === serviceStyle);
+    const styleUpcharge = styleConfig?.upcharge || 0;
+    const effectivePrice = avgProteinPrice + styleUpcharge;
+
+    const baseCatering = effectivePrice * guestCount;
 
     const sidesTotal = sidesQty * WEDDING_PRICING_CONFIG.catering.sides.pricePerPerson * guestCount;
     const appetizersTotal = appetizersQty * WEDDING_PRICING_CONFIG.catering.appetizers.pricePerPerson * guestCount;
 
+    // Optional dessert
+    const dessertPrice = WEDDING_PRICING_CONFIG.catering.dessert?.pricePerPerson || 12;
+    const dessertCost = includeDessert ? dessertPrice * guestCount : 0;
+
     return {
       avgProteinPrice,
+      styleUpcharge,
+      effectivePrice,
+      serviceStyleName: styleConfig?.name || 'Buffet',
       baseCatering,
       sidesCount: sidesQty,
       sidesCost: sidesTotal,
       appetizersCount: appetizersQty,
       appetizersCost: appetizersTotal,
-      total: baseCatering + sidesTotal + appetizersTotal
+      dessertCost,
+      total: baseCatering + sidesTotal + appetizersTotal + dessertCost
     };
   }
 
@@ -137,7 +154,9 @@ export class WeddingCalculator {
       cart.catering.protein1,
       cart.catering.protein2,
       cart.catering.sidesQty || 0,
-      cart.catering.appetizersQty || 0
+      cart.catering.appetizersQty || 0,
+      cart.catering.serviceStyle || 'buffet',
+      cart.catering.dessert || false
     );
 
     // === BEVERAGES ===

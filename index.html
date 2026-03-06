@@ -279,7 +279,7 @@
         <!-- Step 2: Catering -->
         <div class="cart-step" data-step="2">
           <h2>Catering Selection</h2>
-          <p class="step-description">Choose 2 protein options for your reception (includes salad & dessert)</p>
+          <p class="step-description">Choose 2 protein options for your reception (includes salad)</p>
           <div class="service-fee-notice">
             <i class="fas fa-info-circle"></i>
             A <strong>20% service fee</strong> is applied to all food & beverage services and is included in your total estimate.
@@ -302,9 +302,9 @@
                 <img src="src/images/food/vegan-entree.avif" alt="Vegetarian Option" class="protein-img">
                 <div class="protein-content">
                   <h3>Vegetarian</h3>
-                  <div class="protein-price">$70<span>/person</span></div>
+                  <div class="protein-price">$40<span>/person</span></div>
                   <p class="protein-description">Seasonal vegetable entrée</p>
-                  <p class="includes-note">Includes salad & dessert</p>
+                  <p class="includes-note">Includes salad</p>
                 </div>
                 <div class="selection-indicator">
                   <i class="fas fa-check"></i>
@@ -315,9 +315,9 @@
                 <img src="src/images/food/Food1.avif" alt="Chicken" class="protein-img">
                 <div class="protein-content">
                   <h3>Chicken</h3>
-                  <div class="protein-price">$80<span>/person</span></div>
+                  <div class="protein-price">$50<span>/person</span></div>
                   <p class="protein-description">Expertly prepared chicken</p>
-                  <p class="includes-note">Includes salad & dessert</p>
+                  <p class="includes-note">Includes salad</p>
                 </div>
                 <div class="selection-indicator">
                   <i class="fas fa-check"></i>
@@ -328,9 +328,9 @@
                 <img src="src/images/food/fish-plate.avif" alt="Fish" class="protein-img">
                 <div class="protein-content">
                   <h3>Fish</h3>
-                  <div class="protein-price">$90<span>/person</span></div>
+                  <div class="protein-price">$60<span>/person</span></div>
                   <p class="protein-description">Fresh fish selection</p>
-                  <p class="includes-note">Includes salad & dessert</p>
+                  <p class="includes-note">Includes salad</p>
                 </div>
                 <div class="selection-indicator">
                   <i class="fas fa-check"></i>
@@ -341,9 +341,9 @@
                 <img src="src/images/food/steak-dish.avif" alt="Steak" class="protein-img">
                 <div class="protein-content">
                   <h3>Steak</h3>
-                  <div class="protein-price">$100<span>/person</span></div>
+                  <div class="protein-price">$70<span>/person</span></div>
                   <p class="protein-description">Premium steak</p>
-                  <p class="includes-note">Includes salad & dessert</p>
+                  <p class="includes-note">Includes salad</p>
                 </div>
                 <div class="selection-indicator">
                   <i class="fas fa-check"></i>
@@ -365,6 +365,56 @@
             <div class="average-display" id="average-meal-cost" style="display: none;">
               <i class="fas fa-calculator"></i>
               Average meal cost: <strong id="avg-price-display">$0</strong>/person
+            </div>
+          </div>
+
+          <!-- Service Style -->
+          <div class="form-section">
+            <div class="section-header">
+              <label class="form-label">
+                <i class="fas fa-concierge-bell"></i>
+                Style of Service *
+              </label>
+            </div>
+            <div class="service-style-grid">
+              <div class="service-style-card selected" data-style="buffet">
+                <div class="service-style-name">Buffet</div>
+                <div class="service-style-price">Included</div>
+                <div class="service-style-desc">Self-serve stations</div>
+              </div>
+              <div class="service-style-card" data-style="familyStyle">
+                <div class="service-style-name">Family Style</div>
+                <div class="service-style-price">+$5/person</div>
+                <div class="service-style-desc">Shared platters at each table</div>
+              </div>
+              <div class="service-style-card" data-style="plated">
+                <div class="service-style-name">Plated</div>
+                <div class="service-style-price">+$10/person</div>
+                <div class="service-style-desc">Full table service</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dessert Add-On -->
+          <div class="form-section">
+            <div class="section-header">
+              <label class="form-label">
+                <i class="fas fa-birthday-cake"></i>
+                Dessert Course
+              </label>
+              <label class="toggle-switch">
+                <input type="checkbox" id="dessert-toggle">
+                <span class="toggle-slider"></span>
+                <span class="toggle-label">Add dessert? <strong>+$12/person</strong></span>
+              </label>
+            </div>
+            <div id="dessert-info" style="display: none;">
+              <p class="qty-examples">
+                <strong>$12/person.</strong> Add a dessert course to your reception — 
+                options include Wedding Cake Cutting Service, Plated Dessert, or a Dessert Bar. 
+                <em>Final selection confirmed during planning.</em>
+              </p>
+              <div class="qty-cost-display" id="dessert-cost-display"></div>
             </div>
           </div>
 
