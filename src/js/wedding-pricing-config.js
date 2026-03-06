@@ -60,6 +60,18 @@ export const WEDDING_PRICING_CONFIG = {
           peak: { monThu: 650, friday: 750, saturday: 850, sunday: 800 }
         }
       },
+      partialBuildingFlat: {
+        id: 'partialBuildingFlat',
+        name: 'Single Floor — 12 Hour Block',
+        description: 'All-day flat rate, 30% off hourly',
+        isFlat: true,
+        capacity: 150,
+        pricing: {
+          offPeak:  { monThu: 4600, friday: 5050, saturday: 5450, sunday: 5050 },
+          shoulder: { monThu: 5050, friday: 5450, saturday: 6300, sunday: 5900 },
+          peak:     { monThu: 5450, friday: 6300, saturday: 7150, sunday: 6700 }
+        }
+      },
       premiumEventCap: {
         id: 'premiumEventCap',
         name: 'Full Building 12 Hour Block',
@@ -381,6 +393,7 @@ export const WEDDING_PRICING_CONFIG = {
       recommendations: {
         fullBuilding: { min: 50, max: 150, ideal: 100 },
         partialBuilding: { min: 20, max: 150, ideal: 80 },
+        partialBuildingFlat: { min: 20, max: 150, ideal: 80 },
         partialBuilding: {
         id: 'partialBuilding',
         name: 'Single Floor Rental',
@@ -392,6 +405,18 @@ export const WEDDING_PRICING_CONFIG = {
           offPeak: { monThu: 550, friday: 600, saturday: 650, sunday: 600 },
           shoulder: { monThu: 600, friday: 650, saturday: 750, sunday: 700 },
           peak: { monThu: 650, friday: 750, saturday: 850, sunday: 800 }
+        }
+      },
+      partialBuildingFlat: {
+        id: 'partialBuildingFlat',
+        name: 'Single Floor — 12 Hour Block',
+        description: 'All-day flat rate, 30% off hourly',
+        isFlat: true,
+        capacity: 150,
+        pricing: {
+          offPeak:  { monThu: 4600, friday: 5050, saturday: 5450, sunday: 5050 },
+          shoulder: { monThu: 5050, friday: 5450, saturday: 6300, sunday: 5900 },
+          peak:     { monThu: 5450, friday: 6300, saturday: 7150, sunday: 6700 }
         }
       },
       premiumEventCap: { min: 100, max: 150, ideal: 125 }
