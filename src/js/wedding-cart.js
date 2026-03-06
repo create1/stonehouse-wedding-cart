@@ -214,23 +214,32 @@ class WeddingCart {
   updateVenueAvailability(date) {
     const isSaturday = date.getDay() === 6;
 
-    const fullBuildingCard = document.querySelector('.venue-card[data-venue="fullBuilding"]');
-    const premiumCapCard = document.querySelector('.venue-card[data-venue="premiumEventCap"]');
+    // Hourly options (hidden on Saturdays — block rental only)
+    const hourlyCards = ['fullBuilding', 'partialBuilding'];
+    // Flat/block options (always available)
+    const flatCards   = ['partialBuildingFlat', 'premiumEventCap'];
 
     if (isSaturday) {
-      // Saturday: Full Building 12 Hour Block only — no hourly rentals
-      if (fullBuildingCard) {
-        fullBuildingCard.style.display = 'none';
-        if (this.cart.venue.type === 'fullBuilding') {
-          fullBuildingCard.classList.remove('selected');
+      // Saturday: flat/block rentals only — hide hourly options
+      hourlyCards.forEach(id => {
+        const card = document.querySelector(`.venue-card[data-venue="${id}"]`);
+        if (!card) return;
+        card.style.display = 'none';
+        if (this.cart.venue.type === id) {
+          card.classList.remove('selected');
           this.cart.venue.type = null;
         }
-      }
-      if (premiumCapCard) premiumCapCard.style.display = '';
+      });
+      flatCards.forEach(id => {
+        const card = document.querySelector(`.venue-card[data-venue="${id}"]`);
+        if (card) card.style.display = '';
+      });
     } else {
-      // All other days: both options available
-      if (fullBuildingCard) fullBuildingCard.style.display = '';
-      if (premiumCapCard) premiumCapCard.style.display = '';
+      // All other days: all four options visible
+      [...hourlyCards, ...flatCards].forEach(id => {
+        const card = document.querySelector(`.venue-card[data-venue="${id}"]`);
+        if (card) card.style.display = '';
+      });
     }
   }
 
