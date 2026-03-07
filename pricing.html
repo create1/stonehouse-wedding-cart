@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Pricing Guide — Stone House</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root { --gold:#D4AF37;--gold-lt:#f5efc7;--burg:#8B4053;--dark:#1a1a1a;--gray:#555;--light:#f9f7f2;--border:#e8e0c8; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Georgia',serif;background:var(--light);color:var(--dark);line-height:1.6;}
+    .print-bar{background:var(--dark);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+    .print-bar span{color:#aaa;font-size:.85rem;font-family:Arial,sans-serif;}
+    .print-btn{background:var(--gold);color:#fff;border:none;padding:8px 20px;border-radius:6px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:Arial,sans-serif;display:flex;align-items:center;gap:8px;}
+    .print-btn:hover{background:#b8962e;}
+    .page{max-width:960px;margin:0 auto;padding:40px 24px 80px;}
+    .doc-header{text-align:center;padding:48px 24px;background:linear-gradient(135deg,#1a1a1a 0%,#3a2030 100%);border-radius:12px;margin-bottom:40px;color:white;}
+    .doc-header .venue-name{font-size:.8rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;font-family:Arial,sans-serif;}
+    .doc-header h1{font-size:2.4rem;font-weight:normal;margin-bottom:10px;}
+    .doc-header .tagline{color:rgba(255,255,255,.6);font-size:.95rem;font-family:Arial,sans-serif;}
+    .doc-header .address{margin-top:20px;color:rgba(255,255,255,.5);font-size:.8rem;font-family:Arial,sans-serif;letter-spacing:1px;}
+    .section{margin-bottom:48px;}
+    .section-title{display:flex;align-items:center;gap:12px;font-size:1.05rem;letter-spacing:3px;text-transform:uppercase;color:var(--burg);border-bottom:2px solid var(--gold);padding-bottom:10px;margin-bottom:24px;font-family:Arial,sans-serif;font-weight:700;}
+    .section-title i{color:var(--gold);font-size:1rem;}
+    .season-tabs{display:flex;gap:8px;margin-bottom:16px;font-family:Arial,sans-serif;}
+    .stab{padding:6px 16px;border:2px solid var(--border);border-radius:20px;font-size:.8rem;font-weight:600;cursor:pointer;background:white;color:var(--gray);transition:all .2s;}
+    .stab.active{background:var(--gold);border-color:var(--gold);color:white;}
+    .stab span{font-weight:400;font-size:.72rem;display:block;}
+    .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    table{width:100%;border-collapse:collapse;font-family:Arial,sans-serif;font-size:.88rem;}
+    thead th{background:var(--dark);color:white;padding:12px 14px;text-align:left;font-size:.82rem;font-weight:600;}
+    thead th span{display:block;font-weight:400;font-size:.72rem;color:#aaa;margin-top:2px;}
+    thead th.feat{background:var(--burg);}
+    .spaces-row td{font-size:.72rem;color:#aaa;padding:4px 14px 10px;border-bottom:2px solid var(--border);font-style:italic;}
+    tbody tr:nth-child(even) td{background:#faf7f0;}
+    tbody td{padding:11px 14px;border-bottom:1px solid var(--border);}
+    .day-col{font-weight:700;}
+    .price-col{font-weight:600;color:var(--burg);}
+    .price-col.feat{color:var(--gold);font-weight:700;}
+    .na-col{color:#ccc;text-align:center;}
+    .sat-note{font-size:.68rem;background:var(--gold);color:white;padding:2px 6px;border-radius:10px;margin-left:6px;font-weight:700;vertical-align:middle;}
+    .cards{display:grid;gap:16px;}
+    .c2{grid-template-columns:repeat(2,1fr);}
+    .c3{grid-template-columns:repeat(3,1fr);}
+    .c4{grid-template-columns:repeat(4,1fr);}
+    .card{background:white;border:1px solid var(--border);border-radius:10px;padding:20px;position:relative;}
+    .card.feat{border:2px solid var(--gold);background:linear-gradient(135deg,#fffdf4,#fff9e6);}
+    .card-badge{position:absolute;top:-10px;right:14px;background:var(--gold);color:white;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:10px;font-family:Arial,sans-serif;text-transform:uppercase;letter-spacing:1px;}
+    .card-name{font-family:Arial,sans-serif;font-weight:700;font-size:1rem;color:var(--dark);margin-bottom:4px;}
+    .card-price{font-size:1.5rem;font-weight:700;color:var(--gold);margin-bottom:2px;}
+    .card-price span{font-size:.75rem;font-weight:400;color:var(--gray);}
+    .card-sub{font-size:.78rem;color:var(--gray);margin-bottom:12px;font-family:Arial,sans-serif;}
+    .card-includes{list-style:none;font-size:.78rem;font-family:Arial,sans-serif;color:var(--gray);line-height:1.9;}
+    .card-includes li::before{content:'✓ ';color:var(--gold);font-weight:700;}
+    .sst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;font-family:Arial,sans-serif;}
+    .sst-card{border:2px solid var(--border);border-radius:10px;padding:16px;text-align:center;background:white;}
+    .sst-card.def{border-color:var(--gold);background:var(--gold-lt);}
+    .sst-name{font-weight:700;font-size:1rem;color:var(--dark);}
+    .sst-price{font-size:1.2rem;font-weight:700;color:var(--gold);margin:4px 0;}
+    .sst-desc{font-size:.78rem;color:var(--gray);}
+    .ppa-list{display:flex;flex-direction:column;gap:10px;}
+    .ppa-row{display:flex;align-items:center;justify-content:space-between;background:white;border:1px solid var(--border);border-radius:8px;padding:14px 18px;font-family:Arial,sans-serif;gap:12px;}
+    .ppa-label{font-weight:600;font-size:.9rem;color:var(--dark);}
+    .ppa-sub{font-size:.75rem;color:var(--gray);margin-top:2px;}
+    .ppa-price{font-weight:700;color:var(--gold);font-size:1rem;white-space:nowrap;}
+    .info-box{background:white;border:1px solid var(--border);border-radius:10px;padding:20px 24px;font-family:Arial,sans-serif;font-size:.85rem;}
+    .info-box h4{font-size:.9rem;font-weight:700;color:var(--dark);margin-bottom:10px;}
+    .info-box ul{list-style:none;color:var(--gray);line-height:2;}
+    .info-box ul li{display:flex;justify-content:space-between;align-items:center;}
+    .tag{font-size:.68rem;padding:2px 8px;border-radius:10px;font-weight:700;}
+    .taxable{background:#ffeaea;color:#c0392b;}
+    .exempt{background:#eafaf1;color:#27ae60;}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .sub-h{font-family:Arial,sans-serif;font-size:.85rem;font-weight:700;color:var(--dark);margin-bottom:12px;letter-spacing:1px;text-transform:uppercase;}
+    .doc-footer{text-align:center;margin-top:60px;padding-top:24px;border-top:2px solid var(--border);font-family:Arial,sans-serif;font-size:.78rem;color:#aaa;line-height:2;}
+    .doc-footer a{color:var(--gold);text-decoration:none;}
+    .intro-note{font-family:Arial,sans-serif;font-size:.85rem;color:var(--gray);margin-bottom:20px;}
+    @media(max-width:640px){.c4,.c3{grid-template-columns:repeat(2,1fr);}.c2,.sst-grid,.two-col{grid-template-columns:1fr;}.doc-header h1{font-size:1.7rem;}}
+    @media(max-width:420px){.c4,.c3,.c2{grid-template-columns:1fr;}}
+    @media print{.print-bar{display:none;}body{background:white;}.page{padding:20px;}.card,.info-box,.ppa-row,.sst-card{break-inside:avoid;}.section{break-inside:avoid;}.doc-header{background:#1a1a1a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+  </style>
+</head>
+<body>
+
+<div class="print-bar">
+  <span>Stone House — Wedding Pricing Guide</span>
+  <button class="print-btn" onclick="window.print()"><i class="fas fa-print"></i> Print / Save PDF</button>
+</div>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="doc-header">
+    <div class="venue-name">Stone House · Nevada City, CA</div>
+    <h1>Wedding Pricing Guide</h1>
+    <div class="tagline">Venue rental · Catering · Bar service · Add-on packages · All-in-one reference</div>
+    <div class="address">107 Sacramento Street · Nevada City, CA 95959 · bookings@stonehouse.io · (530) 265-5050</div>
+  </div>
+
+  <!-- 1. VENUE -->
+  <div class="section">
+    <div class="section-title"><i class="fas fa-building"></i> Venue Rental</div>
+    <p class="intro-note">All rentals include our full AV system, built-in bar, bridal suite, and on-site support. <strong>Saturdays require a full-day block rental.</strong> Select a season below to view pricing.</p>
+    <div class="season-tabs">
+      <button class="stab active" data-s="0">Off-Peak <span>Jan – Feb</span></button>
+      <button class="stab" data-s="1">Shoulder <span>Mar – Apr, Nov</span></button>
+      <button class="stab" data-s="2">Peak <span>May – Oct, Dec</span></button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Partial Venue <span>Hourly · 3-hr min</span></th>
+            <th>Partial Venue <span>12-Hour Block · save 40%</span></th>
+            <th>Full Building <span>Hourly · 3-hr min</span></th>
+            <th class="feat">Full Building <span>12-Hour Block · Best Value</span></th>
+          </tr>
+          <tr class="spaces-row">
+            <td></td>
+            <td>Lounge, Dining Room, Patio &amp; Cave</td>
+            <td>Lounge, Dining Room, Patio &amp; Cave</td>
+            <td>All 6 spaces incl. Great Hall &amp; Parlour</td>
+            <td>All 6 spaces incl. Great Hall &amp; Parlour</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="day-col">Mon – Thu</td>
+            <td class="price-col" data-vals="$550/hr|$600/hr|$650/hr">$550/hr</td>
+            <td class="price-col" data-vals="$3,950|$4,300|$4,700">$3,950</td>
+            <td class="price-col" data-vals="$900/hr|$950/hr|$1,000/hr">$900/hr</td>
+            <td class="price-col feat" data-vals="$6,000|$7,800|$9,000">$6,000</td>
+          </tr>
+          <tr>
+            <td class="day-col">Friday</td>
+            <td class="price-col" data-vals="$600/hr|$650/hr|$750/hr">$600/hr</td>
+            <td class="price-col" data-vals="$4,300|$4,700|$5,400">$4,300</td>
+            <td class="price-col" data-vals="$950/hr|$1,000/hr|$1,100/hr">$950/hr</td>
+            <td class="price-col feat" data-vals="$7,000|$9,500|$11,000">$7,000</td>
+          </tr>
+          <tr>
+            <td class="day-col">Saturday <span class="sat-note">Block only</span></td>
+            <td class="na-col">—</td>
+            <td class="price-col" data-vals="$4,700|$5,400|$6,100">$4,700</td>
+            <td class="na-col">—</td>
+            <td class="price-col feat" data-vals="$8,500|$11,000|$12,000">$8,500</td>
+          </tr>
+          <tr>
+            <td class="day-col">Sunday</td>
+            <td class="price-col" data-vals="$600/hr|$700/hr|$800/hr">$600/hr</td>
+            <td class="price-col" data-vals="$4,300|$5,050|$5,750">$4,300</td>
+            <td class="price-col" data-vals="$950/hr|$1,000/hr|$1,100/hr">$950/hr</td>
+            <td class="price-col feat" data-vals="$7,800|$10,000|$11,500">$7,800</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 2. CATERING -->
+  <div class="section">
+    <div class="section-title"><i class="fas fa-utensils"></i> Catering</div>
+    <p class="intro-note">All packages include a salad course. Choose 1 or 2 proteins — when 2 are selected, the per-person price is the average of both. A <strong>20% service fee</strong> is applied to all food &amp; beverage.</p>
+
+    <p class="sub-h" style="margin-bottom:12px;">Entrée Options — Buffet Base Price</p>
+    <div class="cards c4" style="margin-bottom:24px;">
+      <div class="card">
+        <div class="card-name">Vegetarian</div>
+        <div class="card-price">$40<span>/person</span></div>
+        <div class="card-sub">Seasonal vegetable entrée</div>
+        <ul class="card-includes"><li>Eggplant Parmesan</li><li>Vegetable Lasagna</li><li>Stuffed Portobello</li></ul>
+      </div>
+      <div class="card">
+        <div class="card-name">Chicken</div>
+        <div class="card-price">$50<span>/person</span></div>
+        <div class="card-sub">Expertly prepared chicken</div>
+        <ul class="card-includes"><li>Herb Roasted Chicken</li><li>Chicken Marsala</li><li>Chicken Piccata</li></ul>
+      </div>
+      <div class="card">
+        <div class="card-name">Fish</div>
+        <div class="card-price">$60<span>/person</span></div>
+        <div class="card-sub">Fresh fish selection</div>
+        <ul class="card-includes"><li>Pan-Seared Salmon</li><li>Grilled Sea Bass</li><li>Herb-Crusted Tilapia</li></ul>
+      </div>
+      <div class="card feat">
+        <div class="card-name">Steak</div>
+        <div class="card-price">$70<span>/person</span></div>
+        <div class="card-sub">Premium steak cuts</div>
+        <ul class="card-includes"><li>Filet Mignon</li><li>Ribeye</li><li>NY Strip</li></ul>
+      </div>
+    </div>
+
+    <p class="sub-h" style="margin-bottom:12px;">Style of Service Upcharge</p>
+    <div class="sst-grid" style="margin-bottom:24px;">
+      <div class="sst-card def">
+        <div class="sst-name">Buffet</div>
+        <div class="sst-price">Included</div>
+        <div class="sst-desc">Self-serve stations</div>
+      </div>
+      <div class="sst-card">
+        <div class="sst-name">Family Style</div>
+        <div class="sst-price">+$5/person</div>
+        <div class="sst-desc">Shared platters at each table</div>
+      </div>
+      <div class="sst-card">
+        <div class="sst-name">Plated</div>
+        <div class="sst-price">+$10/person</div>
+        <div class="sst-desc">Full table service</div>
+      </div>
+    </div>
+
+    <p class="sub-h" style="margin-bottom:12px;">Optional Catering Add-Ons (per person)</p>
+    <div class="ppa-list" style="margin-bottom:12px;">
+      <div class="ppa-row">
+        <div>
+          <div class="ppa-label">Additional Side Dishes</div>
+          <div class="ppa-sub">Garlic Mashed Potatoes, Truffle Mac &amp; Cheese, Roasted Vegetables, Rice Pilaf, Grilled Asparagus &amp; more — final selections confirmed during planning</div>
+        </div>
+        <div class="ppa-price">$8/person <span style="font-weight:400;font-size:.78rem;color:#aaa;">per side</span></div>
+      </div>
+      <div class="ppa-row">
+        <div>
+          <div class="ppa-label">Passed Appetizers</div>
+          <div class="ppa-sub">Bruschetta, Shrimp Cocktail, Caprese Skewers, Mini Sliders, Stuffed Mushrooms, Spring Rolls &amp; more — final selections confirmed during planning</div>
+        </div>
+        <div class="ppa-price">$6/person <span style="font-weight:400;font-size:.78rem;color:#aaa;">per appetizer</span></div>
+      </div>
+      <div class="ppa-row">
+        <div>
+          <div class="ppa-label">Dessert Course</div>
+          <div class="ppa-sub">Wedding Cake Cutting Service, Plated Dessert, or Dessert Bar — final selection confirmed during planning</div>
+        </div>
+        <div class="ppa-price">$12/person</div>
+      </div>
+      <div class="ppa-row">
+        <div>
+          <div class="ppa-label">Outside Catering</div>
+          <div class="ppa-sub">Approved vendors only · Includes kitchen access &amp; coordination. Replaces in-house catering.</div>
+        </div>
+        <div class="ppa-price">$1,000 flat</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. BAR SERVICE -->
+  <div class="section">
+    <div class="section-title"><i class="fas fa-wine-glass"></i> Bar Service</div>
+    <div class="cards c3">
+      <div class="card">
+        <div class="card-name">Beer &amp; Wine</div>
+        <div class="card-price">$40<span>/person</span></div>
+        <div class="card-sub">4-hour bar service</div>
+        <ul class="card-includes">
+          <li>Domestic &amp; imported beer</li>
+          <li>Red &amp; white wine</li>
+          <li>Non-alcoholic beverages</li>
+          <li>Professional bartender</li>
+        </ul>
+      </div>
+      <div class="card feat">
+        <div class="card-badge">Most Popular</div>
+        <div class="card-name">Premium</div>
+        <div class="card-price">$50<span>/person</span></div>
+        <div class="card-sub">4-hour bar service</div>
+        <ul class="card-includes">
+          <li>Premium beer selection</li>
+          <li>Premium wine selection</li>
+          <li>Full liquor bar (well brands)</li>
+          <li>Professional bartender</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-name">Top Shelf</div>
+        <div class="card-price">$60<span>/person</span></div>
+        <div class="card-sub">5-hour bar service</div>
+        <ul class="card-includes">
+          <li>Premium craft beer</li>
+          <li>Premium wine selection</li>
+          <li>Top-shelf liquor brands</li>
+          <li>Champagne toast</li>
+          <li>2 professional bartenders</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. FLORAL -->
+  <div class="section">
+    <div class="section-title"><i class="fas fa-leaf"></i> Floral Packages &nbsp;<span style="font-size:.7rem;font-weight:400;color:#aaa;letter-spacing:1px;">Tax-Exempt</span></div>
+    <div class="cards c4">
+      <div class="card">
+        <div class="card-name">Intimate</div>
+        <div class="card-price">$1,500</div>
+        <ul class="card-includes" style="margin-top:10px;">
+          <li>Bridal bouquet</li>
+          <li>4 bridesmaid bouquets</li>
+          <li>5 boutonnieres</li>
+          <li>Centerpieces up to 10 tables</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-name">Classic</div>
+        <div class="card-price">$2,500</div>
+        <ul class="card-includes" style="margin-top:10px;">
+          <li>Everything in Intimate</li>
+          <li>Ceremony arch / backdrop</li>
+          <li>Cocktail area arrangements</li>
+          <li>Centerpieces up to 15 tables</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-name">Elegant</div>
+        <div class="card-price">$5,000</div>
+        <ul class="card-includes" style="margin-top:10px;">
+          <li>Everything in Classic</li>
+          <li>Premium flower varieties</li>
+          <li>Large ceremony installations</li>
+          <li>Head table arrangements</li>
+          <li>Centerpieces up to 25 tables</li>
+        </ul>
+      </div>
+      <div class="card feat">
+        <div class="card-badge">Luxury</div>
+        <div class="card-name">Luxury</div>
+        <div class="card-price">$10,000</div>
+        <ul class="card-includes" style="margin-top:10px;">
+          <li>Everything in Elegant</li>
+          <li>Premium imported flowers</li>
+          <li>Multiple ceremony installations</li>
+          <li>Ceiling installations</li>
+          <li>Custom floral consultation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. ADD-ONS -->
+  <div class="section">
+    <div class="section-title"><i class="fas fa-star"></i> Add-On Services &nbsp;<span style="font-size:.7rem;font-weight:400;color:#aaa;letter-spacing:1px;">All Tax-Exempt</span></div>
+    <div class="cards c3">
+      <div class="card">
+        <div class="card-name">Professional Photography</div>
+        <div class="card-price">$2,000</div>
+        <ul class="card-includes" style="margin-top:10px;">
+          <li>8 hours of coverage</li>
+          <li>2 professional photographers</li>
+          <li>500+ edited images</li>
+          <li>Online gallery for sharing</li>
+          <li>Full print release</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-name">Wedding Planning &amp; Coordination</div>
+        <div class="card-price">$2,500</div>
+        <ul class="card-includes" style="margin-top:10px;">
+          <li>Day-of coordination</li>
+          <li>Timeline creation</li>
+          <li>Vendor management</li>
+          <li>Setup supervision</li>
+          <li>Guest assistance</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-name">DJ Entertainment</div>
+        <div class="card-price">$2,500</div>
+        <ul class="card-includes" style="margin-top:10px;">
+          <li>5 hours of service</li>
+          <li>Professional sound system</li>
+          <li>2 wireless microphones</li>
+          <li>Dance floor lighting</li>
+          <li>Music consultation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. FEES & TAX -->
+  <div class="section">
+    <div class="section-title"><i class="fas fa-receipt"></i> Fees &amp; Tax</div>
+    <div class="two-col">
+      <div class="info-box">
+        <h4>Service Fee — 20%</h4>
+        <p style="color:var(--gray);font-size:.82rem;margin-bottom:10px;">Applied to all food &amp; beverage services before tax is calculated.</p>
+        <ul>
+          <li><span>Catering (entrées, sides, apps, dessert)</span><span class="tag taxable">Included</span></li>
+          <li><span>Bar service packages</span><span class="tag taxable">Included</span></li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <h4>Sales Tax — 7.75%</h4>
+        <p style="color:var(--gray);font-size:.82rem;margin-bottom:10px;">Unincorporated Nevada County rate. Applied to taxable items only.</p>
+        <ul>
+          <li><span>Food, beverage &amp; service fee</span><span class="tag taxable">Taxable</span></li>
+          <li><span>Venue rental</span><span class="tag exempt">Tax-exempt</span></li>
+          <li><span>Floral, photography, DJ, planning</span><span class="tag exempt">Tax-exempt</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    <strong>Stone House</strong> · 107 Sacramento Street, Nevada City, CA 95959<br>
+    <a href="mailto:bookings@stonehouse.io">bookings@stonehouse.io</a> · (530) 265-5050<br><br>
+    All pricing is subject to availability and final contract terms. Prices are estimates and may vary.<br>
+    Build your custom quote at <a href="https://stonehouse-wedding-cart.vercel.app">stonehouse-wedding-cart.vercel.app</a>
+  </div>
+
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.stab');
+  const cells = document.querySelectorAll('[data-vals]');
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      cells.forEach(cell => {
+        const vals = cell.dataset.vals.split('|');
+        cell.textContent = vals[i] || vals[0];
+      });
+    });
+  });
+</script>
+</body>
+</html>
