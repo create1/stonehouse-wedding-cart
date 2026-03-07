@@ -34,19 +34,6 @@ export const WEDDING_PRICING_CONFIG = {
 
     // Venue rental options with pricing by season and day
     options: {
-      fullBuilding: {
-        id: 'fullBuilding',
-        name: 'Full Building',
-        description: 'Hourly rental, 3-hour minimum',
-        minimumHours: 3,
-        maximumHours: 12,
-        capacity: 300,
-        pricing: {
-          offPeak: { monThu: 900, friday: 950, saturday: 1000, sunday: 950 },
-          shoulder: { monThu: 950, friday: 1000, saturday: 1100, sunday: 1000 },
-          peak: { monThu: 1000, friday: 1100, saturday: 1200, sunday: 1100 }
-        }
-      },
       partialBuilding: {
         id: 'partialBuilding',
         name: 'Partial Venue Rental',
@@ -403,7 +390,6 @@ export const WEDDING_PRICING_CONFIG = {
       largeEventMessage: 'For weddings with more than 150 guests, please contact us for a custom quote.',
       largeEventContact: 'bookings@stonehouse.io',
       recommendations: {
-        fullBuilding: { min: 50, max: 150, ideal: 100 },
         partialBuilding: { min: 20, max: 150, ideal: 80 },
         partialBuildingFlat: { min: 20, max: 150, ideal: 80 },
         partialBuilding: {
