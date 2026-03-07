@@ -44,8 +44,9 @@ const FLORAL_INCLUDES = {
 };
 
 const VENUE_NAMES = {
-  partialBuilding:     'Partial Venue Rental — Lounge, Dining Room, Patio & Cave',
-  partialBuildingFlat: 'Partial Venue — 12 Hour Block — Lounge, Dining Room, Patio & Cave',
+  singleRoom:          'Single Room (Hourly)',
+  partialBuilding:     'Partial Building (Hourly) — Lounge, Dining Room, Patio & Cavern',
+  partialBuildingFlat: 'Partial Building — 12 Hour Block — Lounge, Dining Room, Patio & Cavern',
   fullBuilding:    'Full Building (Hourly)',
   premiumEventCap: 'Full Building — 12-Hour Block',
 };

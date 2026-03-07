@@ -220,7 +220,7 @@ class WeddingCart {
     const isSaturday = date.getDay() === 6;
 
     // Hourly options (hidden on Saturdays — block rental only)
-    const hourlyCards = ['partialBuilding'];
+    const hourlyCards = ['singleRoom', 'partialBuilding'];
     // Flat/block options (always available)
     const flatCards   = ['partialBuildingFlat', 'premiumEventCap'];
 

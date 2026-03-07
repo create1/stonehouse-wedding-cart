@@ -102,11 +102,13 @@
                   <tr>
                     <th class="col-day">Day</th>
                     <th>Single Room <span>(hourly · 3-hr min)</span></th>
-                    <th>Single Room <span>(12 hr block · 40% off)</span></th>
+                    <th>Partial Building <span>(hourly · 3-hr min)</span></th>
+                    <th>Partial Building <span>(12 hr block · 40% off)</span></th>
                     <th class="col-featured">Full Building <span>(12 hr block · best value)</span></th>
                   </tr>
                   <tr class="col-subtitle-row">
                     <td></td>
+                    <td class="col-subtitle">One room of your choice</td>
                     <td class="col-subtitle">Lounge, Dining, Patio &amp; Cave</td>
                     <td class="col-subtitle">Lounge, Dining, Patio &amp; Cave</td>
                     <td class="col-subtitle col-featured">All 6 spaces</td>
@@ -115,12 +117,14 @@
                 <tbody>
                   <tr>
                     <td class="day-label">Mon–Thu</td>
+                    <td class="price-cell" data-offpeak="$250/hr" data-shoulder="$300/hr" data-peak="$350/hr">$250/hr</td>
                     <td class="price-cell" data-offpeak="$550/hr" data-shoulder="$600/hr" data-peak="$650/hr">$550/hr</td>
                     <td class="price-cell" data-offpeak="$3,950" data-shoulder="$4,300" data-peak="$4,700">$3,950</td>
                                         <td class="price-cell col-featured" data-offpeak="$6,000" data-shoulder="$7,800" data-peak="$9,000">$6,000</td>
                   </tr>
                   <tr>
                     <td class="day-label">Friday</td>
+                    <td class="price-cell" data-offpeak="$300/hr" data-shoulder="$350/hr" data-peak="$400/hr">$300/hr</td>
                     <td class="price-cell" data-offpeak="$600/hr" data-shoulder="$650/hr" data-peak="$750/hr">$600/hr</td>
                     <td class="price-cell" data-offpeak="$4,300" data-shoulder="$4,700" data-peak="$5,400">$4,300</td>
                                         <td class="price-cell col-featured" data-offpeak="$7,000" data-shoulder="$9,500" data-peak="$11,000">$7,000</td>
@@ -128,11 +132,13 @@
                   <tr class="saturday-row">
                     <td class="day-label">Saturday <span class="sat-badge">Block only</span></td>
                     <td class="na-cell">&mdash;</td>
+                    <td class="na-cell">&mdash;</td>
                     <td class="price-cell" data-offpeak="$4,700" data-shoulder="$5,400" data-peak="$6,100">$4,700</td>
                     <td class="price-cell col-featured" data-offpeak="$8,500" data-shoulder="$11,000" data-peak="$12,000">$8,500</td>
                   </tr>
                   <tr>
                     <td class="day-label">Sunday</td>
+                    <td class="price-cell" data-offpeak="$275/hr" data-shoulder="$325/hr" data-peak="$375/hr">$275/hr</td>
                     <td class="price-cell" data-offpeak="$600/hr" data-shoulder="$700/hr" data-peak="$800/hr">$600/hr</td>
                     <td class="price-cell" data-offpeak="$4,300" data-shoulder="$5,050" data-peak="$5,750">$4,300</td>
                                         <td class="price-cell col-featured" data-offpeak="$7,800" data-shoulder="$10,000" data-peak="$11,500">$7,800</td>
@@ -223,9 +229,25 @@
             </label>
 
             <div class="venue-grid">
+              <div class="venue-card" data-venue="singleRoom">
+                <div class="venue-card-header">
+                  <h3>Single Room</h3>
+                  <div class="venue-price" data-price-display="singleRoom"></div>
+                </div>
+                <p class="venue-description">Hourly rental, 3-hour minimum</p>
+                <p class="venue-capacity">Up to 75 guests</p>
+                <p class="venue-includes">One room of your choice.</p>
+                <div class="venue-duration" id="duration-singleRoom" style="display: none;">
+                  <label>Duration (hours):</label>
+                  <input type="range" class="duration-slider" min="3" max="12" value="5" step="1">
+                  <span class="duration-display">5 hours</span>
+                </div>
+                <button class="venue-select-btn">Select</button>
+              </div>
+
               <div class="venue-card" data-venue="partialBuilding">
                 <div class="venue-card-header">
-                  <h3>Partial Venue Rental</h3>
+                  <h3>Partial Building</h3>
                   <div class="venue-price" data-price-display="partialBuilding"></div>
                 </div>
                 <p class="venue-description">Hourly rental, 3-hour minimum</p>
@@ -241,7 +263,7 @@
 
               <div class="venue-card" data-venue="partialBuildingFlat">
                 <div class="venue-card-header">
-                  <h3>Partial Venue — 12 Hour Block</h3>
+                  <h3>Partial Building — 12 Hour Block</h3>
                   <div class="venue-price" data-price-display="partialBuildingFlat"></div>
                 </div>
                 <p class="venue-description">All-day flat rate — save 40% vs. hourly</p>

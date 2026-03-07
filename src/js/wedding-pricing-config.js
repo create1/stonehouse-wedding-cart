@@ -34,9 +34,22 @@ export const WEDDING_PRICING_CONFIG = {
 
     // Venue rental options with pricing by season and day
     options: {
+      singleRoom: {
+        id: 'singleRoom',
+        name: 'Single Room',
+        description: 'Hourly rental, 3-hour minimum — one room',
+        minimumHours: 3,
+        maximumHours: 12,
+        capacity: 75,
+        pricing: {
+          offPeak:  { monThu: 250, friday: 300, saturday: 350, sunday: 275 },
+          shoulder: { monThu: 300, friday: 350, saturday: 400, sunday: 325 },
+          peak:     { monThu: 350, friday: 400, saturday: 450, sunday: 375 }
+        }
+      },
       partialBuilding: {
         id: 'partialBuilding',
-        name: 'Partial Venue Rental',
+        name: 'Partial Building',
         description: 'Hourly rental, 3-hour minimum',
         minimumHours: 3,
         maximumHours: 12,
@@ -49,8 +62,8 @@ export const WEDDING_PRICING_CONFIG = {
       },
       partialBuildingFlat: {
         id: 'partialBuildingFlat',
-        name: 'Partial Venue — 12 Hour Block',
-        description: 'All-day flat rate, 40% off hourly',
+        name: 'Partial Building — 12 Hour Block',
+        description: 'All-day flat rate, 40% off hourly — dining room, lounge, patio & cavern',
         isFlat: true,
         capacity: 150,
         pricing: {
@@ -390,11 +403,37 @@ export const WEDDING_PRICING_CONFIG = {
       largeEventMessage: 'For weddings with more than 150 guests, please contact us for a custom quote.',
       largeEventContact: 'bookings@stonehouse.io',
       recommendations: {
-        partialBuilding: { min: 20, max: 150, ideal: 80 },
+        singleRoom: {
+        id: 'singleRoom',
+        name: 'Single Room',
+        description: 'Hourly rental, 3-hour minimum — one room',
+        minimumHours: 3,
+        maximumHours: 12,
+        capacity: 75,
+        pricing: {
+          offPeak:  { monThu: 250, friday: 300, saturday: 350, sunday: 275 },
+          shoulder: { monThu: 300, friday: 350, saturday: 400, sunday: 325 },
+          peak:     { monThu: 350, friday: 400, saturday: 450, sunday: 375 }
+        }
+      },
+      partialBuilding: { min: 20, max: 150, ideal: 80 },
         partialBuildingFlat: { min: 20, max: 150, ideal: 80 },
-        partialBuilding: {
+        singleRoom: {
+        id: 'singleRoom',
+        name: 'Single Room',
+        description: 'Hourly rental, 3-hour minimum — one room',
+        minimumHours: 3,
+        maximumHours: 12,
+        capacity: 75,
+        pricing: {
+          offPeak:  { monThu: 250, friday: 300, saturday: 350, sunday: 275 },
+          shoulder: { monThu: 300, friday: 350, saturday: 400, sunday: 325 },
+          peak:     { monThu: 350, friday: 400, saturday: 450, sunday: 375 }
+        }
+      },
+      partialBuilding: {
         id: 'partialBuilding',
-        name: 'Partial Venue Rental',
+        name: 'Partial Building',
         description: 'Hourly rental, 3-hour minimum',
         minimumHours: 3,
         maximumHours: 12,
@@ -407,8 +446,8 @@ export const WEDDING_PRICING_CONFIG = {
       },
       partialBuildingFlat: {
         id: 'partialBuildingFlat',
-        name: 'Partial Venue — 12 Hour Block',
-        description: 'All-day flat rate, 40% off hourly',
+        name: 'Partial Building — 12 Hour Block',
+        description: 'All-day flat rate, 40% off hourly — dining room, lounge, patio & cavern',
         isFlat: true,
         capacity: 150,
         pricing: {
