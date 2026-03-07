@@ -8,7 +8,7 @@ import { WEDDING_PRICING_CONFIG, WeddingPricingHelpers } from './wedding-pricing
 
 export class WeddingCalculator {
   
-  constructor(venueCity = 'unincorporated') {
+  constructor(venueCity = 'nevada-city') {
     this.venueCity = venueCity;
     this.taxRate = this.getTaxRate(venueCity);
   }

@@ -287,7 +287,7 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
   const nonTaxable  = venueCost + floralCost + photoCost + plannerCost + djCost;
   rows += r('Taxable Subtotal (catering, bar & service fee)', fmt(taxableBase));
   rows += r('Non-Taxable Subtotal (venue & add-ons)', fmt(nonTaxable));
-  rows += r('Sales Tax (7.75% on taxable items)', fmt(salesTax));
+  rows += r('Sales Tax (8.875% on taxable items)', fmt(salesTax));
   rows += divRow();
   rows += `<tr>
     <td style="padding:14px 0 0;font-size:1.2rem;font-weight:700;color:#D4AF37;">ESTIMATED TOTAL</td>

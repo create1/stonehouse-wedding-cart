@@ -349,7 +349,7 @@ export const WEDDING_PRICING_CONFIG = {
   // SALES TAX - NEVADA COUNTY, CA
   // ===================================
   salesTax: {
-    defaultRate: 0.0775, // 7.75% unincorporated Nevada County
+    defaultRate: 0.08875, // 8.875% Nevada City (venue location: 107 Sacramento St, Nevada City)
     jurisdiction: 'Nevada County, California',
     
     ratesByCity: {
@@ -369,9 +369,9 @@ export const WEDDING_PRICING_CONFIG = {
         breakdown: { state: 0.06, county: 0.0025, local: 0.0275 }
       },
       'unincorporated': {
-        rate: 0.0775,
+        rate: 0.075,
         name: 'Unincorporated Nevada County',
-        breakdown: { state: 0.06, county: 0.0025, local: 0.015 }
+        breakdown: { state: 0.06, county: 0.0025, local: 0.0125 }
       }
     },
 

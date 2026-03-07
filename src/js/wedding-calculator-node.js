@@ -46,18 +46,18 @@ const WEDDING_PRICING_CONFIG = {
     ]
   },
   salesTax: {
-    defaultRate: 0.0775,
+    defaultRate: 0.08875,
     ratesByCity: {
       'grass-valley': { rate: 0.08875 },
       'nevada-city': { rate: 0.08875 },
       'truckee': { rate: 0.09000 },
-      'unincorporated': { rate: 0.0775 }
+      'unincorporated': { rate: 0.08875 }
     }
   }
 };
 
 class WeddingCalculator {
-  constructor(venueCity = 'unincorporated') {
+  constructor(venueCity = 'nevada-city') {
     this.venueCity = venueCity;
     this.taxRate = this.getTaxRate(venueCity);
   }
