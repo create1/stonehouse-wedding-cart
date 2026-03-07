@@ -218,14 +218,14 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
       rows += r(
         `Additional Sides — ${sidesQty} side dish${sidesQty > 1 ? 'es' : ''}`,
         fmt(sidesTotal),
-        `${guestCount} guests × $8/person × ${sidesQty} side${sidesQty > 1 ? 's' : ''} · Final selections confirmed during planning`
+        `${guestCount} guests × $6/person × ${sidesQty} side${sidesQty > 1 ? 's' : ''} · Final selections confirmed during planning`
       );
     }
     if (appsQty > 0) {
       rows += r(
         `Passed Appetizers — ${appsQty} appetizer${appsQty > 1 ? 's' : ''}`,
         fmt(appsTotal),
-        `${guestCount} guests × $6/person × ${appsQty} appetizer${appsQty > 1 ? 's' : ''} · Final selections confirmed during planning`
+        `${guestCount} guests × $5/person × ${appsQty} appetizer${appsQty > 1 ? 's' : ''} · Final selections confirmed during planning`
       );
     }
 

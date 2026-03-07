@@ -484,8 +484,8 @@ class WeddingCart {
     if (!el) return;
     const qty = this.cart.catering.sidesQty || 0;
     if (qty > 0) {
-      const cost = qty * 8 * this.cart.guestCount;
-      el.innerHTML = `<i class="fas fa-check-circle"></i> ${qty} side dish${qty !== 1 ? 'es' : ''} × $8/person × ${this.cart.guestCount} guests = <strong>${WeddingPricingHelpers.formatCurrency(cost)}</strong>`;
+      const cost = qty * 5 * this.cart.guestCount;
+      el.innerHTML = `<i class="fas fa-check-circle"></i> ${qty} side dish${qty !== 1 ? 'es' : ''} × $5/person × ${this.cart.guestCount} guests = <strong>${WeddingPricingHelpers.formatCurrency(cost)}</strong>`;
     }
   }
 
@@ -494,8 +494,8 @@ class WeddingCart {
     if (!el) return;
     const qty = this.cart.catering.appetizersQty || 0;
     if (qty > 0) {
-      const cost = qty * 6 * this.cart.guestCount;
-      el.innerHTML = `<i class="fas fa-check-circle"></i> ${qty} passed appetizer${qty !== 1 ? 's' : ''} × $6/person × ${this.cart.guestCount} guests = <strong>${WeddingPricingHelpers.formatCurrency(cost)}</strong>`;
+      const cost = qty * 5 * this.cart.guestCount;
+      el.innerHTML = `<i class="fas fa-check-circle"></i> ${qty} passed appetizer${qty !== 1 ? 's' : ''} × $5/person × ${this.cart.guestCount} guests = <strong>${WeddingPricingHelpers.formatCurrency(cost)}</strong>`;
     }
   }
 
@@ -1291,7 +1291,7 @@ class WeddingCart {
     if (quote.catering.sides?.count > 0) {
       checkPageBreak(50);
       doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
-      doc.text('ADDITIONAL SIDES  —  $8/person each', marginL, y); y += 13;
+      doc.text('ADDITIONAL SIDES  —  $6/person each', marginL, y); y += 13;
       labelValue('Quantity', `${quote.catering.sides.count} side dish${quote.catering.sides.count !== 1 ? 'es' : ''}`);
       labelValue('Rate', `$8/person × ${quote.catering.guestCount} guests`);
       doc.setFont('helvetica', 'italic'); doc.setFontSize(8); doc.setTextColor(...mid);
@@ -1305,7 +1305,7 @@ class WeddingCart {
     if (quote.catering.appetizers?.count > 0) {
       checkPageBreak(50);
       doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
-      doc.text('PASSED APPETIZERS  —  $6/person each', marginL, y); y += 13;
+      doc.text('PASSED APPETIZERS  —  $5/person each', marginL, y); y += 13;
       labelValue('Quantity', `${quote.catering.appetizers.count} passed appetizer${quote.catering.appetizers.count !== 1 ? 's' : ''}`);
       labelValue('Rate', `$6/person × ${quote.catering.guestCount} guests`);
       doc.setFont('helvetica', 'italic'); doc.setFontSize(8); doc.setTextColor(...mid);

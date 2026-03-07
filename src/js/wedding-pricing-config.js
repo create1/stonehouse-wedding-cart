@@ -155,7 +155,7 @@ export const WEDDING_PRICING_CONFIG = {
     ],
 
     sides: {
-      pricePerPerson: 8,
+      pricePerPerson: 6,
       description: 'Additional side dishes',
       options: [
         { id: 'roasted-veg', name: 'Roasted Seasonal Vegetables', image: null },
@@ -168,7 +168,7 @@ export const WEDDING_PRICING_CONFIG = {
     },
 
     appetizers: {
-      pricePerPerson: 6,
+      pricePerPerson: 5,
       description: 'Passed appetizers during cocktail hour',
       options: [
         { id: 'bruschetta', name: 'Bruschetta', image: null },

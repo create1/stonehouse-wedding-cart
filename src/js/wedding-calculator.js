@@ -335,7 +335,7 @@ export class WeddingCalculator {
     if (quote.catering.sides.count > 0) {
       items.push({
         category: 'Additional Sides',
-        description: `${quote.catering.sides.count} side dish${quote.catering.sides.count !== 1 ? 'es' : ''} × $8/person × ${quote.catering.guestCount} guests`,
+        description: `${quote.catering.sides.count} side dish${quote.catering.sides.count !== 1 ? 'es' : ''} × $5/person × ${quote.catering.guestCount} guests`,
         amount: quote.catering.sides.cost,
         taxable: true,
         formatted: WeddingPricingHelpers.formatCurrency(quote.catering.sides.cost)
@@ -346,7 +346,7 @@ export class WeddingCalculator {
     if (quote.catering.appetizers.count > 0) {
       items.push({
         category: 'Passed Appetizers',
-        description: `${quote.catering.appetizers.count} passed appetizer${quote.catering.appetizers.count !== 1 ? 's' : ''} × $6/person × ${quote.catering.guestCount} guests`,
+        description: `${quote.catering.appetizers.count} passed appetizer${quote.catering.appetizers.count !== 1 ? 's' : ''} × $5/person × ${quote.catering.guestCount} guests`,
         amount: quote.catering.appetizers.cost,
         taxable: true,
         formatted: WeddingPricingHelpers.formatCurrency(quote.catering.appetizers.cost)
