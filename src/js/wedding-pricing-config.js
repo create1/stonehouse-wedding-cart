@@ -80,7 +80,7 @@ export const WEDDING_PRICING_CONFIG = {
         capacity: 300,
         pricing: {
           offPeak:  { monThu: 8000, friday: 9000, saturday: 10500, sunday: 9800 },
-          shoulder: { monThu: 9800, friday: 11500, saturday: 13000, sunday: 12000 },
+          shoulder: { monThu: 9800, friday: 11500, saturday: 13000, sunday: 12500 },
           peak:     { monThu: 11000, friday: 13000, saturday: 14000, sunday: 13500 }
         }
       }
@@ -294,7 +294,7 @@ export const WEDDING_PRICING_CONFIG = {
       photography: {
         id: 'photography',
         name: 'Professional Photography',
-        price: 2000,
+        price: 2500,
         taxable: false, // Professional service
         includes: [
           '8 hours of coverage',
