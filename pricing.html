@@ -38,7 +38,7 @@
     .price-col{font-weight:600;color:var(--burg);}
     .price-col.feat{color:var(--gold);font-weight:700;}
     .na-col{color:#ccc;text-align:center;}
-    .sat-note{font-size:.68rem;background:var(--gold);color:white;padding:2px 6px;border-radius:10px;margin-left:6px;font-weight:700;vertical-align:middle;}
+    .sat-note{display:inline-flex;align-items:center;gap:.25rem;font-size:.6rem;background:rgba(184,145,30,0.12);color:#7a5e00;border:1px solid rgba(184,145,30,0.4);padding:.15rem .45rem;border-radius:20px;margin-left:6px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle;white-space:nowrap;}.sat-note i{font-size:.55rem;opacity:.8;}
     .cards{display:grid;gap:16px;}
     .c2{grid-template-columns:repeat(2,1fr);}
     .c3{grid-template-columns:repeat(3,1fr);}
@@ -140,7 +140,7 @@
             <td class="price-col feat" data-vals="$9,000|$11,500|$13,000">$9,000</td>
           </tr>
           <tr>
-            <td class="day-col">Saturday <span class="sat-note">Block only</span></td>
+            <td class="day-col">Saturday <span class="sat-note"><i class="fas fa-lock"></i> Block only</span></td>
             <td class="na-col">—</td>
             <td class="na-col">—</td>
             <td class="price-col" data-vals="$4,700|$5,400|$6,100">$4,700</td>

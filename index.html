@@ -130,7 +130,7 @@
                                         <td class="price-cell col-featured" data-offpeak="$9,000" data-shoulder="$11,500" data-peak="$13,000">$9,000</td>
                   </tr>
                   <tr class="saturday-row">
-                    <td class="day-label">Saturday <span class="sat-badge">Block only</span></td>
+                    <td class="day-label">Saturday <span class="sat-badge"><i class="fas fa-lock"></i> Block only</span></td>
                     <td class="na-cell">&mdash;</td>
                     <td class="na-cell">&mdash;</td>
                     <td class="price-cell" data-offpeak="$4,700" data-shoulder="$5,400" data-peak="$6,100">$4,700</td>
@@ -227,6 +227,14 @@
               <i class="fas fa-building"></i>
               Venue Selection *
             </label>
+
+            <div id="saturday-notice" class="saturday-notice" style="display:none;">
+              <div class="saturday-notice-icon"><i class="fas fa-calendar-times"></i></div>
+              <div class="saturday-notice-text">
+                <strong>Saturdays are block-rental only</strong>
+                <span>Hourly rentals are not available on Saturdays. Choose a 12-hour block package below.</span>
+              </div>
+            </div>
 
             <div class="venue-grid">
               <div class="venue-card" data-venue="singleRoom">

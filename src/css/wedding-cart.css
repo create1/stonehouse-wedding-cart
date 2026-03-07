@@ -259,25 +259,87 @@ body {
 }
 
 .saturday-row {
-  background: rgba(212, 175, 55, 0.04);
+  background: rgba(212, 175, 55, 0.05);
 }
 
 .saturday-row td.day-label {
   color: var(--cart-primary);
+  font-weight: 600;
 }
 
 .sat-badge {
-  display: inline-block;
-  background: rgba(212, 175, 55, 0.15);
-  color: var(--cart-primary);
-  font-size: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(212, 175, 55, 0.12);
+  color: #8a6a00;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  font-size: 0.58rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  padding: 0.1rem 0.35rem;
-  border-radius: 3px;
-  margin-left: 0.3rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 20px;
+  margin-left: 0.4rem;
   vertical-align: middle;
+  white-space: nowrap;
+}
+
+.sat-badge i {
+  font-size: 0.55rem;
+  opacity: 0.85;
+}
+
+/* Saturday block-only notice banner */
+.saturday-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.04) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-left: 4px solid var(--cart-primary);
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1rem;
+  animation: noticeSlideIn 0.3s ease;
+}
+
+@keyframes noticeSlideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.saturday-notice-icon {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  background: rgba(212, 175, 55, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cart-primary);
+  font-size: 0.85rem;
+  margin-top: 0.05rem;
+}
+
+.saturday-notice-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.saturday-notice-text strong {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #6b4f00;
+  letter-spacing: 0.01em;
+}
+
+.saturday-notice-text span {
+  font-size: 0.75rem;
+  color: #7a6020;
+  line-height: 1.4;
 }
 
 /* ===================================

@@ -224,6 +224,8 @@ class WeddingCart {
     // Flat/block options (always available)
     const flatCards   = ['partialBuildingFlat', 'premiumEventCap'];
 
+    const notice = document.getElementById('saturday-notice');
+
     if (isSaturday) {
       // Saturday: flat/block rentals only — hide hourly options
       hourlyCards.forEach(id => {
@@ -239,12 +241,14 @@ class WeddingCart {
         const card = document.querySelector(`.venue-card[data-venue="${id}"]`);
         if (card) card.style.display = '';
       });
+      if (notice) notice.style.display = 'flex';
     } else {
       // All other days: all four options visible
       [...hourlyCards, ...flatCards].forEach(id => {
         const card = document.querySelector(`.venue-card[data-venue="${id}"]`);
         if (card) card.style.display = '';
       });
+      if (notice) notice.style.display = 'none';
     }
   }
 
