@@ -231,8 +231,8 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
     }
 
     // Service style
-    const styleLabels = { buffet: 'Buffet (included)', familyStyle: 'Family Style (+$5/person)', plated: 'Plated (+$10/person)' };
-    rows += r('Style of Service', styleLabels[serviceStyle] || serviceStyle, 'Buffet includes salad & entrée · Family Style +$5 · Plated +$10');
+    const styleLabels = { buffet: 'Buffet (included)', familyStyle: 'Family Style (+$10/person)', plated: 'Plated (+$10/person · highest entrée price applies)' };
+    rows += r('Style of Service', styleLabels[serviceStyle] || serviceStyle, 'All prices include catering rentals, plates & flatware · Buffet included · Family Style +$10 · Plated +$10 (highest entrée price applies to all guests)');
 
     // Dessert
     if (hasDessert) {

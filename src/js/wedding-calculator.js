@@ -68,7 +68,21 @@ export class WeddingCalculator {
   /**
    * Calculate catering total
    */
-  calculateCateringTotal(guestCount, protein1Id, protein2Id, sidesQty = 0, appetizersQty = 0, serviceStyle = 'buffet', includeDessert = false) {
+  /**
+   * Get the highest protein price from selections (used for Plated — highest price prevails)
+   */
+  calculateMaxProteinPrice(protein1Id, protein2Id) {
+    const proteins = WEDDING_PRICING_CONFIG.catering.proteins;
+    const p1 = proteins.find(p => p.id === protein1Id);
+    const p2 = proteins.find(p => p.id === protein2Id);
+    if (!p1 && !p2) return 0;
+    if (protein1Id === 'outside' || protein2Id === 'outside') return 0;
+    if (!p2) return p1?.pricePerPerson || 0;
+    if (!p1) return p2?.pricePerPerson || 0;
+    return Math.max(p1.pricePerPerson, p2.pricePerPerson);
+  }
+
+    calculateCateringTotal(guestCount, protein1Id, protein2Id, sidesQty = 0, appetizersQty = 0, serviceStyle = 'buffet', includeDessert = false) {
     // Check if outside catering is selected
     if (protein1Id === 'outside' || protein2Id === 'outside') {
       return {
@@ -91,7 +105,12 @@ export class WeddingCalculator {
     // Service style upcharge per person
     const styleConfig = WEDDING_PRICING_CONFIG.catering.serviceStyles?.find(s => s.id === serviceStyle);
     const styleUpcharge = styleConfig?.upcharge || 0;
-    const effectivePrice = avgProteinPrice + styleUpcharge;
+
+    // For Plated: highest protein price prevails across full guest count
+    const baseProteinPrice = styleConfig?.usesMaxProteinPrice
+      ? this.calculateMaxProteinPrice(protein1Id, protein2Id)
+      : avgProteinPrice;
+    const effectivePrice = baseProteinPrice + styleUpcharge;
 
     const baseCatering = effectivePrice * guestCount;
 
@@ -104,6 +123,9 @@ export class WeddingCalculator {
 
     return {
       avgProteinPrice,
+      maxProteinPrice: this.calculateMaxProteinPrice(protein1Id, protein2Id),
+      baseProteinPrice,
+      usesMaxProteinPrice: styleConfig?.usesMaxProteinPrice || false,
       styleUpcharge,
       effectivePrice,
       serviceStyleName: styleConfig?.name || 'Buffet',

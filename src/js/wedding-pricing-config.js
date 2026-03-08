@@ -100,8 +100,8 @@ export const WEDDING_PRICING_CONFIG = {
 
     serviceStyles: [
       { id: 'buffet',       name: 'Buffet',        upcharge: 0,  description: 'Self-serve stations' },
-      { id: 'familyStyle',  name: 'Family Style',  upcharge: 5,  description: 'Shared platters at each table' },
-      { id: 'plated',       name: 'Plated',        upcharge: 10, description: 'Full table service' },
+      { id: 'familyStyle',  name: 'Family Style',  upcharge: 10, description: 'Shared platters at each table' },
+      { id: 'plated',       name: 'Plated',        upcharge: 10, description: 'Full table service', usesMaxProteinPrice: true },
     ],
 
     dessert: {
@@ -114,7 +114,7 @@ export const WEDDING_PRICING_CONFIG = {
       {
         id: 'vegetarian',
         name: 'Vegetarian',
-        pricePerPerson: 40,
+        pricePerPerson: 45,
         description: 'Seasonal vegetable entrée',
         examples: ['Eggplant Parmesan', 'Vegetable Lasagna', 'Stuffed Portobello'],
         image: '../src/images/food/vegan-entree.avif'
@@ -122,7 +122,7 @@ export const WEDDING_PRICING_CONFIG = {
       {
         id: 'chicken',
         name: 'Chicken',
-        pricePerPerson: 50,
+        pricePerPerson: 55,
         description: 'Expertly prepared chicken',
         examples: ['Herb Roasted Chicken', 'Chicken Marsala', 'Chicken Piccata'],
         image: '../src/images/food/Food1.avif'
@@ -130,7 +130,7 @@ export const WEDDING_PRICING_CONFIG = {
       {
         id: 'fish',
         name: 'Fish',
-        pricePerPerson: 60,
+        pricePerPerson: 65,
         description: 'Fresh fish selection',
         examples: ['Pan-Seared Salmon', 'Grilled Sea Bass', 'Herb-Crusted Tilapia'],
         image: '../src/images/food/fish-plate.avif'
@@ -138,7 +138,7 @@ export const WEDDING_PRICING_CONFIG = {
       {
         id: 'steak',
         name: 'Steak',
-        pricePerPerson: 70,
+        pricePerPerson: 75,
         description: 'Premium steak',
         examples: ['Filet Mignon', 'Ribeye', 'NY Strip'],
         image: '../src/images/food/steak-dish.avif'
