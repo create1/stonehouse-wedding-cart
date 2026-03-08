@@ -536,7 +536,7 @@ class WeddingCart {
     const qty = this.cart.guestCount || 0;
     const cost = 12 * qty;
     el.textContent = qty > 0
-      ? `+$${cost.toLocaleString()} (${qty} guests × $12/person)`
+      ? `+$${cost.toLocaleString()} (${qty} guests × $10/person)`
       : '';
   }
 

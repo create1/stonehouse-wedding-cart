@@ -100,12 +100,12 @@ export const WEDDING_PRICING_CONFIG = {
 
     serviceStyles: [
       { id: 'buffet',       name: 'Buffet',        upcharge: 0,  description: 'Self-serve stations' },
-      { id: 'familyStyle',  name: 'Family Style',  upcharge: 10, description: 'Shared platters at each table' },
+      { id: 'familyStyle',  name: 'Family Style',  upcharge: 5, description: 'Shared platters at each table' },
       { id: 'plated',       name: 'Plated',        upcharge: 10, description: 'Full table service', usesMaxProteinPrice: true },
     ],
 
     dessert: {
-      pricePerPerson: 12,
+      pricePerPerson: 10,
       description: 'Optional dessert course',
       examples: ['Wedding Cake Cutting', 'Plated Dessert', 'Dessert Bar'],
     },

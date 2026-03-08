@@ -231,14 +231,14 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
     }
 
     // Service style
-    const styleLabels = { buffet: 'Buffet (included)', familyStyle: 'Family Style (+$10/person)', plated: 'Plated (+$10/person · highest entrée price applies)' };
-    rows += r('Style of Service', styleLabels[serviceStyle] || serviceStyle, 'All prices include catering rentals, plates & flatware · Buffet included · Family Style +$10 · Plated +$10 (highest entrée price applies to all guests)');
+    const styleLabels = { buffet: 'Buffet (included)', familyStyle: 'Family Style (+$5/person)', plated: 'Plated (+$10/person · highest entrée price applies)' };
+    rows += r('Style of Service', styleLabels[serviceStyle] || serviceStyle, 'All prices include catering rentals, plates & flatware · Buffet included · Family Style +$5 · Plated +$10 (highest entrée price applies to all guests)');
 
     // Dessert
     if (hasDessert) {
-      rows += r('Dessert Course', fmt(dessertCost), `${guestCount} guests × $12/person · Final selection confirmed during planning`);
+      rows += r('Dessert Course', fmt(dessertCost), `${guestCount} guests × $10/person · Final selection confirmed during planning`);
     } else {
-      rows += note('Dessert not included — can be added at $12/person');
+      rows += note('Dessert not included — can be added at $10/person');
     }
   }
 
