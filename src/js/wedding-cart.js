@@ -1209,7 +1209,7 @@ class WeddingCart {
 
     if (venueConfig?.isFlat) {
       labelValue('Package', quote.venue.typeName);
-      labelValue('Includes', 'Lounge, Great Hall, Show Room, Patio, Cavern & Parlour');
+      labelValue('Includes', 'Lounge, Great Hall, Show Room, Courtyard, Cavern & Parlour');
       labelValue('Duration', '12-Hour Block (all-day access)');
       labelValue('Day', dayOfWeek + ` (${dayTierName} rate)`);
       labelValue('Season', `${season?.name} Season (${season?.description})`);
@@ -1225,7 +1225,7 @@ class WeddingCart {
       const hourlyRate = venueConfig?.pricing?.[season?.key]?.[dayTier] || 0;
       const hours = cart.venue.hours || 5;
       labelValue('Package', quote.venue.typeName);
-      labelValue('Includes', 'Lounge, Great Hall, Show Room, Patio, Cavern & Parlour');
+      labelValue('Includes', 'Lounge, Great Hall, Show Room, Courtyard, Cavern & Parlour');
       labelValue('Day', dayOfWeek + ` (${dayTierName} rate)`);
       labelValue('Season', `${season?.name} Season (${season?.description})`);
       labelValue('Hourly Rate', `${fmt(hourlyRate)}/hour`);

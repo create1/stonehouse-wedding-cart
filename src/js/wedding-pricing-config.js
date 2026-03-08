@@ -63,7 +63,7 @@ export const WEDDING_PRICING_CONFIG = {
       partialBuildingFlat: {
         id: 'partialBuildingFlat',
         name: 'Partial Building — 12 Hour Block',
-        description: 'All-day flat rate, 40% off hourly — dining room, lounge, patio & cavern',
+        description: 'All-day flat rate, 40% off hourly — dining room, lounge, courtyard & cavern',
         isFlat: true,
         capacity: 150,
         pricing: {
@@ -447,7 +447,7 @@ export const WEDDING_PRICING_CONFIG = {
       partialBuildingFlat: {
         id: 'partialBuildingFlat',
         name: 'Partial Building — 12 Hour Block',
-        description: 'All-day flat rate, 40% off hourly — dining room, lounge, patio & cavern',
+        description: 'All-day flat rate, 40% off hourly — dining room, lounge, courtyard & cavern',
         isFlat: true,
         capacity: 150,
         pricing: {

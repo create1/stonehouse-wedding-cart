@@ -45,8 +45,8 @@ const FLORAL_INCLUDES = {
 
 const VENUE_NAMES = {
   singleRoom:          'Single Room (Hourly)',
-  partialBuilding:     'Partial Building (Hourly) — Lounge, Dining Room, Patio & Cavern',
-  partialBuildingFlat: 'Partial Building — 12 Hour Block — Lounge, Dining Room, Patio & Cavern',
+  partialBuilding:     'Partial Building (Hourly) — Lounge, Dining Room, Courtyard & Cavern',
+  partialBuildingFlat: 'Partial Building — 12 Hour Block — Lounge, Dining Room, Courtyard & Cavern',
   fullBuilding:    'Full Building (Hourly)',
   premiumEventCap: 'Full Building — 12-Hour Block',
 };
@@ -195,9 +195,9 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
   rows += sh('🏛️ Venue');
   if (venueType) {
     const vName = VENUE_NAMES[venueType] || venueType;
-    const vSub  = venueType === 'partialBuildingFlat'      ? 'Full-day access (12 hours) · 40% off hourly rate · Lounge, Dining Room, Patio & Cave'      : venueType === 'partialBuilding'      ? `${venueHours || 5} hours · 3-hour minimum · Lounge, Dining Room, Patio & Cave`      : venueType === 'fullBuilding'
-      ? `${venueHours || 5} hours · 3-hour minimum · Lounge, Great Hall, Show Room, Patio, Cavern & Parlour`
-      : 'Full-day access · Lounge, Great Hall, Show Room, Patio, Cavern & Parlour';
+    const vSub  = venueType === 'partialBuildingFlat'      ? 'Full-day access (12 hours) · 40% off hourly rate · Lounge, Dining Room, Courtyard & Cave'      : venueType === 'partialBuilding'      ? `${venueHours || 5} hours · 3-hour minimum · Lounge, Dining Room, Courtyard & Cave`      : venueType === 'fullBuilding'
+      ? `${venueHours || 5} hours · 3-hour minimum · Lounge, Great Hall, Show Room, Courtyard, Cavern & Parlour`
+      : 'Full-day access · Lounge, Great Hall, Show Room, Courtyard, Cavern & Parlour';
     rows += r(vName, fmt(venueCost), vSub);
   } else {
     rows += r('Venue', fmt(venueCost));
