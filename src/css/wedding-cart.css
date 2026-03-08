@@ -11,6 +11,7 @@ html {
   margin: 0;
   padding: 0;
   width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
 }
 
@@ -18,6 +19,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
+  max-width: 100%;
   min-height: 100vh;
   font-family: 'Open Sans', sans-serif;
   background: var(--cart-bg);
@@ -2859,4 +2861,54 @@ textarea.form-input {
   .venue-card-header h3 { font-size: 0.9rem !important; }
   .venue-price { font-size: 1rem !important; }
   .venue-select-btn { padding: 0.55rem 0.75rem !important; font-size: 0.8rem !important; min-width: 60px !important; }
+}
+
+/* ================================================================
+   OVERFLOW CONTROL + MOBILE PRICING TABLE HIDE
+   ================================================================ */
+
+/* Mobile pricing link (shown instead of table on mobile) */
+.mobile-pricing-link {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Root-level overflow guard */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
+  /* Hide the pricing reference table on mobile — too wide */
+  .inline-pricing {
+    display: none !important;
+  }
+
+  /* Show a clean "View pricing" link instead */
+  .mobile-pricing-link {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    color: var(--cart-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .mobile-pricing-link:hover {
+    background: rgba(212, 175, 55, 0.14);
+  }
+
+  .mobile-pricing-link .fa-arrow-right {
+    margin-left: auto;
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
 }
