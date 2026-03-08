@@ -2506,8 +2506,7 @@ textarea.form-input {
     border-radius: 8px;
   }
 
-  /* Single column everything */
-  .protein-grid,
+  /* Single column for options only (protein stays 2-col) */
   .options-grid {
     grid-template-columns: 1fr;
   }
@@ -2813,5 +2812,316 @@ textarea.form-input {
   .pricing-table th span,
   .col-subtitle-row td {
     font-size: 0.65rem;
+  }
+}
+
+
+/* ========================================================
+   COMPREHENSIVE MOBILE OPTIMIZATIONS
+   ======================================================== */
+
+/* ── Tap / touch active feedback on all card types ──────── */
+@media (hover: none) {
+  .venue-card:active,
+  .protein-card:active,
+  .beverage-card:active,
+  .floral-card:active,
+  .service-card:active,
+  .service-style-card:active {
+    transform: scale(0.97);
+    opacity: 0.85;
+    transition: transform 0.1s, opacity 0.1s;
+  }
+}
+
+/* ── Pricing table: right-fade scroll indicator ─────────── */
+.pricing-table-wrap {
+  position: relative;
+}
+
+.pricing-scroll-hint {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  color: var(--cart-medium);
+  padding: 0.45rem 0.75rem;
+  background: rgba(0, 0, 0, 0.03);
+  border-top: 1px solid var(--cart-light);
+  border-radius: 0 0 10px 10px;
+  letter-spacing: 0.02em;
+}
+
+.pricing-scroll-hint i {
+  color: var(--cart-primary);
+  font-size: 0.75rem;
+}
+
+/* ── 768px — Primary mobile breakpoint ─────────────────── */
+@media (max-width: 768px) {
+
+  /* Hero: reduce height */
+  .cart-hero {
+    padding: 1.75rem 1rem 1.5rem;
+  }
+
+  /* Show scroll hint below pricing table */
+  .pricing-scroll-hint {
+    display: flex;
+  }
+
+  /* Right-fade on pricing table */
+  .pricing-table-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 36px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.92));
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* Hide subtitle row in pricing table to save vertical space */
+  .col-subtitle-row {
+    display: none;
+  }
+
+  /* Venue cards: compact vertical */
+  .venue-grid {
+    gap: 0.65rem;
+  }
+
+  .venue-card {
+    padding: 0.85rem 1rem;
+  }
+
+  .venue-card.recommended {
+    padding-top: 2.35rem;
+  }
+
+  .venue-card-header h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .venue-price {
+    font-size: 1.25rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .venue-description,
+  .venue-capacity,
+  .venue-note {
+    font-size: 0.8rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .venue-includes {
+    font-size: 0.74rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .venue-select-btn {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Protein cards: always 2 columns, compact */
+  .protein-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.65rem;
+  }
+
+  .protein-img {
+    height: 140px;
+  }
+
+  .protein-content {
+    padding: 0.8rem;
+  }
+
+  .protein-content h3 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .protein-price {
+    font-size: 1.35rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .protein-description {
+    font-size: 0.82rem;
+  }
+
+  .includes-note {
+    font-size: 0.78rem;
+  }
+
+  /* Service style: 3 compact cols */
+  .service-style-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px;
+  }
+
+  .service-style-card {
+    padding: 10px 8px;
+  }
+
+  .service-style-name {
+    font-size: 0.82rem;
+  }
+
+  .service-style-price {
+    font-size: 0.72rem;
+  }
+
+  .service-style-desc {
+    font-size: 0.65rem;
+  }
+
+  /* Beverage cards: shorter images */
+  .beverage-img {
+    height: 155px;
+  }
+
+  /* Floral cards */
+  .floral-grid {
+    gap: 0.65rem;
+  }
+
+  .floral-card {
+    padding: 0.9rem;
+  }
+
+  /* Service add-on cards */
+  .service-card {
+    padding: 0.9rem;
+    gap: 0.75rem;
+  }
+
+  /* Qty selector: tighter */
+  .qty-number {
+    font-size: 2.4rem;
+  }
+
+  /* Form sections: tighter gaps */
+  .form-section {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Mobile price bar: gold top border + safe-area */
+  .mobile-price-bar {
+    border-top: 3px solid var(--cart-primary);
+    padding: 0.6rem 1rem calc(0.6rem + env(safe-area-inset-bottom));
+  }
+
+  .mobile-expand-btn {
+    padding: 0.7rem;
+    font-size: 0.9rem;
+  }
+
+  /* Review: tighten totals */
+  .total-row {
+    font-size: 0.9rem;
+  }
+
+  .total-row.grand-total {
+    font-size: 1.2rem;
+  }
+}
+
+/* ── 480px — Small phones ───────────────────────────────── */
+@media (max-width: 480px) {
+
+  /* Protein: still 2 cols, shorter image */
+  .protein-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem;
+  }
+
+  .protein-img {
+    height: 110px;
+  }
+
+  .protein-content {
+    padding: 0.65rem;
+  }
+
+  .protein-content h3 {
+    font-size: 0.9rem;
+  }
+
+  .protein-price {
+    font-size: 1.15rem;
+  }
+
+  /* Service style: 3 cols, very tight — hide description */
+  .service-style-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 5px;
+  }
+
+  .service-style-card {
+    padding: 8px 5px;
+    border-radius: 8px;
+  }
+
+  .service-style-name {
+    font-size: 0.72rem;
+  }
+
+  .service-style-price {
+    font-size: 0.65rem;
+  }
+
+  .service-style-desc {
+    display: none;
+  }
+
+  /* Qty: compact */
+  .qty-number {
+    font-size: 2rem;
+  }
+
+  .qty-btn {
+    width: 42px;
+    height: 42px;
+  }
+
+  /* Venue cards: even more compact */
+  .venue-card {
+    padding: 0.7rem 0.85rem;
+  }
+
+  .venue-card-header h3 {
+    font-size: 0.95rem;
+  }
+
+  .venue-price {
+    font-size: 1.1rem;
+  }
+
+  /* Beverage: shorter image */
+  .beverage-img {
+    height: 130px;
+  }
+
+  /* Hero: minimal */
+  .cart-hero {
+    padding: 1.5rem 0.75rem 1.25rem;
+  }
+
+  /* Tighten review page */
+  .review-section {
+    padding: 1rem 0.9rem;
+  }
+
+  .itemized-list {
+    padding: 1rem;
   }
 }
