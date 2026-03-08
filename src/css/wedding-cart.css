@@ -2210,14 +2210,14 @@ textarea.form-input {
   margin-top: 1.5rem;
 }
 
-/* ===================================
-   RESPONSIVE DESIGN
-   =================================== */
-
-/* ===================================
+/* ================================================================
    TABLET (≤1024px)
-   =================================== */
+   ================================================================ */
 @media (max-width: 1024px) {
+  .summary-close-btn {
+    display: flex;
+  }
+
   .cart-container {
     padding: 1.25rem;
   }
@@ -2235,331 +2235,15 @@ textarea.form-input {
   .mobile-price-bar {
     display: block;
   }
-}
-
-/* ===================================
-   MOBILE (≤768px)
-   =================================== */
-@media (max-width: 768px) {
-
-  /* Hero */
-  .cart-hero {
-    padding: 2.5rem 1rem 2rem;
-  }
-
-  .cart-hero h1 {
-    font-size: 1.8rem;
-  }
-
-  .cart-hero .hero-subtitle {
-    font-size: 1rem;
-  }
-
-  .hero-logo {
-    max-height: 70px;
-    margin-bottom: 1rem;
-  }
-
-  /* Layout */
-  .cart-container {
-    padding: 0.75rem 0.75rem 140px;
-  }
-
-  .cart-main {
-    padding: 1.25rem 1rem;
-    border-radius: 10px;
-  }
-
-  /* Progress bar — stay horizontal, shrink */
-  .progress-steps {
-    gap: 0;
-  }
-
-  .step-circle {
-    width: 34px;
-    height: 34px;
-    font-size: 0.85rem;
-  }
-
-  .step-label {
-    font-size: 0.65rem;
-  }
-
-  .progress-line {
-    margin: 0 2px;
-    top: -17px;
-  }
-
-  .cart-step h2 {
-    font-size: 1.5rem;
-  }
-
-  .step-description {
-    font-size: 0.95rem;
-  }
-
-  /* Pricing table — horizontal scroll */
-  .inline-pricing {
-    margin-bottom: 1.25rem;
-  }
-
-  .pricing-table thead th,
-  .pricing-table tbody td {
-    padding: 0.55rem 0.6rem;
-    font-size: 0.78rem;
-    white-space: nowrap;
-  }
-
-  .pricing-table thead th span,
-  .sat-badge {
-    display: none;
-  }
-
-  .season-tab {
-    padding: 0.4rem 0.25rem;
-  }
-
-  .season-tab-name {
-    font-size: 0.72rem;
-  }
-
-  .season-tab-dates {
-    font-size: 0.6rem;
-  }
-
-  /* Cards — single column */
-  .venue-grid,
-  .beverage-grid,
-  .floral-grid,
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .protein-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .options-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* Section headers stack on mobile */
-  .section-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-  }
-
-  .section-header .toggle-switch {
-    align-self: flex-start;
-  }
-
-  /* Navigation buttons */
-  .step-navigation {
-    flex-direction: column-reverse;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-  }
-
-  .step-navigation .btn {
-    width: 100%;
-    justify-content: center;
-    padding: 1rem;
-    font-size: 1rem;
-  }
-
-  /* Forms */
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-
-  /* Prevent iOS zoom on input focus — must be 16px+ */
-  .form-input,
-  .form-input-small,
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  input[type="number"],
-  select,
-  textarea {
-    font-size: 16px !important;
-  }
-
-  /* Slider */
-  .slider {
-    height: 12px;
-  }
-
-  .slider::-webkit-slider-thumb,
-  .slider::-moz-range-thumb {
-    width: 44px;
-    height: 44px;
-  }
-
-  .guest-count-display #guest-count-value {
-    font-size: 2.5rem;
-  }
-
-  /* Sidebar — hide on mobile, use sticky bar instead */
-  .price-summary {
-    display: none;
-  }
-
-  .price-summary.mobile-expanded {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9998;
-    max-height: 100vh;
-    border-radius: 0;
-    overflow-y: auto;
-    padding-bottom: 6rem;
-  }
-
-  /* Mobile price bar */
-  .mobile-price-bar {
-    padding: 0.75rem 1rem;
-  }
-
-  .mobile-price-content {
-    margin-bottom: 0.5rem;
-  }
-
-  .mobile-amount {
-    font-size: 1.4rem;
-  }
-
-  /* Review page */
-  .review-section {
-    padding: 1.25rem;
-  }
-
-  .item-row {
-    flex-wrap: wrap;
-    gap: 0.25rem;
-  }
-
-  .full-package-banner {
-    flex-direction: column;
-    gap: 0.75rem;
-    text-align: center;
-  }
-
-  .full-package-banner i {
-    font-size: 2rem;
-  }
-
-  .banner-content h3 {
-    font-size: 1.2rem;
-  }
-
-  /* Touch-friendly min heights */
-  .venue-select-btn,
-  .package-select-btn,
-  .floral-select-btn,
-  .service-toggle-btn,
-  .btn {
-    min-height: 48px;
-  }
-
-  .slider-btn {
-    width: 48px;
-    height: 48px;
-  }
-
-  /* Success page */
-  .success-actions {
-    flex-direction: column;
-  }
-
-  .success-actions .btn {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-/* ===================================
-   SMALL MOBILE (≤480px)
-   =================================== */
-@media (max-width: 480px) {
-  .cart-hero {
-    padding: 2rem 0.75rem 1.5rem;
-  }
-
-  .cart-hero h1 {
-    font-size: 1.5rem;
-  }
-
-  .hero-logo {
-    max-height: 60px;
-  }
 
   .cart-container {
-    padding: 0.5rem 0.5rem 140px;
-  }
-
-  .cart-main {
-    padding: 1rem 0.75rem;
-    border-radius: 8px;
-  }
-
-  /* Single column for options only (protein stays 2-col) */
-  .options-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* Hide step labels, just circles */
-  .step-label {
-    display: none;
-  }
-
-  .step-circle {
-    width: 30px;
-    height: 30px;
-    font-size: 0.8rem;
-  }
-
-  .cart-step h2 {
-    font-size: 1.3rem;
-  }
-
-  .form-label {
-    font-size: 1rem;
-  }
-
-  /* Protein images shorter */
-  .protein-img {
-    height: 130px;
-  }
-
-  .beverage-img {
-    height: 180px;
-  }
-
-  .beverage-img--beerwine {
-    object-position: center 40%;
-  }
-
-  .beverage-img--premium {
-    object-position: center 70%;
-  }
-
-  .beverage-img--topshelf {
-    object-position: center 65%;
-  }
-
-  /* Tighter form sections */
-  .form-section {
-    margin-bottom: 1.75rem;
+    padding-bottom: 140px;
   }
 }
 
-/* ===================================
-   FLATPICKR MOBILE OVERRIDES
-   =================================== */
+/* ================================================================
+   FLATPICKR OVERRIDES
+   ================================================================ */
 .flatpickr-calendar {
   border-radius: 12px !important;
   box-shadow: 0 8px 32px rgba(0,0,0,0.18) !important;
@@ -2606,7 +2290,6 @@ textarea.form-input {
   fill: white !important;
 }
 
-/* Touch-friendly calendar on mobile */
 @media (max-width: 768px) {
   .flatpickr-calendar {
     width: calc(100vw - 2rem) !important;
@@ -2617,11 +2300,6 @@ textarea.form-input {
     transform: translate(-50%, -50%) !important;
     z-index: 99999 !important;
     box-shadow: 0 16px 48px rgba(0,0,0,0.35) !important;
-  }
-
-  /* Backdrop overlay */
-  .flatpickr-calendar.open {
-    animation: none !important;
   }
 
   .flatpickr-calendar.open::after {
@@ -2664,66 +2342,48 @@ textarea.form-input {
   }
 }
 
-/* ===================================
-   UTILITY CLASSES
-   =================================== */
-.text-center {
-  text-align: center;
+/* ================================================================
+   MOBILE — 768px and below
+   ONE authoritative block, no duplicates
+   ================================================================ */
+
+/* ── Touch feedback ──────────────────────────────────────────── */
+@media (hover: none) {
+  .venue-card:active,
+  .protein-card:active,
+  .beverage-card:active,
+  .floral-card:active,
+  .service-card:active,
+  .service-style-card:active {
+    transform: scale(0.97);
+    opacity: 0.88;
+    transition: transform 0.08s, opacity 0.08s;
+  }
 }
 
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 1.5rem; }
-.mb-1 { margin-bottom: 0.5rem; }
-.mb-2 { margin-bottom: 1rem; }
-.mb-3 { margin-bottom: 1.5rem; }
-
-.note-text {
-  font-size: 0.9rem;
+/* ── Scroll hint under pricing table ─────────────────────────── */
+.pricing-scroll-hint {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
   color: var(--cart-medium);
-  font-style: italic;
+  padding: 0.4rem 0.75rem;
+  background: rgba(0,0,0,0.03);
+  border-top: 1px solid var(--cart-light);
+  border-radius: 0 0 10px 10px;
 }
 
-/* ===================================
-   LOADING STATES
-   =================================== */
-.loading-spinner {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 3px solid var(--cart-light);
-  border-top-color: var(--cart-primary);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+.pricing-scroll-hint i {
+  color: var(--cart-primary);
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.pricing-table-wrap {
+  position: relative;
 }
 
-/* ===================================
-   PRINT STYLES
-   =================================== */
-@media print {
-  .navbar,
-  .footer,
-  .step-navigation,
-  .mobile-price-bar,
-  .progress-bar-container {
-    display: none;
-  }
-
-  .cart-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .price-summary {
-    position: static;
-    page-break-inside: avoid;
-  }
-}
-
-/* ─── Service Style Cards ─────────────────────────────────────────── */
+/* ── Service style cards (3 col always) ──────────────────────── */
 .service-style-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2771,13 +2431,7 @@ textarea.form-input {
   line-height: 1.3;
 }
 
-@media (max-width: 480px) {
-  .service-style-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ─── Pricing Matrix — 4 column expansion ────────────────────────── */
+/* ── Pricing matrix ──────────────────────────────────────────── */
 .col-subtitle-row td {
   padding: 2px 10px 10px;
   font-size: 0.72rem;
@@ -2803,103 +2457,55 @@ textarea.form-input {
   -webkit-overflow-scrolling: touch;
 }
 
-@media (max-width: 768px) {
-  .pricing-table th,
-  .pricing-table td {
-    padding: 8px 6px;
-    font-size: 0.8rem;
+/* ── Print ───────────────────────────────────────────────────── */
+@media print {
+  .navbar, .footer, .step-navigation,
+  .mobile-price-bar, .progress-bar-container {
+    display: none;
   }
-  .pricing-table th span,
-  .col-subtitle-row td {
-    font-size: 0.65rem;
+  .cart-layout {
+    grid-template-columns: 1fr;
   }
-}
-
-
-
-/* ================================================================
-   MOBILE REDESIGN — True mobile-first layouts
-   ================================================================ */
-
-/* ── Touch feedback on all tappable cards ─────────────────────── */
-@media (hover: none) {
-  .venue-card:active,
-  .protein-card:active,
-  .beverage-card:active,
-  .floral-card:active,
-  .service-card:active,
-  .service-style-card:active {
-    transform: scale(0.97);
-    opacity: 0.88;
-    transition: transform 0.08s, opacity 0.08s;
+  .price-summary {
+    position: static;
+    page-break-inside: avoid;
   }
-}
-
-/* ── Scroll hint strip under pricing table ────────────────────── */
-.pricing-scroll-hint {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  font-size: 0.72rem;
-  color: var(--cart-medium);
-  padding: 0.4rem 0.75rem;
-  background: rgba(0,0,0,0.03);
-  border-top: 1px solid var(--cart-light);
-  border-radius: 0 0 10px 10px;
-  letter-spacing: 0.03em;
-}
-
-.pricing-scroll-hint i {
-  color: var(--cart-primary);
-}
-
-/* Right-fade on pricing table to hint at scroll */
-.pricing-table-wrap {
-  position: relative;
 }
 
 /* ================================================================
-   ≤ 768px  PRIMARY MOBILE BREAKPOINT
+   768px MOBILE — definitive
    ================================================================ */
 @media (max-width: 768px) {
 
-  /* ── Hero ──────────────────────────────────────────────────── */
+  /* Hero */
   .cart-hero {
     padding: 1.75rem 1rem 1.5rem;
   }
-
   .cart-hero h1 {
     font-size: 1.75rem;
   }
-
   .hero-logo {
     max-height: 65px;
     margin-bottom: 0.75rem;
   }
-
   .cart-hero .hero-subtitle {
     font-size: 0.95rem;
   }
 
-  /* ── Layout ────────────────────────────────────────────────── */
+  /* Layout */
   .cart-container {
-    padding: 0.5rem 0.5rem 150px;
+    padding: 0.5rem 0.5rem 160px;
   }
-
   .cart-main {
     padding: 1.1rem 0.9rem;
     border-radius: 10px;
   }
-
   .cart-layout {
     grid-template-columns: 1fr;
   }
-
   .price-summary {
     display: none;
   }
-
   .price-summary.mobile-expanded {
     display: block;
     position: fixed;
@@ -2911,47 +2517,19 @@ textarea.form-input {
     padding-bottom: 6rem;
   }
 
-  /* ── Progress bar ──────────────────────────────────────────── */
-  .progress-steps {
-    gap: 0;
-  }
+  /* Progress bar */
+  .progress-steps { gap: 0; }
+  .step-circle { width: 32px; height: 32px; font-size: 0.82rem; }
+  .step-label { font-size: 0.62rem; }
+  .progress-line { margin: 0 2px; top: -16px; }
+  .progress-bar-container { margin-bottom: 1.5rem; padding-bottom: 1.25rem; }
 
-  .step-circle {
-    width: 32px;
-    height: 32px;
-    font-size: 0.82rem;
-  }
+  /* Step headings */
+  .cart-step h2 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+  .step-description { font-size: 0.88rem; margin-bottom: 1.25rem; }
 
-  .step-label {
-    font-size: 0.62rem;
-  }
-
-  .progress-line {
-    margin: 0 2px;
-    top: -16px;
-  }
-
-  .progress-bar-container {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.25rem;
-  }
-
-  /* ── Step headings ─────────────────────────────────────────── */
-  .cart-step h2 {
-    font-size: 1.4rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .step-description {
-    font-size: 0.88rem;
-    margin-bottom: 1.25rem;
-  }
-
-  /* ── Pricing table ─────────────────────────────────────────── */
-  .pricing-scroll-hint {
-    display: flex;
-  }
-
+  /* Pricing table */
+  .pricing-scroll-hint { display: flex; }
   .pricing-table-wrap::after {
     content: '';
     position: absolute;
@@ -2961,638 +2539,324 @@ textarea.form-input {
     pointer-events: none;
     z-index: 2;
   }
-
-  .col-subtitle-row {
-    display: none;
-  }
-
+  .col-subtitle-row { display: none; }
   .pricing-table thead th,
   .pricing-table tbody td {
     padding: 0.5rem 0.55rem;
     font-size: 0.74rem;
     white-space: nowrap;
   }
+  .pricing-table thead th span { display: none; }
+  .season-tab { padding: 0.35rem 0.2rem; }
+  .season-tab-name { font-size: 0.7rem; }
+  .season-tab-dates { font-size: 0.58rem; }
 
-  .pricing-table thead th span {
-    display: none;
-  }
-
-  .season-tab {
-    padding: 0.35rem 0.2rem;
-  }
-
-  .season-tab-name {
-    font-size: 0.7rem;
-  }
-
-  .season-tab-dates {
-    font-size: 0.58rem;
-  }
-
-  /* ── VENUE CARDS — horizontal row layout ───────────────────── */
-  .venue-grid {
-    grid-template-columns: 1fr;
-    gap: 0.6rem;
-  }
+  /* ── VENUE CARDS — horizontal row ──── */
+  .venue-grid { grid-template-columns: 1fr; gap: 0.6rem; }
 
   .venue-card {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto auto;
-    gap: 0.05rem 0.75rem;
-    align-items: center;
-    padding: 0.85rem 1rem;
-    border-radius: 10px;
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    grid-template-rows: auto auto auto !important;
+    gap: 0.05rem 0.75rem !important;
+    align-items: center !important;
+    padding: 0.85rem 1rem !important;
+    border-radius: 10px !important;
   }
-
-  .venue-card.recommended {
-    padding-top: 2.4rem;
-  }
+  .venue-card.recommended { padding-top: 2.4rem !important; }
 
   .venue-card-header {
-    grid-column: 1;
-    grid-row: 1;
-    margin-bottom: 0;
-    padding: 0;
-    background: none;
-    border-radius: 0;
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    background: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
   }
-
-  .venue-card-header h3 {
-    font-size: 1rem;
-    margin-bottom: 0.1rem;
-  }
-
-  .venue-price {
-    font-size: 1.1rem;
-    margin-bottom: 0;
-    line-height: 1.2;
-  }
+  .venue-card-header h3 { font-size: 1rem !important; margin-bottom: 0.1rem !important; }
+  .venue-price { font-size: 1.1rem !important; margin-bottom: 0 !important; line-height: 1.2 !important; }
 
   .venue-description {
-    grid-column: 1;
-    grid-row: 2;
-    font-size: 0.78rem;
-    margin: 0.1rem 0 0;
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    font-size: 0.78rem !important;
+    margin: 0.1rem 0 0 !important;
   }
-
   .venue-includes {
-    grid-column: 1;
-    grid-row: 3;
-    font-size: 0.72rem;
-    margin: 0.1rem 0 0;
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    font-size: 0.72rem !important;
+    margin: 0.1rem 0 0 !important;
   }
-
-  .venue-capacity {
-    display: none;
-  }
-
-  .venue-duration {
-    grid-column: 1 / -1;
-    grid-row: 4;
-  }
+  .venue-capacity { display: none !important; }
+  .venue-duration { grid-column: 1 / -1 !important; grid-row: 4 !important; }
 
   .venue-select-btn {
-    grid-column: 2;
-    grid-row: 1 / 4;
-    align-self: center;
-    width: auto;
-    padding: 0.65rem 0.9rem;
-    font-size: 0.85rem;
-    white-space: nowrap;
-    margin-top: 0;
-    border-radius: 8px;
-    min-width: 72px;
+    grid-column: 2 !important;
+    grid-row: 1 / 4 !important;
+    align-self: center !important;
+    width: auto !important;
+    padding: 0.65rem 0.9rem !important;
+    font-size: 0.85rem !important;
+    white-space: nowrap !important;
+    margin-top: 0 !important;
+    min-width: 70px !important;
+    min-height: 44px !important;
   }
 
-  /* ── PROTEIN CARDS — horizontal row with small image ──────── */
-  .protein-grid {
-    grid-template-columns: 1fr !important;
-    gap: 0.55rem;
-  }
+  /* ── PROTEIN CARDS — horizontal row ── */
+  .protein-grid { grid-template-columns: 1fr !important; gap: 0.55rem !important; }
 
   .protein-card {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-radius: 10px;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
   }
-
   .protein-img {
-    width: 90px;
-    height: 90px;
-    flex-shrink: 0;
-    object-fit: cover;
-    border-radius: 8px 0 0 8px;
+    width: 90px !important;
+    height: auto !important;
+    min-height: 90px !important;
+    flex-shrink: 0 !important;
+    object-fit: cover !important;
+    border-radius: 0 !important;
   }
-
   .protein-content {
-    flex: 1;
-    padding: 0.7rem 0.85rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex: 1 !important;
+    padding: 0.75rem 0.9rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
   }
-
-  .protein-content h3 {
-    font-size: 1rem;
-    margin-bottom: 0.15rem;
-  }
-
-  .protein-price {
-    font-size: 1.2rem;
-    margin-bottom: 0.1rem;
-  }
-
-  .protein-description {
-    font-size: 0.78rem;
-    margin-bottom: 0.1rem;
-  }
-
-  .includes-note {
-    font-size: 0.74rem;
-  }
+  .protein-content h3 { font-size: 1rem !important; margin-bottom: 0.15rem !important; }
+  .protein-price { font-size: 1.2rem !important; margin-bottom: 0.1rem !important; }
+  .protein-description { font-size: 0.78rem !important; margin-bottom: 0.1rem !important; }
+  .includes-note { font-size: 0.74rem !important; }
 
   .selection-indicator {
-    position: static;
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
-    margin-right: 0.75rem;
-    font-size: 1rem;
-    border-radius: 50%;
-    background: var(--cart-primary);
-    color: white;
-    display: none;
-    align-items: center;
-    justify-content: center;
+    position: relative !important;
+    top: auto !important; right: auto !important;
+    width: 32px !important; height: 32px !important;
+    flex-shrink: 0 !important;
+    margin: auto 0.75rem auto 0 !important;
+    font-size: 0.9rem !important;
+    display: none !important;
   }
-
-  .protein-card.selected .selection-indicator {
-    display: flex;
-  }
-
-  /* Outside catering card horizontal */
-  .outside-catering-card {
-    min-height: 80px;
-  }
+  .protein-card.selected .selection-indicator { display: flex !important; }
 
   .outside-catering-card .protein-content {
-    padding: 0.85rem 1rem;
-    text-align: left;
+    padding: 0.85rem 1rem !important;
+    text-align: left !important;
   }
 
-  /* ── Service style: compact 3 cols ────────────────────────── */
-  .service-style-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 8px;
-  }
+  /* ── SERVICE STYLE — 3 cols compact ── */
+  .service-style-grid { gap: 8px !important; }
+  .service-style-card { padding: 10px 8px !important; }
+  .service-style-name { font-size: 0.82rem !important; }
+  .service-style-price { font-size: 0.72rem !important; }
+  .service-style-desc { font-size: 0.65rem !important; }
 
-  .service-style-card {
-    padding: 10px 8px;
-  }
-
-  .service-style-name {
-    font-size: 0.82rem;
-  }
-
-  .service-style-price {
-    font-size: 0.72rem;
-  }
-
-  .service-style-desc {
-    font-size: 0.65rem;
-  }
-
-  /* ── BEVERAGE CARDS — compact ──────────────────────────────── */
-  .beverage-grid {
-    grid-template-columns: 1fr;
-    gap: 0.65rem;
-  }
-
+  /* ── BEVERAGE CARDS — horizontal row ── */
+  .beverage-grid { grid-template-columns: 1fr !important; gap: 0.65rem !important; }
   .beverage-card {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    border-radius: 10px;
-    overflow: hidden;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
   }
-
   .beverage-img {
-    width: 110px;
-    height: auto;
-    min-height: 120px;
-    flex-shrink: 0;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 0;
+    width: 110px !important;
+    height: auto !important;
+    min-height: 120px !important;
+    flex-shrink: 0 !important;
+    object-fit: cover !important;
   }
-
-  .beverage-img--beerwine { object-position: center 30%; }
-  .beverage-img--premium  { object-position: center 40%; }
-  .beverage-img--topshelf { object-position: center 50%; }
-
+  .beverage-img--beerwine { object-position: center 30% !important; }
+  .beverage-img--premium  { object-position: center 40% !important; }
+  .beverage-img--topshelf { object-position: center 50% !important; }
   .beverage-content {
-    flex: 1;
-    padding: 0.85rem 0.9rem;
-    display: flex;
-    flex-direction: column;
+    flex: 1 !important;
+    padding: 0.85rem 0.9rem !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
-
-  .beverage-content h3 {
-    font-size: 1rem;
-    margin-bottom: 0.2rem;
-  }
-
-  .beverage-price {
-    font-size: 1.2rem;
-    margin-bottom: 0.35rem;
-  }
-
-  .beverage-includes {
-    font-size: 0.78rem;
-    gap: 0.2rem;
-    margin-bottom: 0.5rem;
-  }
-
+  .beverage-content h3 { font-size: 1rem !important; margin-bottom: 0.2rem !important; }
+  .beverage-price { font-size: 1.2rem !important; margin-bottom: 0.35rem !important; }
+  .beverage-includes { font-size: 0.78rem !important; gap: 0.2rem !important; margin-bottom: 0.5rem !important; }
   .package-select-btn {
-    margin-top: auto;
-    padding: 0.55rem 0.75rem;
-    font-size: 0.85rem;
-    min-height: 44px;
+    margin-top: auto !important;
+    padding: 0.55rem 0.75rem !important;
+    font-size: 0.85rem !important;
+    min-height: 44px !important;
   }
-
-  /* Most popular badge on beverage card horizontal */
   .beverage-card.recommended .recommended-badge {
-    top: 0;
-    left: 0;
-    right: auto;
-    bottom: auto;
-    border-radius: 0 0 6px 0;
-    padding: 0.25rem 0.6rem;
-    font-size: 0.65rem;
-    width: 110px;
-    text-align: center;
+    position: absolute !important;
+    top: 0 !important; left: 0 !important; right: auto !important;
+    width: 110px !important;
+    border-radius: 0 0 6px 0 !important;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.62rem !important;
+    text-align: center !important;
   }
 
-  /* ── FLORAL CARDS ──────────────────────────────────────────── */
-  .floral-grid {
-    grid-template-columns: 1fr;
-    gap: 0.6rem;
-  }
-
+  /* ── FLORAL CARDS — horizontal row ── */
+  .floral-grid { grid-template-columns: 1fr !important; gap: 0.6rem !important; }
   .floral-card {
-    padding: 0.9rem 1rem;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.75rem;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    padding: 0.9rem 1rem !important;
+    border-radius: 10px !important;
   }
-
+  .floral-card.recommended,
+  .floral-card.luxury { padding-top: 2.4rem !important; }
   .floral-header {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-    border-bottom: none;
-    padding-bottom: 0;
-    margin-bottom: 0;
+    flex: 1 !important;
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
   }
-
-  .floral-header h3 {
-    font-size: 1rem;
-    margin: 0;
-  }
-
-  .floral-price {
-    font-size: 1.1rem;
-  }
-
-  .floral-includes {
-    display: none;
-  }
-
+  .floral-header h3 { font-size: 0.95rem !important; margin-bottom: 0.15rem !important; }
+  .floral-price { font-size: 1.05rem !important; margin-bottom: 0 !important; }
+  .floral-includes { display: none !important; }
   .floral-select-btn {
-    flex-shrink: 0;
-    width: auto;
-    padding: 0.6rem 0.9rem;
-    font-size: 0.85rem;
-    white-space: nowrap;
+    flex-shrink: 0 !important;
+    width: auto !important;
+    padding: 0.6rem 0.9rem !important;
+    font-size: 0.85rem !important;
+    white-space: nowrap !important;
+    margin-top: 0 !important;
+    min-height: 44px !important;
   }
+  .floral-content { flex: 1 !important; }
+  .floral-content h3 { font-size: 1rem !important; margin-bottom: 0.1rem !important; }
 
-  .floral-card.skip-option {
-    justify-content: space-between;
-  }
-
-  .floral-content {
-    flex: 1;
-  }
-
-  .floral-content h3 {
-    font-size: 1rem;
-    margin-bottom: 0.1rem;
-  }
-
-  /* ── SERVICE CARDS (Photography, DJ, Planner) ──────────────── */
-  .services-grid {
-    grid-template-columns: 1fr;
-    gap: 0.65rem;
-  }
-
+  /* ── SERVICE ADD-ON CARDS — horizontal row ── */
+  .services-grid { grid-template-columns: 1fr !important; gap: 0.65rem !important; }
   .service-card {
-    flex-direction: row;
-    align-items: center;
-    padding: 0.9rem 1rem;
-    gap: 0.85rem;
-    border-radius: 10px;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    padding: 0.9rem 1rem !important;
+    gap: 0.85rem !important;
+    border-radius: 10px !important;
   }
-
   .service-icon {
-    width: 44px;
-    height: 44px;
-    flex-shrink: 0;
-    font-size: 1.1rem;
-    border-radius: 10px;
+    width: 44px !important; height: 44px !important;
+    font-size: 1.1rem !important;
+    border-radius: 10px !important;
+    margin-bottom: 0 !important;
+    flex-shrink: 0 !important;
   }
-
-  .service-content {
-    flex: 1;
-  }
-
-  .service-content h3 {
-    font-size: 0.95rem;
-    margin-bottom: 0.1rem;
-  }
-
-  .service-price {
-    font-size: 1.1rem;
-    margin-bottom: 0.1rem;
-  }
-
-  .tax-note {
-    font-size: 0.72rem;
-    margin-bottom: 0.15rem;
-  }
-
-  .service-includes {
-    display: none;
-  }
-
+  .service-content { flex: 1 !important; }
+  .service-content h3 { font-size: 0.95rem !important; margin-bottom: 0.1rem !important; }
+  .service-price { font-size: 1.1rem !important; margin-bottom: 0.1rem !important; }
+  .tax-note { font-size: 0.72rem !important; margin-bottom: 0.15rem !important; }
+  .service-includes { display: none !important; margin: 0 !important; }
   .service-toggle-btn {
-    flex-shrink: 0;
-    width: auto;
-    padding: 0.6rem 0.8rem;
-    font-size: 0.8rem;
-    white-space: nowrap;
-    align-self: center;
+    flex-shrink: 0 !important;
+    width: auto !important;
+    padding: 0.6rem 0.8rem !important;
+    font-size: 0.8rem !important;
+    white-space: nowrap !important;
+    margin-top: 0 !important;
+    min-height: 44px !important;
+    align-self: center !important;
   }
 
-  /* ── Section headers ───────────────────────────────────────── */
+  /* ── Form / section headers ── */
   .section-header {
-    flex-direction: row;
-    align-items: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
+    flex-direction: row !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 0.75rem !important;
   }
-
-  /* ── Form elements ─────────────────────────────────────────── */
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-
-  .form-section {
-    margin-bottom: 1.5rem;
-  }
-
-  /* Prevent iOS zoom */
-  .form-input,
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  input[type="number"],
-  select,
-  textarea {
+  .form-row { grid-template-columns: 1fr !important; }
+  .form-section { margin-bottom: 1.5rem !important; }
+  .form-input, input[type="text"], input[type="email"],
+  input[type="tel"], input[type="number"], select, textarea {
     font-size: 16px !important;
   }
 
-  /* ── Guest count ────────────────────────────────────────────── */
-  .slider {
-    height: 10px;
-  }
-
+  /* ── Guest count slider ── */
+  .slider { height: 10px !important; }
   .slider::-webkit-slider-thumb,
-  .slider::-moz-range-thumb {
-    width: 44px;
-    height: 44px;
-  }
+  .slider::-moz-range-thumb { width: 44px !important; height: 44px !important; }
+  .guest-count-display #guest-count-value { font-size: 2.5rem !important; }
+  .slider-btn { width: 48px !important; height: 48px !important; }
+  .qty-number { font-size: 2.4rem !important; }
 
-  .guest-count-display #guest-count-value {
-    font-size: 2.5rem;
-  }
-
-  .slider-btn {
-    width: 48px;
-    height: 48px;
-  }
-
-  /* ── Qty selectors ──────────────────────────────────────────── */
-  .qty-number {
-    font-size: 2.4rem;
-  }
-
-  /* ── Navigation buttons ─────────────────────────────────────── */
+  /* ── Navigation ── */
   .step-navigation {
-    flex-direction: column-reverse;
-    gap: 0.65rem;
-    margin-bottom: 0.75rem;
+    flex-direction: column-reverse !important;
+    gap: 0.65rem !important;
+    margin-bottom: 0.75rem !important;
   }
-
   .step-navigation .btn {
-    width: 100%;
-    justify-content: center;
-    padding: 1rem;
-    font-size: 1rem;
-    min-height: 52px;
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 1rem !important;
+    font-size: 1rem !important;
+    min-height: 52px !important;
   }
 
-  /* ── Mobile price bar ───────────────────────────────────────── */
+  /* ── Mobile price bar ── */
   .mobile-price-bar {
-    display: block;
-    border-top: 3px solid var(--cart-primary);
-    padding: 0.65rem 1rem calc(0.65rem + env(safe-area-inset-bottom));
+    display: block !important;
+    border-top: 3px solid var(--cart-primary) !important;
+    padding: 0.65rem 1rem calc(0.65rem + env(safe-area-inset-bottom)) !important;
   }
+  .mobile-amount { font-size: 1.35rem !important; }
+  .mobile-expand-btn { padding: 0.75rem !important; font-size: 0.9rem !important; min-height: 48px !important; }
 
-  .mobile-amount {
-    font-size: 1.35rem;
-  }
+  /* ── Review page ── */
+  .review-section { padding: 1.1rem !important; }
+  .itemized-list { padding: 1rem !important; }
+  .item-row { flex-wrap: wrap !important; gap: 0.25rem !important; }
+  .total-row { font-size: 0.9rem !important; }
+  .total-row.grand-total { font-size: 1.2rem !important; }
 
-  .mobile-expand-btn {
-    padding: 0.75rem;
-    font-size: 0.9rem;
-    min-height: 48px;
-  }
+  /* ── Success ── */
+  .success-actions { flex-direction: column !important; }
+  .success-actions .btn { width: 100% !important; justify-content: center !important; }
 
-  /* ── Review page ─────────────────────────────────────────────── */
-  .review-section {
-    padding: 1.1rem;
-  }
-
-  .itemized-list {
-    padding: 1rem;
-  }
-
-  .item-row {
-    flex-wrap: wrap;
-    gap: 0.25rem;
-  }
-
-  .total-row {
-    font-size: 0.9rem;
-  }
-
-  .total-row.grand-total {
-    font-size: 1.2rem;
-  }
-
-  /* ── Success page ────────────────────────────────────────────── */
-  .success-actions {
-    flex-direction: column;
-  }
-
-  .success-actions .btn {
-    width: 100%;
-    justify-content: center;
-  }
+  /* ── Options grid ── */
+  .options-grid { grid-template-columns: repeat(2, 1fr) !important; }
 }
 
 /* ================================================================
-   ≤ 480px  SMALL PHONES
+   480px SMALL PHONES — definitive
    ================================================================ */
 @media (max-width: 480px) {
+  .cart-hero { padding: 1.5rem 0.75rem 1.25rem !important; }
+  .cart-hero h1 { font-size: 1.4rem !important; }
+  .hero-logo { max-height: 55px !important; }
+  .cart-container { padding: 0.4rem 0.4rem 160px !important; }
+  .cart-main { padding: 0.9rem 0.75rem !important; }
 
-  .cart-hero h1 {
-    font-size: 1.4rem;
-  }
+  .step-label { display: none !important; }
+  .step-circle { width: 30px !important; height: 30px !important; font-size: 0.78rem !important; }
+  .cart-step h2 { font-size: 1.25rem !important; }
 
-  .hero-logo {
-    max-height: 55px;
-  }
+  .protein-img { width: 80px !important; min-height: 80px !important; }
+  .protein-content h3 { font-size: 0.9rem !important; }
+  .protein-price { font-size: 1.05rem !important; }
 
-  .cart-container {
-    padding: 0.4rem 0.4rem 150px;
-  }
+  .beverage-img { width: 90px !important; }
 
-  .cart-main {
-    padding: 0.9rem 0.75rem;
-  }
+  .service-style-card { padding: 8px 5px !important; border-radius: 8px !important; }
+  .service-style-name { font-size: 0.72rem !important; }
+  .service-style-price { font-size: 0.62rem !important; }
+  .service-style-desc { display: none !important; }
 
-  /* Step circles — just icons, no labels */
-  .step-label {
-    display: none;
-  }
+  .qty-number { font-size: 2rem !important; }
+  .qty-btn { width: 42px !important; height: 42px !important; }
 
-  .step-circle {
-    width: 30px;
-    height: 30px;
-    font-size: 0.78rem;
-  }
-
-  .cart-step h2 {
-    font-size: 1.25rem;
-  }
-
-  /* Service style: 3 cols, ultra compact */
-  .service-style-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 5px;
-  }
-
-  .service-style-card {
-    padding: 8px 5px;
-    border-radius: 8px;
-  }
-
-  .service-style-name {
-    font-size: 0.72rem;
-  }
-
-  .service-style-price {
-    font-size: 0.62rem;
-  }
-
-  .service-style-desc {
-    display: none;
-  }
-
-  /* Protein image slightly smaller */
-  .protein-img {
-    width: 80px;
-    height: 80px;
-  }
-
-  .protein-content h3 {
-    font-size: 0.9rem;
-  }
-
-  .protein-price {
-    font-size: 1.05rem;
-  }
-
-  /* Beverage image slightly narrower */
-  .beverage-img {
-    width: 90px;
-  }
-
-  .qty-number {
-    font-size: 2rem;
-  }
-
-  .qty-btn {
-    width: 42px;
-    height: 42px;
-  }
-}
-
-/* ── Horizontal layout fix-ups ─────────────────────────────────── */
-@media (max-width: 768px) {
-
-  /* Floral: reset padding-top on recommended/luxury cards */
-  .floral-card.recommended,
-  .floral-card.luxury {
-    padding-top: 2.4rem;
-  }
-
-  /* Floral: reset price margin in horizontal layout */
-  .floral-price {
-    font-size: 1.05rem;
-    margin-bottom: 0;
-  }
-
-  /* Floral: reset header h3 margin */
-  .floral-header h3 {
-    font-size: 0.95rem;
-    margin-bottom: 0.15rem;
-  }
-
-  /* Service icon: remove bottom margin in row layout */
-  .service-icon {
-    margin-bottom: 0;
-    flex-shrink: 0;
-  }
-
-  /* Service content: reset bottom margin on includes */
-  .service-includes {
-    margin: 0;
-  }
-
-  /* Service toggle: reset margin-top auto from column layout */
-  .service-toggle-btn {
-    margin-top: 0;
-  }
-
-  /* Venue card: reset margin-top auto on select btn */
-  .venue-select-btn {
-    margin-top: 0;
-  }
+  .venue-card { padding: 0.7rem 0.85rem !important; }
+  .venue-card.recommended { padding-top: 2.1rem !important; }
+  .venue-card-header h3 { font-size: 0.9rem !important; }
+  .venue-price { font-size: 1rem !important; }
+  .venue-select-btn { padding: 0.55rem 0.75rem !important; font-size: 0.8rem !important; min-width: 60px !important; }
 }
