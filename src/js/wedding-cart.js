@@ -745,7 +745,7 @@ class WeddingCart {
 
     if (this.currentStep === 1) {
       if (!this.cart.venue.date) {
-        errors.push('Please select a wedding date');
+        errors.push('Please select an event date');
       }
       if (!this.cart.venue.type) {
         errors.push('Please select a venue option');

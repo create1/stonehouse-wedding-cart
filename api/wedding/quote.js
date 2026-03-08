@@ -89,8 +89,8 @@ module.exports = async (req, res) => {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const fromAddress = process.env.FROM_EMAIL
-      ? `Stone House Weddings <${process.env.FROM_EMAIL}>`
-      : 'Stone House Weddings <onboarding@resend.dev>';
+      ? `Stone House Events <${process.env.FROM_EMAIL}>`
+      : 'Stone House Events <onboarding@resend.dev>';
 
     const adminEmails = process.env.ADMIN_EMAILS
       ? process.env.ADMIN_EMAILS.split(',').map(e => e.trim())
@@ -102,7 +102,7 @@ module.exports = async (req, res) => {
       from:     fromAddress,
       to:       adminEmails,
       reply_to: contact.email,
-      subject:  `New Wedding Quote: ${contact.name} — ${fmt(grandTotal)} — ${eventDate}`,
+      subject:  `New Event Quote: ${contact.name} — ${fmt(grandTotal)} — ${eventDate}`,
       html:     buildEmailHTML(emailArgs, true),
     });
 
@@ -114,7 +114,7 @@ module.exports = async (req, res) => {
     await resend.emails.send({
       from:    fromAddress,
       to:      contact.email,
-      subject: `Your Wedding Quote #${quoteNumber} — Stone House`,
+      subject: `Your Event Quote #${quoteNumber} — Stone House`,
       html:    buildEmailHTML(emailArgs, false),
     }).catch(err => console.error('Customer email error:', err));
 
@@ -187,7 +187,7 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
 
   // Event
   rows += sh('📅 Event Details');
-  rows += r('Wedding Date', eventDate);
+  rows += r('Event Date', eventDate);
   rows += r('Guest Count', `${guestCount} guests`);
   if (season) rows += r('Season', season);
 
@@ -272,7 +272,7 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
         '8 hours of coverage · 2 photographers · 500+ edited images delivered digitally');
     }
     if (hasPlanner) {
-      rows += r('Wedding Planning & Coordination', fmt(plannerCost),
+      rows += r('Event Planning & Coordination', fmt(plannerCost),
         'Day-of coordination · Timeline management · Vendor communication · Rehearsal direction');
     }
     if (hasDJ) {
@@ -295,11 +295,11 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
   </tr>`;
 
   const headerTitle = isAdmin
-    ? `New Wedding Quote — ${contact.name}`
+    ? `New Event Quote — ${contact.name}`
     : `Thank You, ${contact.name}!`;
   const headerSub = isAdmin
     ? `Quote #${quoteNumber} · ${eventDate} · ${guestCount} guests`
-    : `We've received your wedding quote request — #${quoteNumber}`;
+    : `We've received your event quote request — #${quoteNumber}`;
 
   const nextSteps = !isAdmin ? `
     <div style="background:#FFF8DC;border-left:4px solid #D4AF37;padding:14px 18px;border-radius:4px;margin:28px 0 0;">
