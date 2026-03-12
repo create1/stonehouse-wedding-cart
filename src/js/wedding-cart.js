@@ -8,7 +8,7 @@ import { WeddingCalculator } from './wedding-calculator.js';
 
 class WeddingCart {
   constructor() {
-    this.calculator = new WeddingCalculator('unincorporated');
+    this.calculator = new WeddingCalculator('nevada-city');
     this.currentStep = 1;
     
     // Cart state
