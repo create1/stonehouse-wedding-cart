@@ -1,0 +1,71 @@
+---
+description: Checkout and payment feature rules for Stone House Venue booking flow
+alwaysApply: true
+---
+
+# Stone House Checkout & Payment Architecture
+
+## Stack & Constraints
+- Frontend: vanilla HTML/CSS/JS (no React/Vue — keep it that way)
+- Backend: Vercel serverless functions (`api/wedding/*.js`) — Node.js CommonJS
+- Payment: **Stripe** — Checkout Sessions with embedded Payment Element
+- Contract: click-to-agree with full contract text displayed in-page (ESIGN/UETA compliant)
+- Email: Resend SDK (already in package.json) for booking confirmations
+- Branch: all checkout work stays on `feature/checkout-payment` — do NOT merge to `main` until fully tested
+
+## Stripe Integration Rules
+- **Always use Stripe Checkout Sessions** (not raw Payment Intents) — simpler, PCI-compliant, fewer moving parts
+- Session `ui_mode: 'embedded'` with `return_url` — keeps user on our domain, no external redirect
+- Payment methods: `['card', 'us_bank_account']` — supports both CC and ACH direct debit
+- Currency: `usd` only (ACH only works in USD)
+- **Create session server-side** in `api/wedding/create-checkout.js` — NEVER put the Stripe secret key in client JS
+- Return `clientSecret` to front-end, mount `stripe.initEmbeddedCheckout()` in checkout.html
+- Webhook at `api/wedding/webhook.js` — verify signature with `stripe.webhooks.constructEvent()`
+- Listen for `checkout.session.completed` to finalize booking and send confirmation emails
+
+## Checkout Flow
+1. **Review** — full quote summary (venue, catering, services, taxes, deposit amount owed)
+2. **Availability Warning** — bold, prominent, NON-NEGOTIABLE (see below)
+3. **Contract** — scrollable rental agreement; typed name + "I Agree" checkbox before payment unlocks
+4. **Payment** — embedded Stripe Payment Element (card or ACH)
+5. **Confirmation** — success screen after checkout.session.completed webhook fires
+
+## Availability Warning (NON-NEGOTIABLE — must appear above contract AND above payment)
+Show this div in both the contract step and the payment step:
+  class="availability-warning" with bold text:
+  "IMPORTANT: Before submitting payment, you must confirm with Stone House venue management
+  that your event date is available. Submitting payment does not guarantee your date."
+
+## Deposit Logic
+- Charge 50% deposit at booking; remainder due 30 days before event date
+- depositAmount = Math.round(grandTotal * 0.50 * 100)  [Stripe uses cents]
+- Pass deposit amount to create-checkout.js; validate server-side — never trust client-submitted totals
+- Display both deposit and remaining balance prominently before checkout
+
+## ESIGN Compliance (Contract)
+- Show full rental agreement text in a scrollable container before the checkbox
+- Require: typed legal name + checkbox "I have read and agree to the Rental Agreement"
+- Payment form must be hidden/disabled until checkbox is checked
+- Record on submission: ISO timestamp, typed name, IP (from serverless request headers), user-agent
+- Pass this data as metadata on the Stripe Checkout Session
+
+## Environment Variables (Vercel Dashboard → Project Settings → Environment Variables)
+  STRIPE_SECRET_KEY       — server-side only, never expose to client
+  STRIPE_PUBLISHABLE_KEY  — safe for client-side JS
+  STRIPE_WEBHOOK_SECRET   — for verifying webhook signatures
+  RESEND_API_KEY          — already configured
+
+## File Map
+  checkout.html                          — booking UI (review → contract → payment)
+  src/js/checkout.js                     — client-side checkout logic
+  src/css/checkout.css                   — checkout page styles
+  api/wedding/create-checkout.js         — Stripe session creator
+  api/wedding/webhook.js                 — Stripe webhook handler
+  api/wedding/booking-confirmation.js    — confirmation email sender
+  CHECKOUT_STRATEGY.md                   — full architecture + decision log
+
+## Security Rules
+- Stripe secret key ONLY in serverless functions — never in HTML or client JS
+- Validate all booking amounts server-side before creating Stripe session
+- Webhook handler MUST verify Stripe signature before any processing
+- Use stripe.webhooks.constructEvent(rawBody, sig, secret) — require raw body (not parsed JSON)

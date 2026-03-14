@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Your Event — Stone House Venue</title>
+  <link rel="stylesheet" href="/src/css/wedding-cart.css?v=6">
+  <link rel="stylesheet" href="/src/css/checkout.css?v=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="checkout-page">
+
+  <!-- Header -->
+  <header class="checkout-header">
+    <div class="checkout-header-inner">
+      <a href="/" class="checkout-back-link">
+        <i class="fas fa-arrow-left"></i> Back to Quote Builder
+      </a>
+      <div class="checkout-logo">Stone House Venue</div>
+    </div>
+  </header>
+
+  <!-- Fatal error (shown if no quote data) -->
+  <div id="checkout-fatal-error" class="fatal-error" style="display:none;"></div>
+
+  <!-- Progress Bar -->
+  <div class="checkout-progress" id="checkout-progress">
+    <div class="checkout-step-indicator active" data-step="0">
+      <span class="step-num">1</span> <span class="step-label">Review</span>
+    </div>
+    <div class="checkout-step-divider"></div>
+    <div class="checkout-step-indicator" data-step="1">
+      <span class="step-num">2</span> <span class="step-label">Agreement</span>
+    </div>
+    <div class="checkout-step-divider"></div>
+    <div class="checkout-step-indicator" data-step="2">
+      <span class="step-num">3</span> <span class="step-label">Payment</span>
+    </div>
+    <div class="checkout-step-divider"></div>
+    <div class="checkout-step-indicator" data-step="3">
+      <span class="step-num">4</span> <span class="step-label">Confirmed</span>
+    </div>
+  </div>
+
+  <main class="checkout-main">
+
+    <!-- ─────────────────────────────────────────────────────────────────── -->
+    <!-- STEP 1: REVIEW                                                      -->
+    <!-- ─────────────────────────────────────────────────────────────────── -->
+    <section id="step-review" class="checkout-section">
+      <h1 class="checkout-title">Review Your Quote</h1>
+      <p class="checkout-subtitle">Confirm your event details and pricing before proceeding.</p>
+
+      <!-- AVAILABILITY WARNING -->
+      <div class="availability-warning">
+        <i class="fas fa-exclamation-triangle"></i>
+        <strong>IMPORTANT: Before proceeding, you must confirm with Stone House venue management that your event date is available. Proceeding to payment does not guarantee your date.</strong>
+        <div class="warning-contact">
+          Contact us to confirm: <a href="mailto:info@stonehousevenue.com">info@stonehousevenue.com</a>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <h2 class="review-card-title">Your Event Quote</h2>
+        <div id="review-summary" class="review-summary">
+          <!-- Populated by checkout.js -->
+          <div class="review-loading">Loading your quote...</div>
+        </div>
+      </div>
+
+      <div class="checkout-actions">
+        <a href="/" class="btn btn-secondary">
+          <i class="fas fa-edit"></i> Edit Quote
+        </a>
+        <button class="btn btn-primary" onclick="showStep(1)">
+          Continue to Agreement <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────────── -->
+    <!-- STEP 2: CONTRACT / AGREEMENT                                        -->
+    <!-- ─────────────────────────────────────────────────────────────────── -->
+    <section id="step-contract" class="checkout-section" style="display:none;">
+      <h1 class="checkout-title">Rental Agreement</h1>
+      <p class="checkout-subtitle">Please read the agreement in full before signing.</p>
+
+      <!-- AVAILABILITY WARNING (repeated) -->
+      <div class="availability-warning">
+        <i class="fas fa-exclamation-triangle"></i>
+        <strong>IMPORTANT: Before submitting payment, you must confirm with Stone House venue management that your event date is available. Submitting payment does not guarantee your date.</strong>
+        <div class="warning-contact">
+          <a href="mailto:info@stonehousevenue.com">info@stonehousevenue.com</a>
+        </div>
+      </div>
+
+      <!-- Contract Text -->
+      <div class="contract-container">
+        <div class="contract-text" id="contract-text">
+          <h3>STONE HOUSE VENUE — RENTAL AGREEMENT</h3>
+
+          <p>This Rental Agreement ("Agreement") is entered into between Stone House Venue ("Venue") and the undersigned renter ("Client") upon payment of the deposit described herein.</p>
+
+          <h4>1. EVENT DATE &amp; SPACE</h4>
+          <p>Client reserves the venue for the date and spaces selected in their quote. This reservation is NOT confirmed until (a) this Agreement is signed, AND (b) the 50% deposit payment is successfully processed.</p>
+          <p><strong>IMPORTANT:</strong> Client is responsible for confirming date availability with Venue management BEFORE submitting payment. Venue management can be reached at <a href="mailto:info@stonehousevenue.com">info@stonehousevenue.com</a>. Submitting payment without confirming availability does not create a binding reservation on a date that is already booked.</p>
+
+          <h4>2. PAYMENT TERMS</h4>
+          <p>A 50% non-refundable deposit is due at signing. The remaining 50% balance is due 30 days prior to the event date. Failure to pay the remaining balance by the due date may result in cancellation of the reservation.</p>
+
+          <h4>3. CANCELLATION POLICY</h4>
+          <ul>
+            <li><strong>More than 180 days before event:</strong> Deposit refunded minus a $500 administrative fee.</li>
+            <li><strong>90–180 days before event:</strong> 50% of deposit refunded.</li>
+            <li><strong>Less than 90 days before event:</strong> Deposit is non-refundable.</li>
+            <li><strong>Date change</strong> (if alternative date available): $250 rescheduling fee.</li>
+          </ul>
+
+          <h4>4. CAPACITY &amp; USE</h4>
+          <p>Client agrees to comply with the Venue's stated capacity limits and all applicable local ordinances regarding noise, fire codes, and occupancy.</p>
+
+          <h4>5. CATERING &amp; VENDORS</h4>
+          <p>All catering services provided through Stone House Venue include necessary rentals, plates, and flatware as described in the quote. Outside catering requires prior written approval.</p>
+
+          <h4>6. DAMAGE &amp; LIABILITY</h4>
+          <p>Client is responsible for any damage to the Venue, its furnishings, or property caused by Client, guests, or vendors. A security deposit of $500 is collected separately and refunded within 14 days post-event if no damage is found.</p>
+
+          <h4>7. FORCE MAJEURE</h4>
+          <p>Neither party shall be liable for failure to perform due to circumstances beyond their reasonable control (natural disaster, government order, etc.). In such cases, a full refund will be issued.</p>
+
+          <h4>8. ELECTRONIC SIGNATURE</h4>
+          <p>By typing your legal name and checking the agreement box below, you acknowledge that you have read, understand, and agree to all terms of this Rental Agreement. This constitutes a legally binding electronic signature under the ESIGN Act and UETA.</p>
+
+          <h4>9. GOVERNING LAW</h4>
+          <p>This Agreement is governed by the laws of the State of California, County of Nevada.</p>
+        </div>
+      </div>
+
+      <!-- Signature Block -->
+      <div class="signature-block">
+        <div class="signature-field">
+          <label for="signer-name" class="signature-label">
+            <strong>Type your full legal name to sign:</strong>
+          </label>
+          <input
+            type="text"
+            id="signer-name"
+            class="signature-input"
+            placeholder="Your Legal Full Name"
+            autocomplete="name"
+            required
+          >
+        </div>
+
+        <label class="agree-label">
+          <input type="checkbox" id="agree-checkbox">
+          <span>I have read and agree to all terms of the Rental Agreement above. I understand this is a legally binding electronic signature.</span>
+        </label>
+
+        <button
+          id="contract-continue-btn"
+          class="btn btn-primary btn-large"
+          disabled
+        >
+          Continue to Payment <i class="fas fa-lock"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────────── -->
+    <!-- STEP 3: PAYMENT                                                     -->
+    <!-- ─────────────────────────────────────────────────────────────────── -->
+    <section id="step-payment" class="checkout-section" style="display:none;">
+      <h1 class="checkout-title">Secure Payment</h1>
+      <p class="checkout-subtitle">Pay your 50% deposit to reserve the venue.</p>
+
+      <!-- AVAILABILITY WARNING (repeated again on payment step) -->
+      <div class="availability-warning">
+        <i class="fas fa-exclamation-triangle"></i>
+        <strong>IMPORTANT: Before submitting payment, you must confirm with Stone House venue management that your event date is available. Submitting payment does not guarantee your date.</strong>
+        <div class="warning-contact">
+          <a href="mailto:info@stonehousevenue.com">info@stonehousevenue.com</a>
+        </div>
+      </div>
+
+      <div class="payment-methods-note">
+        <i class="fas fa-credit-card"></i> Credit/Debit Card &nbsp;|&nbsp;
+        <i class="fas fa-university"></i> ACH Bank Transfer
+        <br><small>ACH bank transfers take 4 business days to settle. You will receive a confirmation email once payment clears.</small>
+      </div>
+
+      <!-- Stripe Embedded Checkout mounts here -->
+      <div id="stripe-loading" class="stripe-loading">
+        <i class="fas fa-circle-notch fa-spin"></i> Loading secure payment form...
+      </div>
+      <div id="stripe-error" class="stripe-error" style="display:none;"></div>
+      <div id="stripe-checkout"></div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────────────────────────── -->
+    <!-- STEP 4: CONFIRMATION                                                -->
+    <!-- ─────────────────────────────────────────────────────────────────── -->
+    <section id="step-confirmation" class="checkout-section confirmation-section" style="display:none;">
+      <div class="confirmation-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h1 class="checkout-title">Booking Received!</h1>
+      <p class="checkout-subtitle">
+        Your deposit payment has been received. <strong>A confirmation email is on its way to you.</strong>
+      </p>
+
+      <div class="confirmation-card">
+        <h3>What happens next?</h3>
+        <ol class="next-steps">
+          <li>
+            <strong>Check your email</strong> — A booking confirmation with all details has been sent.
+          </li>
+          <li>
+            <strong>Contact venue management</strong> — Confirm your date is officially reserved on the Stone House calendar: <a href="mailto:info@stonehousevenue.com">info@stonehousevenue.com</a>
+          </li>
+          <li>
+            <strong>Remaining balance</strong> — Your 50% balance is due 30 days before your event date. We'll send a reminder.
+          </li>
+        </ol>
+      </div>
+
+      <div class="confirmation-ref">
+        Booking Reference: <code id="confirm-session-id"></code>
+      </div>
+      <div class="confirmation-date">
+        Event Date: <strong id="confirm-event-date"></strong>
+      </div>
+
+      <div class="confirmation-actions">
+        <a href="/" class="btn btn-secondary">Return to Quote Builder</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="checkout-footer">
+    <div class="checkout-footer-inner">
+      <span><i class="fas fa-lock"></i> Secure Checkout powered by Stripe</span>
+      <span>&copy; 2026 Stone House Venue</span>
+    </div>
+  </footer>
+
+  <!-- Stripe JS (must load before checkout.js) -->
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <!-- Stripe publishable key (safe to expose) -->
+  <!-- TODO: Replace with your actual Stripe publishable key via Vercel env var injection -->
+  <script>
+    // In production, Vercel can inject env vars via Edge Config or a /api/config endpoint.
+    // For now, set this to your test publishable key.
+    window.STRIPE_PUBLISHABLE_KEY = '<!-- STRIPE_PUBLISHABLE_KEY_PLACEHOLDER -->';
+  </script>
+
+  <script type="module" src="/src/js/checkout.js"></script>
+</body>
+</html>

@@ -6,6 +6,10 @@
   "functions": {
     "api/**/*.js": {
       "maxDuration": 30
+    },
+    "api/wedding/webhook.js": {
+      "maxDuration": 30,
+      "bodyParser": false
     }
   },
   "routes": [
@@ -16,6 +20,10 @@
     {
       "src": "/pricing",
       "dest": "/pricing.html"
+    },
+    {
+      "src": "/checkout",
+      "dest": "/checkout.html"
     }
   ]
 }
