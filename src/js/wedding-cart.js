@@ -82,7 +82,7 @@ class WeddingCart {
     if (!dateInput) return;
 
     const minDate = new Date();
-    minDate.setDate(minDate.getDate() + 90); // 90 days minimum
+    minDate.setDate(minDate.getDate() + 1); // tomorrow minimum (next available day)
 
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() + 2); // 2 years max
