@@ -20,6 +20,9 @@ class WeddingCart {
       },
       guestCount: 100,
       catering: {
+        mode: 'package',        // 'package' | 'custom'
+        package: null,          // 'prospector' | 'brewmaster' | 'motherLode'
+        packageStyle: 'buffet', // 'buffet' | 'plated'
         protein1: null,
         protein2: null,
         sidesQty: 0,
@@ -46,6 +49,8 @@ class WeddingCart {
     this.setupDatePicker();
     this.setupGuestCountSlider();
     this.setupVenueSelection();
+    this.setupCateringMode();
+    this.setupReceptionPackages();
     this.setupProteinSelection();
     this.setupSidesAndAppetizers();
     this.setupServiceStyle();
@@ -319,6 +324,102 @@ class WeddingCart {
         priceDisplay.textContent = `${WeddingPricingHelpers.formatCurrency(rate)}/hr`;
       }
     }
+  }
+
+
+  // ===================================
+  // CATERING MODE TOGGLE
+  // ===================================
+  setupCateringMode() {
+    const modeBtns = document.querySelectorAll('.catering-mode-btn');
+    const packagesPanel = document.getElementById('packages-panel');
+    const customPanel = document.getElementById('custom-catering-panel');
+
+    const switchMode = (mode) => {
+      this.cart.catering.mode = mode;
+
+      modeBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+      });
+
+      if (packagesPanel) packagesPanel.style.display = mode === 'package' ? 'block' : 'none';
+      if (customPanel)  customPanel.style.display  = mode === 'custom'  ? 'block' : 'none';
+
+      // Reset the other mode's state when switching
+      if (mode === 'package') {
+        this.cart.catering.protein1 = null;
+        this.cart.catering.protein2 = null;
+        document.querySelectorAll('.protein-card.selected').forEach(c => c.classList.remove('selected'));
+      } else {
+        this.cart.catering.package = null;
+        this.cart.catering.packageStyle = 'buffet';
+        document.querySelectorAll('.reception-pkg-card.selected').forEach(c => c.classList.remove('selected'));
+        document.querySelectorAll('.pkg-style-btn').forEach(b => b.classList.toggle('active', b.dataset.style === 'buffet'));
+      }
+
+      this.updatePriceSummary();
+    };
+
+    modeBtns.forEach(btn => {
+      btn.addEventListener('click', () => switchMode(btn.dataset.mode));
+    });
+
+    // Default: start in package mode, show packages panel
+    switchMode('package');
+  }
+
+  // ===================================
+  // RECEPTION PACKAGE SELECTION
+  // ===================================
+  setupReceptionPackages() {
+    const pkgCards = document.querySelectorAll('.reception-pkg-card');
+
+    pkgCards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        // Don't trigger if clicking a style button
+        if (e.target.closest('.pkg-style-btn')) return;
+
+        pkgCards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        this.cart.catering.package = card.dataset.pkg;
+        this.updatePriceSummary();
+      });
+    });
+
+    // Style (Buffet / Plated) buttons on each card
+    document.querySelectorAll('.pkg-style-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const card = btn.closest('.reception-pkg-card');
+        const style = btn.dataset.style;
+
+        // Update buttons on THIS card only
+        card.querySelectorAll('.pkg-style-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // If this card is selected, update style
+        if (card.classList.contains('selected')) {
+          this.cart.catering.packageStyle = style;
+          this.updatePriceSummary();
+        } else {
+          // Select the card and set style
+          document.querySelectorAll('.reception-pkg-card').forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          this.cart.catering.package = card.dataset.pkg;
+          this.cart.catering.packageStyle = style;
+          this.updatePriceSummary();
+        }
+      });
+    });
+
+    // Also sync packageStyle whenever a card is clicked
+    pkgCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const activeStyleBtn = card.querySelector('.pkg-style-btn.active');
+        this.cart.catering.packageStyle = activeStyleBtn?.dataset.style || 'buffet';
+        this.updatePriceSummary();
+      });
+    });
   }
 
   // ===================================
@@ -753,8 +854,14 @@ class WeddingCart {
     }
 
     if (this.currentStep === 2) {
-      if (!this.cart.catering.protein1) {
-        errors.push('Please select at least 1 protein option');
+      if (this.cart.catering.mode === 'package') {
+        if (!this.cart.catering.package) {
+          errors.push('Please select a reception package');
+        }
+      } else {
+        if (!this.cart.catering.protein1) {
+          errors.push('Please select at least 1 protein option');
+        }
       }
     }
 

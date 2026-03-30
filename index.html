@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="src/css/wedding-cart.css?v=7">
+  <link rel="stylesheet" href="src/css/wedding-cart.css?v=8">
 </head>
 <body>
 
@@ -315,7 +315,178 @@
         <!-- Step 2: Catering -->
         <div class="cart-step" data-step="2">
           <h2>Catering Selection</h2>
-          <p class="step-description">Choose 2 protein options for your reception (includes salad)</p>
+          <p class="step-description">Choose a curated reception package or build your own custom catering menu.</p>
+
+          <!-- Catering Mode Toggle -->
+          <div class="catering-mode-toggle">
+            <button class="catering-mode-btn active" data-mode="package">
+              <i class="fas fa-star"></i>
+              <span class="mode-title">Reception Packages</span>
+              <span class="mode-desc">All-inclusive curated menus</span>
+            </button>
+            <button class="catering-mode-btn" data-mode="custom">
+              <i class="fas fa-sliders-h"></i>
+              <span class="mode-title">Custom Catering</span>
+              <span class="mode-desc">Build your own menu</span>
+            </button>
+          </div>
+
+          <!-- ══════════════════════════════════════════════════════════ -->
+          <!-- RECEPTION PACKAGES PANEL                                   -->
+          <!-- ══════════════════════════════════════════════════════════ -->
+          <div id="packages-panel">
+
+            <div class="packages-intro">
+              <p>Select a package below, then choose <strong>Buffet</strong> or <strong>Plated</strong> service. All packages include hors d'oeuvres, salad, two entrées, non-alcoholic beverages, champagne toast, linens, china, cake cutting, and AV. A 20% service fee applies.</p>
+            </div>
+
+            <div class="reception-pkg-grid">
+
+              <!-- PROSPECTOR -->
+              <div class="reception-pkg-card" data-pkg="prospector">
+                <div class="pkg-header pkg-header--prospector">
+                  <div class="pkg-name">Prospector</div>
+                  <div class="pkg-tagline">Classic elegance, expertly prepared</div>
+                  <div class="pkg-hors-badge"><i class="fas fa-utensils"></i> 2 Hors d'Oeuvres</div>
+                </div>
+                <div class="pkg-body">
+                  <div class="pkg-style-row">
+                    <button class="pkg-style-btn active" data-style="buffet">
+                      <span class="pkg-style-label">Buffet</span>
+                      <span class="pkg-style-price">$69<small>/person</small></span>
+                    </button>
+                    <button class="pkg-style-btn" data-style="plated">
+                      <span class="pkg-style-label">Plated</span>
+                      <span class="pkg-style-price">$79<small>/person</small></span>
+                    </button>
+                  </div>
+                  <div class="pkg-section-label">Entrée Selections</div>
+                  <ul class="pkg-entree-list">
+                    <li>Lemon Chicken Piccata</li>
+                    <li>Center Cut Sirloin with Demi Glaze</li>
+                    <li>Herb Roasted Chicken</li>
+                    <li>Herb Crusted Tilapia</li>
+                    <li>Braised Beef Short Rib</li>
+                    <li>Roasted Salmon with Dill Cream Sauce</li>
+                  </ul>
+                  <div class="pkg-includes-toggle" data-target="prospector-includes">
+                    <i class="fas fa-chevron-down"></i> What's included
+                  </div>
+                  <ul class="pkg-includes-list" id="prospector-includes" style="display:none;">
+                    <li><i class="fas fa-check"></i> Choice of 2 Hors d'Oeuvres</li>
+                    <li><i class="fas fa-check"></i> Rolls &amp; Butter, Choice Salad</li>
+                    <li><i class="fas fa-check"></i> 2 Entrées + Chef's Vegetarian Option</li>
+                    <li><i class="fas fa-check"></i> Beverage Station (Coffee, Tea, Lemonade)</li>
+                    <li><i class="fas fa-check"></i> House Champagne &amp; Sparkling Cider Toast</li>
+                    <li><i class="fas fa-check"></i> Floor-Length Linens &amp; Linen Napkins</li>
+                    <li><i class="fas fa-check"></i> China, Stemware &amp; Silverware</li>
+                    <li><i class="fas fa-check"></i> Cake Cutting &amp; Screen/Microphone</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- BREWMASTER -->
+              <div class="reception-pkg-card" data-pkg="brewmaster">
+                <div class="pkg-badge">Most Popular</div>
+                <div class="pkg-header pkg-header--brewmaster">
+                  <div class="pkg-name">Brewmaster</div>
+                  <div class="pkg-tagline">Craft-inspired, premium selections</div>
+                  <div class="pkg-hors-badge"><i class="fas fa-utensils"></i> 3 Hors d'Oeuvres</div>
+                </div>
+                <div class="pkg-body">
+                  <div class="pkg-style-row">
+                    <button class="pkg-style-btn active" data-style="buffet">
+                      <span class="pkg-style-label">Buffet</span>
+                      <span class="pkg-style-price">$79<small>/person</small></span>
+                    </button>
+                    <button class="pkg-style-btn" data-style="plated">
+                      <span class="pkg-style-label">Plated</span>
+                      <span class="pkg-style-price">$89<small>/person</small></span>
+                    </button>
+                  </div>
+                  <div class="pkg-section-label">Entrée Selections</div>
+                  <ul class="pkg-entree-list">
+                    <li>Brown Ale Steak Medallions</li>
+                    <li>Whiskey Steak with Fried Onions</li>
+                    <li>Champagne Chicken</li>
+                    <li>Riesling Chicken</li>
+                    <li>Tri Tip with Zinfandel Sauce</li>
+                    <li>Chicken Madeira</li>
+                    <li>Mahi Mahi with Rum Mango-Pineapple Salsa</li>
+                    <li>Sea Bass with Lemon Chive Beurre Blanc</li>
+                  </ul>
+                  <div class="pkg-includes-toggle" data-target="brewmaster-includes">
+                    <i class="fas fa-chevron-down"></i> What's included
+                  </div>
+                  <ul class="pkg-includes-list" id="brewmaster-includes" style="display:none;">
+                    <li><i class="fas fa-check"></i> Choice of 3 Hors d'Oeuvres (incl. premium)</li>
+                    <li><i class="fas fa-check"></i> Rolls &amp; Butter, Choice Salad</li>
+                    <li><i class="fas fa-check"></i> 2 Entrées + Chef's Vegetarian Option</li>
+                    <li><i class="fas fa-check"></i> Beverage Station (Coffee, Tea, Lemonade)</li>
+                    <li><i class="fas fa-check"></i> House Champagne &amp; Sparkling Cider Toast</li>
+                    <li><i class="fas fa-check"></i> Floor-Length Linens &amp; Linen Napkins</li>
+                    <li><i class="fas fa-check"></i> China, Stemware &amp; Silverware</li>
+                    <li><i class="fas fa-check"></i> Cake Cutting &amp; Screen/Microphone</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- MOTHER LODE -->
+              <div class="reception-pkg-card" data-pkg="motherLode">
+                <div class="pkg-badge pkg-badge--luxury">Luxury</div>
+                <div class="pkg-header pkg-header--motherlode">
+                  <div class="pkg-name">Mother Lode</div>
+                  <div class="pkg-tagline">Prime cuts &amp; white-glove service</div>
+                  <div class="pkg-hors-badge"><i class="fas fa-utensils"></i> 4 Hors d'Oeuvres</div>
+                </div>
+                <div class="pkg-body">
+                  <div class="pkg-style-row">
+                    <button class="pkg-style-btn active" data-style="buffet">
+                      <span class="pkg-style-label">Buffet</span>
+                      <span class="pkg-style-price">$89<small>/person</small></span>
+                    </button>
+                    <button class="pkg-style-btn" data-style="plated">
+                      <span class="pkg-style-label">Plated</span>
+                      <span class="pkg-style-price">$99<small>/person</small></span>
+                    </button>
+                  </div>
+                  <div class="pkg-section-label">Entrée Selections</div>
+                  <ul class="pkg-entree-list">
+                    <li>New York Steak <em>(Roasted or Carved)</em></li>
+                    <li>Prime Rib <em>(Roasted or Carved)</em></li>
+                    <li>Stuffed Chicken Cordon Bleu</li>
+                    <li class="pkg-entree-note">+ Any entrée from Prospector or Brewmaster</li>
+                  </ul>
+                  <div class="pkg-includes-toggle" data-target="motherlode-includes">
+                    <i class="fas fa-chevron-down"></i> What's included
+                  </div>
+                  <ul class="pkg-includes-list" id="motherlode-includes" style="display:none;">
+                    <li><i class="fas fa-check"></i> Choice of 4 Hors d'Oeuvres (all premium available)</li>
+                    <li><i class="fas fa-check"></i> Rolls &amp; Butter, Choice Salad</li>
+                    <li><i class="fas fa-check"></i> 2 Entrées + Chef's Vegetarian Option</li>
+                    <li><i class="fas fa-check"></i> Beverage Station (Coffee, Tea, Lemonade)</li>
+                    <li><i class="fas fa-check"></i> House Champagne &amp; Sparkling Cider Toast</li>
+                    <li><i class="fas fa-check"></i> Floor-Length Linens &amp; Linen Napkins</li>
+                    <li><i class="fas fa-check"></i> China, Stemware &amp; Silverware</li>
+                    <li><i class="fas fa-check"></i> Cake Cutting &amp; Screen/Microphone</li>
+                  </ul>
+                </div>
+              </div>
+
+            </div><!-- end reception-pkg-grid -->
+
+            <!-- Children's Menu note -->
+            <div class="pkg-children-note">
+              <i class="fas fa-child"></i>
+              <span><strong>Children's Menu (Ages 4–12):</strong> $20/child — Chicken Tenders &amp; Fries, Cheese Quesadilla, Hamburger &amp; Fries, or Mac &amp; Cheese. Not included in package pricing; please note in your quote.</span>
+            </div>
+
+          </div><!-- end packages-panel -->
+
+          <!-- ══════════════════════════════════════════════════════════ -->
+          <!-- CUSTOM CATERING PANEL (original content)                  -->
+          <!-- ══════════════════════════════════════════════════════════ -->
+          <div id="custom-catering-panel" style="display:none;">
           <div class="service-fee-notice">
             <i class="fas fa-info-circle"></i>
             A <strong>20% service fee</strong> is applied to all food & beverage services and is included in your total estimate.
@@ -529,12 +700,14 @@
             </div>
           </div>
 
+          </div><!-- end custom-catering-panel -->
+
           <div class="step-navigation">
             <button class="btn btn-secondary prev-step">
               <i class="fas fa-arrow-left"></i> Previous
             </button>
             <button class="btn btn-primary next-step" id="next-step-2">
-              Next: Beverages <i class="fas fa-arrow-right"></i>
+              Next: Bar Service <i class="fas fa-arrow-right"></i>
             </button>
           </div>
         </div>
@@ -970,6 +1143,18 @@
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.1/jspdf.plugin.autotable.min.js"></script>
+  <script>
+    document.addEventListener('click', function(e) {
+      const toggle = e.target.closest('.pkg-includes-toggle');
+      if (!toggle) return;
+      const list = document.getElementById(toggle.dataset.target);
+      if (!list) return;
+      const isOpen = list.style.display !== 'none';
+      list.style.display = isOpen ? 'none' : 'block';
+      const icon = toggle.querySelector('i');
+      if (icon) icon.className = isOpen ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
+    });
+  </script>
   <script type="module" src="src/js/wedding-cart.js"></script>
 
 </body>

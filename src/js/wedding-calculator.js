@@ -171,15 +171,42 @@ export class WeddingCalculator {
     );
 
     // === CATERING ===
-    const catering = this.calculateCateringTotal(
-      cart.guestCount,
-      cart.catering.protein1,
-      cart.catering.protein2,
-      cart.catering.sidesQty || 0,
-      cart.catering.appetizersQty || 0,
-      cart.catering.serviceStyle || 'buffet',
-      cart.catering.dessert || false
-    );
+    // Support both reception package mode and custom catering mode
+    let catering;
+    if (cart.catering?.mode === 'package' && cart.catering?.package) {
+      const pkg = WEDDING_PRICING_CONFIG.receptionPackages?.[cart.catering.package];
+      if (pkg) {
+        const styleKey = cart.catering.packageStyle === 'plated' ? 'platedPrice' : 'buffetPrice';
+        const pricePerPerson = pkg[styleKey] || pkg.buffetPrice;
+        const baseTotal = pricePerPerson * cart.guestCount;
+        catering = {
+          total: baseTotal,
+          baseCatering: baseTotal,
+          sidesCount: 0, sidesCost: 0,
+          appetizersCount: 0, appetizersCost: 0,
+          avgProteinPrice: pricePerPerson,
+          maxProteinPrice: pricePerPerson,
+          baseProteinPrice: pricePerPerson,
+          packageMode: true,
+          packageId: cart.catering.package,
+          packageName: pkg.name,
+          packageStyle: cart.catering.packageStyle || 'buffet',
+          pricePerPerson,
+        };
+      } else {
+        catering = { total: 0, baseCatering: 0, sidesCount: 0, sidesCost: 0, appetizersCount: 0, appetizersCost: 0, avgProteinPrice: 0 };
+      }
+    } else {
+      catering = this.calculateCateringTotal(
+        cart.guestCount,
+        cart.catering.protein1,
+        cart.catering.protein2,
+        cart.catering.sidesQty || 0,
+        cart.catering.appetizersQty || 0,
+        cart.catering.serviceStyle || 'buffet',
+        cart.catering.dessert || false
+      );
+    }
 
     // === BEVERAGES ===
     const beverageTotal = this.calculateBeverageTotal(
@@ -229,6 +256,12 @@ export class WeddingCalculator {
 
       catering: {
         guestCount: cart.guestCount,
+        mode: cart.catering?.mode || 'custom',
+        packageMode: catering.packageMode || false,
+        packageId: catering.packageId || null,
+        packageName: catering.packageName || null,
+        packageStyle: catering.packageStyle || null,
+        pricePerPerson: catering.pricePerPerson || catering.avgProteinPrice || 0,
         protein1: cart.catering.protein1,
         protein2: cart.catering.protein2,
         protein1Name: WEDDING_PRICING_CONFIG.catering.proteins.find(p => p.id === cart.catering.protein1)?.name,

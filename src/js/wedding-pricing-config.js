@@ -345,6 +345,107 @@ export const WEDDING_PRICING_CONFIG = {
     }
   },
 
+
+  // ===================================
+  // RECEPTION PACKAGES
+  // All-inclusive catering packages (base price per person; 20% service fee applies)
+  // ===================================
+  receptionPackages: {
+    prospector: {
+      id: 'prospector',
+      name: 'Prospector',
+      tagline: 'Classic elegance, expertly prepared',
+      buffetPrice: 69,
+      platedPrice: 79,
+      horsCount: 2,
+      badge: null,
+      color: '#8B7355',
+      includes: [
+        'Choice of 2 Hors d'Oeuvres during cocktail hour',
+        'Rolls & Butter',
+        'Choice Salad',
+        'Selection of 2 Entrées',
+        'Chef's Choice Vegetarian/Vegan Entrée',
+        'Beverage Station (Coffee, Tea, Lemonade)',
+        'House Champagne & Sparkling Cider Toast',
+        'Floor-Length Tablecloths & Linen Napkins',
+        'China, Stemware & Silverware',
+        'Cake Cutting Service',
+        'Screen & Microphone',
+      ],
+      entrees: [
+        'Lemon Chicken Piccata',
+        'Center Cut Sirloin with Demi Glaze',
+        'Herb Roasted Chicken',
+        'Herb Crusted Tilapia',
+        'Braised Beef Short Rib',
+        'Roasted Salmon with Dill Cream Sauce',
+      ],
+    },
+    brewmaster: {
+      id: 'brewmaster',
+      name: 'Brewmaster',
+      tagline: 'Craft-inspired flavors, premium selections',
+      buffetPrice: 79,
+      platedPrice: 89,
+      horsCount: 3,
+      badge: 'Most Popular',
+      color: '#6B4C3B',
+      includes: [
+        'Choice of 3 Hors d'Oeuvres (incl. premium selections)',
+        'Rolls & Butter',
+        'Choice Salad',
+        'Selection of 2 Entrées',
+        'Chef's Choice Vegetarian/Vegan Entrée',
+        'Beverage Station (Coffee, Tea, Lemonade)',
+        'House Champagne & Sparkling Cider Toast',
+        'Floor-Length Tablecloths & Linen Napkins',
+        'China, Stemware & Silverware',
+        'Cake Cutting Service',
+        'Screen & Microphone',
+      ],
+      entrees: [
+        'Brown Ale Steak Medallions',
+        'Whiskey Steak with Fried Onions',
+        'Champagne Chicken',
+        'Riesling Chicken',
+        'Tri Tip with Zinfandel Sauce',
+        'Chicken Madeira',
+        'Mahi Mahi with Rum Mango-Pineapple Salsa',
+        'Sea Bass with Lemon Chive Beurre Blanc',
+      ],
+    },
+    motherLode: {
+      id: 'motherLode',
+      name: 'Mother Lode',
+      tagline: 'Our finest — prime cuts & white-glove service',
+      buffetPrice: 89,
+      platedPrice: 99,
+      horsCount: 4,
+      badge: 'Luxury',
+      color: '#4A3728',
+      includes: [
+        'Choice of 4 Hors d'Oeuvres (all premium selections available)',
+        'Rolls & Butter',
+        'Choice Salad',
+        'Selection of 2 Entrées',
+        'Chef's Choice Vegetarian/Vegan Entrée',
+        'Beverage Station (Coffee, Tea, Lemonade)',
+        'House Champagne & Sparkling Cider Toast',
+        'Floor-Length Tablecloths & Linen Napkins',
+        'China, Stemware & Silverware',
+        'Cake Cutting Service',
+        'Screen & Microphone',
+      ],
+      entrees: [
+        'New York Steak (Roasted or Carved)',
+        'Prime Rib (Roasted or Carved)',
+        'Stuffed Chicken Cordon Bleu',
+        '+ Any entrée from Prospector or Brewmaster menus',
+      ],
+    },
+  },
+
   // ===================================
   // SALES TAX - NEVADA COUNTY, CA
   // ===================================

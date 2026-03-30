@@ -2944,3 +2944,405 @@ textarea.form-input {
     opacity: 0.7;
   }
 }
+
+
+/* ============================================================
+   CATERING MODE TOGGLE
+   ============================================================ */
+.catering-mode-toggle {
+  display: flex;
+  gap: 12px;
+  margin: 0 0 28px 0;
+}
+
+.catering-mode-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 20px;
+  border: 2px solid #e2d5c3;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.catering-mode-btn i {
+  font-size: 1.3rem;
+  color: #c9a76b;
+  margin-bottom: 2px;
+}
+
+.catering-mode-btn .mode-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #1a1714;
+}
+
+.catering-mode-btn .mode-desc {
+  font-size: 0.75rem;
+  color: #8a7e72;
+}
+
+.catering-mode-btn.active {
+  border-color: #c9a76b;
+  background: linear-gradient(135deg, #fdf8f0 0%, #fef5e4 100%);
+  box-shadow: 0 2px 12px rgba(201, 167, 107, 0.25);
+}
+
+.catering-mode-btn.active i {
+  color: #b8911e;
+}
+
+.catering-mode-btn.active .mode-title {
+  color: #7a5e00;
+}
+
+.catering-mode-btn:hover:not(.active) {
+  border-color: #d4b97e;
+  background: #fafaf7;
+}
+
+/* ============================================================
+   PACKAGES INTRO BANNER
+   ============================================================ */
+.packages-intro {
+  background: linear-gradient(135deg, #fdf8f0 0%, #fef5e4 100%);
+  border: 1px solid rgba(201, 167, 107, 0.3);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  font-size: 0.875rem;
+  color: #5a4a30;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   RECEPTION PACKAGE GRID
+   ============================================================ */
+.reception-pkg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.reception-pkg-card {
+  position: relative;
+  border: 2px solid #e8ddd0;
+  border-radius: 14px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.reception-pkg-card:hover {
+  border-color: #c9a76b;
+  box-shadow: 0 4px 20px rgba(201, 167, 107, 0.2);
+  transform: translateY(-2px);
+}
+
+.reception-pkg-card.selected {
+  border-color: #b8911e;
+  box-shadow: 0 4px 24px rgba(184, 145, 30, 0.3);
+  transform: translateY(-3px);
+}
+
+/* Badge (Most Popular / Luxury) */
+.pkg-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, #c9a76b, #b8911e);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+.pkg-badge--luxury {
+  background: linear-gradient(135deg, #4a3728, #1a1714);
+}
+
+/* Package header bands */
+.pkg-header {
+  padding: 20px 16px 14px 16px;
+  text-align: center;
+  color: #fff;
+  position: relative;
+}
+
+.pkg-header--prospector {
+  background: linear-gradient(135deg, #8B7355 0%, #6b5540 100%);
+}
+
+.pkg-header--brewmaster {
+  background: linear-gradient(135deg, #7a5c40 0%, #5a3c28 100%);
+}
+
+.pkg-header--motherlode {
+  background: linear-gradient(135deg, #3a2a1e 0%, #1a1714 100%);
+}
+
+.pkg-name {
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  font-size: 1.55rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  margin-bottom: 3px;
+}
+
+.pkg-tagline {
+  font-size: 0.72rem;
+  opacity: 0.85;
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+
+.pkg-hors-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  text-transform: uppercase;
+}
+
+/* Package body */
+.pkg-body {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Buffet / Plated style toggle */
+.pkg-style-row {
+  display: flex;
+  gap: 8px;
+}
+
+.pkg-style-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 8px;
+  border: 1.5px solid #e2d5c3;
+  border-radius: 9px;
+  background: #fafaf7;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pkg-style-btn.active {
+  border-color: #c9a76b;
+  background: linear-gradient(135deg, #fdf8f0, #fef5e4);
+}
+
+.pkg-style-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #5a4a30;
+}
+
+.pkg-style-price {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #b8911e;
+  line-height: 1.2;
+}
+
+.pkg-style-price small {
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: #8a7e72;
+}
+
+/* Entrée section */
+.pkg-section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8a7e72;
+  border-bottom: 1px solid #e8ddd0;
+  padding-bottom: 4px;
+}
+
+.pkg-entree-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.pkg-entree-list li {
+  font-size: 0.82rem;
+  color: #3a2e24;
+  padding: 3px 0;
+  line-height: 1.4;
+  border-bottom: 1px solid #f5efe7;
+}
+
+.pkg-entree-list li:last-child { border-bottom: none; }
+
+.pkg-entree-list li em {
+  font-size: 0.73rem;
+  color: #8a7e72;
+}
+
+.pkg-entree-note {
+  font-style: italic;
+  color: #8a7e72 !important;
+  font-size: 0.75rem !important;
+}
+
+/* What's included toggle */
+.pkg-includes-toggle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #c9a76b;
+  cursor: pointer;
+  padding: 6px 0 0 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  user-select: none;
+  border-top: 1px solid #f0e8db;
+}
+
+.pkg-includes-toggle:hover { color: #b8911e; }
+
+.pkg-includes-list {
+  list-style: none;
+  padding: 8px 0 0 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pkg-includes-list li {
+  font-size: 0.76rem;
+  color: #5a4a30;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  line-height: 1.4;
+}
+
+.pkg-includes-list li i {
+  color: #c9a76b;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* Children's menu note */
+.pkg-children-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(201, 167, 107, 0.08);
+  border: 1px solid rgba(201, 167, 107, 0.25);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.8rem;
+  color: #5a4a30;
+  line-height: 1.5;
+}
+
+.pkg-children-note i {
+  color: #c9a76b;
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ============================================================
+   MOBILE — Reception Packages
+   ============================================================ */
+@media (max-width: 900px) {
+  .reception-pkg-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .reception-pkg-card {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .pkg-header {
+    width: 120px;
+    min-width: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px 12px;
+    flex-shrink: 0;
+  }
+
+  .pkg-name { font-size: 1.2rem; }
+  .pkg-tagline { font-size: 0.65rem; }
+  .pkg-hors-badge { font-size: 0.6rem; }
+
+  .pkg-body {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .pkg-style-btn { padding: 7px 6px; }
+  .pkg-style-price { font-size: 1rem; }
+  .pkg-entree-list { display: none; } /* hide entrées on mobile to keep compact */
+  .pkg-section-label { display: none; }
+
+  .catering-mode-toggle {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .catering-mode-btn {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 12px 16px;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .catering-mode-btn i { margin-bottom: 0; font-size: 1.1rem; }
+}
+
+@media (max-width: 480px) {
+  .reception-pkg-card {
+    flex-direction: column;
+  }
+
+  .pkg-header {
+    width: 100%;
+    min-width: unset;
+    padding: 14px 16px 10px 16px;
+  }
+
+  .pkg-badge {
+    top: 8px;
+    right: 8px;
+  }
+}
