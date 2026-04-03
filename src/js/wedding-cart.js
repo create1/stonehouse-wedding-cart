@@ -382,6 +382,9 @@ class WeddingCart {
         pkgCards.forEach(c => c.classList.remove('selected'));
         card.classList.add('selected');
         this.cart.catering.package = card.dataset.pkg;
+        // Sync packageStyle from whichever style btn is active on this card
+        const activeStyleBtn = card.querySelector('.pkg-style-btn.active');
+        this.cart.catering.packageStyle = activeStyleBtn?.dataset.style || 'buffet';
         this.updatePriceSummary();
       });
     });
@@ -412,14 +415,6 @@ class WeddingCart {
       });
     });
 
-    // Also sync packageStyle whenever a card is clicked
-    pkgCards.forEach(card => {
-      card.addEventListener('click', () => {
-        const activeStyleBtn = card.querySelector('.pkg-style-btn.active');
-        this.cart.catering.packageStyle = activeStyleBtn?.dataset.style || 'buffet';
-        this.updatePriceSummary();
-      });
-    });
   }
 
   // ===================================
@@ -635,7 +630,7 @@ class WeddingCart {
     const el = document.getElementById('dessert-cost-display');
     if (!el) return;
     const qty = this.cart.guestCount || 0;
-    const cost = 12 * qty;
+    const cost = 10 * qty;
     el.textContent = qty > 0
       ? `+$${cost.toLocaleString()} (${qty} guests × $10/person)`
       : '';
@@ -1351,13 +1346,55 @@ class WeddingCart {
     // SECTION 2 — CATERING
     // ─────────────────────────────────
     checkPageBreak(80);
-    sectionHeader('CATERING  —  Includes Salad & Dessert');
 
-    if (quote.catering.isOutsideCatering) {
+    if (quote.catering.packageMode) {
+      // ── RECEPTION PACKAGE MODE ──────────────────────────────────────
+      const pkg = config.receptionPackages?.[quote.catering.packageId] || {};
+      const styleName = quote.catering.packageStyle === 'plated' ? 'Plated' : 'Buffet';
+      sectionHeader(`CATERING  —  ${pkg.name || 'Reception'} Package (${styleName})`);
+
+      labelValue('Package', pkg.name || quote.catering.packageId);
+      labelValue('Service Style', styleName);
+      labelValue('Rate', `$${quote.catering.pricePerPerson}/person × ${quote.catering.guestCount} guests`);
+
+      // Package includes box
+      y += 6;
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
+      doc.text('PACKAGE INCLUDES:', marginL, y); y += 14;
+      if (pkg.includes?.length) {
+        pkg.includes.forEach(item => { checkPageBreak(16); bulletLine(item); });
+      }
+
+      y += 4;
+      // Entrées available
+      if (pkg.entrees?.length) {
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
+        doc.text('ENTRÉE SELECTIONS (choose 2):', marginL, y); y += 14;
+        pkg.entrees.forEach(item => { checkPageBreak(16); bulletLine(item); });
+        y += 6;
+        doc.setFont('helvetica', 'italic'); doc.setFontSize(8); doc.setTextColor(...mid);
+        doc.text('Final entrée selections to be confirmed during event planning.', marginL, y); y += 14;
+      }
+
+      // Total box
+      doc.setFillColor(248, 249, 250);
+      doc.roundedRect(marginL, y, contentW, 26, 4, 4, 'F');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(...dark);
+      doc.text(`$${quote.catering.pricePerPerson}/person  ×  ${quote.catering.guestCount} guests`, marginL + 12, y + 17);
+      doc.setTextColor(...gold);
+      doc.text(fmt(quote.catering.total), marginL + contentW - 12, y + 17, { align: 'right' });
+      y += 34;
+
+    } else if (cart.catering.protein1 === 'outside') {
+      // ── OUTSIDE CATERING ────────────────────────────────────────────
+      sectionHeader('CATERING  —  Outside / Preferred Vendor');
       labelValue('Type', 'Outside Catering (approved vendors only)');
       labelValue('Fee', fmt(config.catering.outsideCateringFee) + ' flat fee');
+
     } else {
-      // Entrees
+      // ── CUSTOM CATERING MODE ─────────────────────────────────────────
+      sectionHeader('CATERING  —  Custom Menu (Includes Salad)');
+
       doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
       doc.text('ENTRÉE SELECTIONS', marginL, y); y += 14;
 
@@ -1365,7 +1402,6 @@ class WeddingCart {
       const p1 = proteins.find(p => p.id === cart.catering.protein1);
       const p2 = proteins.find(p => p.id === cart.catering.protein2);
 
-      // Entree table rows
       const entreeRows = [];
       if (p1) entreeRows.push([p1.name, p1.description, `$${p1.pricePerPerson}/person`, fmt(p1.pricePerPerson * quote.catering.guestCount)]);
       if (p2) entreeRows.push([p2.name, p2.description, `$${p2.pricePerPerson}/person`, fmt(p2.pricePerPerson * quote.catering.guestCount)]);
@@ -1373,29 +1409,31 @@ class WeddingCart {
         entreeRows.push(['', `Average of both entrées × ${quote.catering.guestCount} guests`, `$${quote.catering.avgProteinPrice}/person avg`, fmt(quote.catering.baseCost)]);
       }
 
-      doc.autoTable({
-        startY: y,
-        head: [['Entrée', 'Description', 'Per Person', `Total (${quote.catering.guestCount} guests)`]],
-        body: entreeRows,
-        theme: 'grid',
-        headStyles: { fillColor: [60, 78, 96], textColor: 255, fontStyle: 'bold', fontSize: 8 },
-        bodyStyles: { fontSize: 9, textColor: dark },
-        alternateRowStyles: { fillColor: [248, 249, 250] },
-        columnStyles: {
-          0: { fontStyle: 'bold', cellWidth: 90 },
-          1: { cellWidth: 'auto' },
-          2: { halign: 'center', cellWidth: 80 },
-          3: { halign: 'right', cellWidth: 90, fontStyle: 'bold' }
-        },
-        margin: { left: marginL, right: marginR },
-        didParseCell: (data) => {
-          if (data.row.index === entreeRows.length - 1 && p1 && p2) {
-            data.cell.styles.fillColor = [255, 252, 235];
-            data.cell.styles.fontStyle = 'bold';
+      if (entreeRows.length > 0) {
+        doc.autoTable({
+          startY: y,
+          head: [['Entrée', 'Description', 'Per Person', `Total (${quote.catering.guestCount} guests)`]],
+          body: entreeRows,
+          theme: 'grid',
+          headStyles: { fillColor: [60, 78, 96], textColor: 255, fontStyle: 'bold', fontSize: 8 },
+          bodyStyles: { fontSize: 9, textColor: dark },
+          alternateRowStyles: { fillColor: [248, 249, 250] },
+          columnStyles: {
+            0: { fontStyle: 'bold', cellWidth: 90 },
+            1: { cellWidth: 'auto' },
+            2: { halign: 'center', cellWidth: 80 },
+            3: { halign: 'right', cellWidth: 90, fontStyle: 'bold' }
+          },
+          margin: { left: marginL, right: marginR },
+          didParseCell: (data) => {
+            if (data.row.index === entreeRows.length - 1 && p1 && p2) {
+              data.cell.styles.fillColor = [255, 252, 235];
+              data.cell.styles.fontStyle = 'bold';
+            }
           }
-        }
-      });
-      y = doc.lastAutoTable.finalY + 12;
+        });
+        y = doc.lastAutoTable.finalY + 12;
+      }
     }
 
     // Additional Sides
@@ -1554,7 +1592,10 @@ class WeddingCart {
     const summaryRows = [
       ['Venue Rental', fmt(quote.venue.cost), 'Non-taxable'],
     ];
-    if (quote.catering.total > 0) summaryRows.push(['Catering (entrées, salad & dessert)', fmt(quote.catering.total), 'Taxable']);
+    const cateringLabel = quote.catering.packageMode
+      ? `${quote.catering.packageName || 'Reception'} Package (${quote.catering.packageStyle || 'Buffet'}) — All-inclusive`
+      : 'Catering (entrées, salad & service)';
+    if (quote.catering.total > 0) summaryRows.push([cateringLabel, fmt(quote.catering.total), 'Taxable']);
     if (quote.catering.sides?.cost > 0) summaryRows.push([`Additional Sides (${quote.catering.sides.count} dish${quote.catering.sides.count !== 1 ? 'es' : ''})`, fmt(quote.catering.sides.cost), 'Taxable']);
     if (quote.catering.appetizers?.cost > 0) summaryRows.push([`Passed Appetizers (${quote.catering.appetizers.count})`, fmt(quote.catering.appetizers.cost), 'Taxable']);
     if (quote.beverages.total > 0) summaryRows.push([`Bar Service — ${quote.beverages.packageName}`, fmt(quote.beverages.total), 'Taxable']);

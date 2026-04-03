@@ -130,6 +130,9 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
   const guestCount  = cart?.guestCount || 0;
   const venueType   = cart?.venue?.type;
   const venueHours  = cart?.venue?.hours;
+  const cateringMode = cart?.catering?.mode || 'custom';
+  const cateringPkg  = cart?.catering?.package;
+  const pkgStyle     = cart?.catering?.packageStyle || 'buffet';
   const protein1    = cart?.catering?.protein1;
   const protein2    = cart?.catering?.protein2;
   const sidesQty    = cart?.catering?.sidesQty || 0;
@@ -205,10 +208,30 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
 
   // Catering
   rows += sh('🍽️ Catering');
-  if (protein1 === 'outside') {
+
+  if (cateringMode === 'package' && cateringPkg) {
+    // Reception Package mode
+    const PACKAGE_NAMES = { prospector: 'Prospector', brewmaster: 'Brewmaster', motherLode: 'Mother Lode' };
+    const PACKAGE_PRICES = {
+      prospector:  { buffet: 69, plated: 79 },
+      brewmaster:  { buffet: 79, plated: 89 },
+      motherLode:  { buffet: 89, plated: 99 },
+    };
+    const pkgName = PACKAGE_NAMES[cateringPkg] || cateringPkg;
+    const pkgPricePerPerson = PACKAGE_PRICES[cateringPkg]?.[pkgStyle] || 0;
+    const pkgStyleLabel = pkgStyle === 'plated' ? 'Plated Service' : 'Buffet Service';
+
+    rows += r(`${pkgName} Reception Package`, fmt(cateringTotal),
+      `${pkgStyleLabel} · $${pkgPricePerPerson}/person × ${guestCount} guests`);
+    rows += note("Package includes: hors d'oeuvres, salad, 2 entrées, vegetarian option, beverage station, champagne toast, linens, china, silverware, cake cutting & screen/mic");
+    rows += note('All-inclusive pricing — 20% service fee applies to all food & beverage');
+
+  } else if (protein1 === 'outside') {
     rows += r('Outside Catering', fmt(1000), 'Approved vendor · Kitchen access & coordination included');
+
   } else {
-    rows += note('All catering includes salad course & dessert');
+    // Custom catering mode
+    rows += note('All catering includes salad course');
     if (protein1) rows += r(`Entrée 1: ${PROTEIN_NAMES[protein1] || protein1}`, '');
     if (protein2) rows += r(`Entrée 2: ${PROTEIN_NAMES[protein2] || protein2}`, '');
     if (cateringTotal > 0) {
@@ -232,7 +255,7 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
 
     // Service style
     const styleLabels = { buffet: 'Buffet (included)', familyStyle: 'Family Style (+$10/person)', plated: 'Plated (+$10/person · highest entrée price applies)' };
-    rows += r('Style of Service', styleLabels[serviceStyle] || serviceStyle, 'All prices include catering rentals, plates & flatware · Buffet included · Family Style +$10 · Plated +$10 (highest entrée price applies to all guests)');
+    rows += r('Style of Service', styleLabels[serviceStyle] || serviceStyle, 'All prices include catering rentals, plates & flatware');
 
     // Dessert
     if (hasDessert) {
