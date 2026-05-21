@@ -222,7 +222,7 @@ export class WeddingCalculator {
       ? WEDDING_PRICING_CONFIG.addOns.floral.packages.find(p => p.id === cart.addOns.floral)?.price || 0
       : 0;
 
-    const photographyCost = cart.addOns.photography ? 2500 : 0;
+    const photographyCost = cart.addOns.photography ? 4500 : 0;
     const djCost = cart.addOns.dj ? 2500 : 0;
 
     const plannerCost = cart.addOns.weddingPlanner ? 2500 : 0;
