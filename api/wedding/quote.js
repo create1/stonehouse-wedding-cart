@@ -218,7 +218,7 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
     rows += r(`${pkgName} Reception Package`, fmt(cateringTotal),
       `${pkgStyleLabel} · $${pkgPricePerPerson}/person × ${guestCount} guests`);
     rows += note("Package includes: hors d'oeuvres, salad, 2 entrées, vegetarian option, 2 sides, beverage station, china, silverware, cake cutting & screen/mic");
-    rows += note('All-inclusive pricing — 20% service fee applies to all food & beverage');
+    rows += note('All-inclusive pricing — 25% service fee applies to all food & beverage');
 
   } else if (protein1 === 'outside') {
     rows += r('Outside Catering', fmt(1000), 'Approved vendor · Kitchen access & coordination included');
@@ -270,7 +270,7 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
   // Service Fee
   if (serviceFee > 0) {
     rows += sh('📋 Service Fee');
-    rows += r('20% Service Fee (food & beverage)', fmt(serviceFee),
+    rows += r('25% Service Fee (food & beverage)', fmt(serviceFee),
       `Taxable · Applied to ${fmt(cateringTotal + bevTotal)} food & beverage total`);
   }
 

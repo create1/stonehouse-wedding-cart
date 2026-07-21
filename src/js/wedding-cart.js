@@ -1351,9 +1351,9 @@ class WeddingCart {
       sectionHeader('SERVICE FEE');
 
       const foodBevTotal = quote.catering.total + quote.beverages.total;
-      labelValue('Rate', '20% of all food & beverage services');
+      labelValue('Rate', '25% of all food & beverage services');
       labelValue('Applied to', `Catering + Bar Service = ${fmt(foodBevTotal)}`);
-      labelValue('Calculation', `${fmt(foodBevTotal)} × 20%`);
+      labelValue('Calculation', `${fmt(foodBevTotal)} × 25%`);
 
       doc.setFillColor(248, 249, 250);
       doc.roundedRect(marginL, y + 4, contentW, 26, 4, 4, 'F');
@@ -1449,7 +1449,7 @@ class WeddingCart {
     if (quote.catering.sides?.cost > 0) summaryRows.push([`Additional Sides (${quote.catering.sides.count} dish${quote.catering.sides.count !== 1 ? 'es' : ''})`, fmt(quote.catering.sides.cost), 'Taxable']);
     if (quote.catering.appetizers?.cost > 0) summaryRows.push([`Passed Appetizers (${quote.catering.appetizers.count})`, fmt(quote.catering.appetizers.cost), 'Taxable']);
     if (quote.beverages.total > 0) summaryRows.push([`Bar Service — ${quote.beverages.packageName}`, fmt(quote.beverages.total), 'Taxable']);
-    if (quote.serviceFee.amount > 0) summaryRows.push(['Service Fee (20% on food & beverage)', fmt(quote.serviceFee.amount), 'Taxable']);
+    if (quote.serviceFee.amount > 0) summaryRows.push(['Service Fee (25% on food & beverage)', fmt(quote.serviceFee.amount), 'Taxable']);
     if (quote.addOns.floral.cost > 0) summaryRows.push([`Floral — ${quote.addOns.floral.packageName}`, fmt(quote.addOns.floral.cost), 'Tax-exempt']);
     if (quote.addOns.photography.selected) summaryRows.push(['Professional Photography', fmt(quote.addOns.photography.cost), 'Tax-exempt']);
     if (quote.addOns.weddingPlanner.selected) {

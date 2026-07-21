@@ -301,7 +301,7 @@ export const WEDDING_PRICING_CONFIG = {
   // ===================================
   fees: {
     serviceFee: {
-      rate: 0.20, // 20%
+      rate: 0.25, // 25%
       description: 'Service fee on food and beverage',
       appliesTo: ['catering', 'beverages'],
       taxable: true
@@ -311,7 +311,7 @@ export const WEDDING_PRICING_CONFIG = {
 
   // ===================================
   // RECEPTION PACKAGES
-  // All-inclusive catering packages (base price per person; 20% service fee applies)
+  // All-inclusive catering packages (base price per person; 25% service fee applies)
   // ===================================
   receptionPackages: {
     prospector: {
