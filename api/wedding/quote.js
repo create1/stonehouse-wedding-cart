@@ -143,6 +143,7 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
 
   const venueCost     = quote?.venue?.cost               || 0;
   const cateringTotal = quote?.catering?.total            || 0;
+  const cateringBase  = quote?.catering?.baseCost         || 0;
   const sidesTotal    = quote?.catering?.sides?.cost      || 0;
   const dessertCost   = quote?.catering?.dessertCost       || 0;
   const appsTotal     = quote?.catering?.appetizers?.cost || 0;
@@ -318,7 +319,8 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
 
   // Financial summary
   rows += sh('💰 Financial Summary');
-  const taxableBase = cateringTotal + sidesTotal + appsTotal + bevTotal + serviceFee;
+  // Use base catering + add-ons (not catering.total) to avoid double-counting sides/apps/dessert
+  const taxableBase = cateringBase + sidesTotal + appsTotal + dessertCost + bevTotal + serviceFee;
   const nonTaxable  = venueCost + floralCost + photoCost + plannerCost + djCost;
   rows += r('Taxable Subtotal (catering, bar & service fee)', fmt(taxableBase));
   rows += r('Non-Taxable Subtotal (venue & add-ons)', fmt(nonTaxable));
