@@ -217,7 +217,7 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
 
     rows += r(`${pkgName} Reception Package`, fmt(cateringTotal),
       `${pkgStyleLabel} · $${pkgPricePerPerson}/person × ${guestCount} guests`);
-    rows += note("Package includes: hors d'oeuvres, salad, 2 entrées, vegetarian option, beverage station, china, silverware, cake cutting & screen/mic");
+    rows += note("Package includes: hors d'oeuvres, salad, 2 entrées, vegetarian option, 2 sides, beverage station, china, silverware, cake cutting & screen/mic");
     rows += note('All-inclusive pricing — 20% service fee applies to all food & beverage');
 
   } else if (protein1 === 'outside') {
