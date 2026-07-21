@@ -22,9 +22,10 @@ const WEDDING_PRICING_CONFIG = {
       },
       premiumEventCap: {
         pricing: {
-          offPeak: { monThu: 5000, friday: 6000, saturday: 7000, sunday: 6500 },
-          shoulder: { monThu: 6500, friday: 8000, saturday: 9000, sunday: 8500 },
-          peak: { monThu: 7500, friday: 9000, saturday: 10000, sunday: 9500 }
+          // Weekdays $8,000 · Weekends $10,000 (same across seasons)
+          offPeak:  { monThu: 8000, friday: 8000, saturday: 10000, sunday: 10000 },
+          shoulder: { monThu: 8000, friday: 8000, saturday: 10000, sunday: 10000 },
+          peak:     { monThu: 8000, friday: 8000, saturday: 10000, sunday: 10000 }
         },
         isFlat: true
       }
