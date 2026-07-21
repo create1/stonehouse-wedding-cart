@@ -128,7 +128,7 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
   const venueHours  = cart?.venue?.hours;
   const cateringMode = cart?.catering?.mode || 'custom';
   const cateringPkg  = cart?.catering?.package;
-  const pkgStyle     = cart?.catering?.packageStyle || 'buffet';
+  const pkgStyle     = cart?.catering?.packageStyle || 'plated';
   const protein1    = cart?.catering?.protein1;
   const protein2    = cart?.catering?.protein2;
   const sidesQty    = cart?.catering?.sidesQty || 0;
@@ -207,13 +207,13 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
     // Reception Package mode
     const PACKAGE_NAMES = { prospector: 'Prospector', brewmaster: 'Brewmaster', motherLode: 'Mother Lode' };
     const PACKAGE_PRICES = {
-      prospector:  { buffet: 69, plated: 79 },
-      brewmaster:  { buffet: 79, plated: 89 },
-      motherLode:  { buffet: 89, plated: 99 },
+      prospector:  { plated: 69, familyStyle: 79 },
+      brewmaster:  { plated: 79, familyStyle: 89 },
+      motherLode:  { plated: 89, familyStyle: 99 },
     };
     const pkgName = PACKAGE_NAMES[cateringPkg] || cateringPkg;
-    const pkgPricePerPerson = PACKAGE_PRICES[cateringPkg]?.[pkgStyle] || 0;
-    const pkgStyleLabel = pkgStyle === 'plated' ? 'Plated Service' : 'Buffet Service';
+    const pkgPricePerPerson = PACKAGE_PRICES[cateringPkg]?.[pkgStyle] || PACKAGE_PRICES[cateringPkg]?.plated || 0;
+    const pkgStyleLabel = pkgStyle === 'familyStyle' ? 'Family Style Service' : 'Plated Service';
 
     rows += r(`${pkgName} Reception Package`, fmt(cateringTotal),
       `${pkgStyleLabel} · $${pkgPricePerPerson}/person × ${guestCount} guests`);
