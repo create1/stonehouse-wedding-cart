@@ -215,9 +215,27 @@ function buildEmailHTML({ cart, quote, contact, quoteNumber, eventDate, grandTot
     const pkgPricePerPerson = PACKAGE_PRICES[cateringPkg]?.[pkgStyle] || PACKAGE_PRICES[cateringPkg]?.plated || 0;
     const pkgStyleLabel = pkgStyle === 'familyStyle' ? 'Family Style Service' : 'Plated Service';
 
-    rows += r(`${pkgName} Reception Package`, fmt(cateringTotal),
+    const pkgBase = pkgPricePerPerson * guestCount;
+    rows += r(`${pkgName} Reception Package`, fmt(pkgBase),
       `${pkgStyleLabel} · $${pkgPricePerPerson}/person × ${guestCount} guests`);
     rows += note("Package includes: hors d'oeuvres, salad, 2 entrées, vegetarian option, 2 sides, beverage station, china, silverware, cake cutting & screen/mic");
+    if (sidesQty > 0) {
+      rows += r(
+        `Additional Sides — ${sidesQty} side dish${sidesQty > 1 ? 'es' : ''}`,
+        fmt(sidesTotal),
+        `${guestCount} guests × $6/person × ${sidesQty} side${sidesQty > 1 ? 's' : ''} · Final selections confirmed during planning`
+      );
+    }
+    if (appsQty > 0) {
+      rows += r(
+        `Passed Appetizers — ${appsQty} appetizer${appsQty > 1 ? 's' : ''}`,
+        fmt(appsTotal),
+        `${guestCount} guests × $5/person × ${appsQty} appetizer${appsQty > 1 ? 's' : ''} · Final selections confirmed during planning`
+      );
+    }
+    if (hasDessert) {
+      rows += r('Dessert Course', fmt(dessertCost), `${guestCount} guests × $10/person · Final selection confirmed during planning`);
+    }
     rows += note('All-inclusive pricing — 25% service fee applies to all food & beverage');
 
   } else if (protein1 === 'outside') {

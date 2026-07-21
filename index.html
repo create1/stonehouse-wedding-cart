@@ -498,104 +498,107 @@
             <p class="includes-note" style="margin-top: 0.5rem; font-size: 0.82rem; color: var(--cart-medium);"><i class="fas fa-check-circle" style="color: var(--cart-success); margin-right: 0.3rem;"></i>All prices include catering rentals, plates &amp; flatware</p>
           </div>
 
-          <!-- Dessert Add-On -->
-          <div class="form-section">
-            <div class="section-header">
-              <label class="form-label">
-                <i class="fas fa-birthday-cake"></i>
-                Dessert Course
-              </label>
-              <label class="toggle-switch">
-                <input type="checkbox" id="dessert-toggle">
-                <span class="toggle-slider"></span>
-                <span class="toggle-label">Add dessert? <strong>+$10/person</strong></span>
-              </label>
-            </div>
-            <div id="dessert-info" style="display: none;">
-              <p class="qty-examples">
-                <strong>$10/person.</strong> Add a dessert course to your reception — 
-                options include Wedding Cake Cutting Service, Plated Dessert, or a Dessert Bar. 
-                <em>Final selection confirmed during planning.</em>
-              </p>
-              <div class="qty-cost-display" id="dessert-cost-display"></div>
-            </div>
-          </div>
-
-          <!-- Additional Sides -->
-          <div class="form-section">
-            <div class="section-header">
-              <label class="form-label">
-                <i class="fas fa-leaf"></i>
-                Additional Sides
-              </label>
-              <label class="toggle-switch">
-                <input type="checkbox" id="sides-toggle">
-                <span class="toggle-slider"></span>
-                <span class="toggle-label">Add extra sides?</span>
-              </label>
-            </div>
-
-            <div id="sides-qty-panel" style="display: none;">
-              <p class="qty-examples">
-                <strong>$6/person per side.</strong> Choose how many side dishes you'd like served with dinner.
-                Popular options include: Garlic Mashed Potatoes, Roasted Seasonal Vegetables, Truffle Mac &amp; Cheese, 
-                Rice Pilaf, Grilled Asparagus, Roasted Sweet Potatoes, and many more — 
-                <em>final selections made during planning.</em>
-              </p>
-              <div class="qty-selector">
-                <button class="qty-btn" id="sides-decrease" aria-label="Remove a side">
-                  <i class="fas fa-minus"></i>
-                </button>
-                <div class="qty-display">
-                  <span class="qty-number" id="sides-qty">1</span>
-                  <span class="qty-label">Side Dish<span id="sides-plural">es</span></span>
-                </div>
-                <button class="qty-btn" id="sides-increase" aria-label="Add a side">
-                  <i class="fas fa-plus"></i>
-                </button>
-              </div>
-              <div class="qty-cost-display" id="sides-cost-display"></div>
-            </div>
-          </div>
-
-          <!-- Passed Appetizers -->
-          <div class="form-section">
-            <div class="section-header">
-              <label class="form-label">
-                <i class="fas fa-wine-glass"></i>
-                Passed Appetizers
-              </label>
-              <label class="toggle-switch">
-                <input type="checkbox" id="appetizers-toggle">
-                <span class="toggle-slider"></span>
-                <span class="toggle-label">Add passed appetizers?</span>
-              </label>
-            </div>
-
-            <div id="appetizers-qty-panel" style="display: none;">
-              <p class="qty-examples">
-                <strong>$5/person per appetizer.</strong> Choose how many passed appetizers you'd like during cocktail hour.
-                Popular options include: Bruschetta, Shrimp Cocktail, Caprese Skewers, Italian Meatballs, 
-                Mini Sliders, Stuffed Mushrooms, Spring Rolls, and many more — 
-                <em>final selections made during planning.</em>
-              </p>
-              <div class="qty-selector">
-                <button class="qty-btn" id="apps-decrease" aria-label="Remove an appetizer">
-                  <i class="fas fa-minus"></i>
-                </button>
-                <div class="qty-display">
-                  <span class="qty-number" id="apps-qty">1</span>
-                  <span class="qty-label">Appetizer<span id="apps-plural">s</span></span>
-                </div>
-                <button class="qty-btn" id="apps-increase" aria-label="Add an appetizer">
-                  <i class="fas fa-plus"></i>
-                </button>
-              </div>
-              <div class="qty-cost-display" id="apps-cost-display"></div>
-            </div>
-          </div>
-
           </div><!-- end custom-catering-panel -->
+
+          <!-- Shared catering add-ons (packages + custom) -->
+          <div id="catering-addons-panel">
+            <!-- Dessert Add-On -->
+            <div class="form-section">
+              <div class="section-header">
+                <label class="form-label">
+                  <i class="fas fa-birthday-cake"></i>
+                  Dessert Course
+                </label>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="dessert-toggle">
+                  <span class="toggle-slider"></span>
+                  <span class="toggle-label">Add dessert? <strong>+$10/person</strong></span>
+                </label>
+              </div>
+              <div id="dessert-info" style="display: none;">
+                <p class="qty-examples">
+                  <strong>$10/person.</strong> Add a dessert course to your reception —
+                  options include Wedding Cake Cutting Service, Plated Dessert, or a Dessert Bar.
+                  <em>Final selection confirmed during planning.</em>
+                </p>
+                <div class="qty-cost-display" id="dessert-cost-display"></div>
+              </div>
+            </div>
+
+            <!-- Additional Sides -->
+            <div class="form-section">
+              <div class="section-header">
+                <label class="form-label">
+                  <i class="fas fa-leaf"></i>
+                  Additional Sides
+                </label>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="sides-toggle">
+                  <span class="toggle-slider"></span>
+                  <span class="toggle-label">Add extra sides?</span>
+                </label>
+              </div>
+
+              <div id="sides-qty-panel" style="display: none;">
+                <p class="qty-examples">
+                  <strong>$6/person per side.</strong> Choose how many additional side dishes you'd like beyond those included in your package.
+                  Popular options include: Garlic Mashed Potatoes, Roasted Seasonal Vegetables, Truffle Mac &amp; Cheese,
+                  Rice Pilaf, Grilled Asparagus, Roasted Sweet Potatoes, and many more —
+                  <em>final selections made during planning.</em>
+                </p>
+                <div class="qty-selector">
+                  <button class="qty-btn" id="sides-decrease" aria-label="Remove a side">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <div class="qty-display">
+                    <span class="qty-number" id="sides-qty">1</span>
+                    <span class="qty-label">Side Dish<span id="sides-plural">es</span></span>
+                  </div>
+                  <button class="qty-btn" id="sides-increase" aria-label="Add a side">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <div class="qty-cost-display" id="sides-cost-display"></div>
+              </div>
+            </div>
+
+            <!-- Passed Appetizers -->
+            <div class="form-section">
+              <div class="section-header">
+                <label class="form-label">
+                  <i class="fas fa-wine-glass"></i>
+                  Passed Appetizers
+                </label>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="appetizers-toggle">
+                  <span class="toggle-slider"></span>
+                  <span class="toggle-label">Add passed appetizers?</span>
+                </label>
+              </div>
+
+              <div id="appetizers-qty-panel" style="display: none;">
+                <p class="qty-examples">
+                  <strong>$5/person per appetizer.</strong> Choose how many additional passed appetizers you'd like during cocktail hour.
+                  Popular options include: Bruschetta, Shrimp Cocktail, Caprese Skewers, Italian Meatballs,
+                  Mini Sliders, Stuffed Mushrooms, Spring Rolls, and many more —
+                  <em>final selections made during planning.</em>
+                </p>
+                <div class="qty-selector">
+                  <button class="qty-btn" id="apps-decrease" aria-label="Remove an appetizer">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <div class="qty-display">
+                    <span class="qty-number" id="apps-qty">1</span>
+                    <span class="qty-label">Appetizer<span id="apps-plural">s</span></span>
+                  </div>
+                  <button class="qty-btn" id="apps-increase" aria-label="Add an appetizer">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <div class="qty-cost-display" id="apps-cost-display"></div>
+              </div>
+            </div>
+          </div><!-- end catering-addons-panel -->
 
           <div class="step-navigation">
             <button class="btn btn-secondary prev-step">

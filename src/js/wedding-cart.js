@@ -452,8 +452,9 @@ class WeddingCart {
     if (!el) return;
     const qty = this.cart.catering.sidesQty || 0;
     if (qty > 0) {
-      const cost = qty * 5 * this.cart.guestCount;
-      el.innerHTML = `<i class="fas fa-check-circle"></i> ${qty} side dish${qty !== 1 ? 'es' : ''} × $5/person × ${this.cart.guestCount} guests = <strong>${WeddingPricingHelpers.formatCurrency(cost)}</strong>`;
+      const rate = WEDDING_PRICING_CONFIG.catering.sides?.pricePerPerson || 6;
+      const cost = qty * rate * this.cart.guestCount;
+      el.innerHTML = `<i class="fas fa-check-circle"></i> ${qty} side dish${qty !== 1 ? 'es' : ''} × $${rate}/person × ${this.cart.guestCount} guests = <strong>${WeddingPricingHelpers.formatCurrency(cost)}</strong>`;
     }
   }
 
@@ -462,8 +463,9 @@ class WeddingCart {
     if (!el) return;
     const qty = this.cart.catering.appetizersQty || 0;
     if (qty > 0) {
-      const cost = qty * 5 * this.cart.guestCount;
-      el.innerHTML = `<i class="fas fa-check-circle"></i> ${qty} passed appetizer${qty !== 1 ? 's' : ''} × $5/person × ${this.cart.guestCount} guests = <strong>${WeddingPricingHelpers.formatCurrency(cost)}</strong>`;
+      const rate = WEDDING_PRICING_CONFIG.catering.appetizers?.pricePerPerson || 5;
+      const cost = qty * rate * this.cart.guestCount;
+      el.innerHTML = `<i class="fas fa-check-circle"></i> ${qty} passed appetizer${qty !== 1 ? 's' : ''} × $${rate}/person × ${this.cart.guestCount} guests = <strong>${WeddingPricingHelpers.formatCurrency(cost)}</strong>`;
     }
   }
 
@@ -803,8 +805,8 @@ class WeddingCart {
     html += '</div>';
 
     // Catering
-    html += '<div class="item-category"><h4>Catering (includes salad & dessert)</h4>';
-    items.filter(item => ['Catering', 'Additional Sides', 'Passed Appetizers'].includes(item.category)).forEach(item => {
+    html += '<div class="item-category"><h4>Catering</h4>';
+    items.filter(item => ['Catering', 'Additional Sides', 'Passed Appetizers', 'Dessert Course'].includes(item.category)).forEach(item => {
       html += `
         <div class="item-row">
           <div class="item-details">
@@ -1226,13 +1228,13 @@ class WeddingCart {
         doc.text('Final entrée selections to be confirmed during event planning.', marginL, y); y += 14;
       }
 
-      // Total box
+      // Total box (package base only; add-ons listed separately)
       doc.setFillColor(248, 249, 250);
       doc.roundedRect(marginL, y, contentW, 26, 4, 4, 'F');
       doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(...dark);
       doc.text(`$${quote.catering.pricePerPerson}/person  ×  ${quote.catering.guestCount} guests`, marginL + 12, y + 17);
       doc.setTextColor(...gold);
-      doc.text(fmt(quote.catering.total), marginL + contentW - 12, y + 17, { align: 'right' });
+      doc.text(fmt(quote.catering.baseCost), marginL + contentW - 12, y + 17, { align: 'right' });
       y += 34;
 
     } else if (cart.catering.protein1 === 'outside') {
@@ -1288,11 +1290,12 @@ class WeddingCart {
 
     // Additional Sides
     if (quote.catering.sides?.count > 0) {
+      const sideRate = config.catering.sides?.pricePerPerson || 6;
       checkPageBreak(50);
       doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
-      doc.text('ADDITIONAL SIDES  —  $6/person each', marginL, y); y += 13;
+      doc.text(`ADDITIONAL SIDES  —  $${sideRate}/person each`, marginL, y); y += 13;
       labelValue('Quantity', `${quote.catering.sides.count} side dish${quote.catering.sides.count !== 1 ? 'es' : ''}`);
-      labelValue('Rate', `$8/person × ${quote.catering.guestCount} guests`);
+      labelValue('Rate', `$${sideRate}/person × ${quote.catering.guestCount} guests`);
       doc.setFont('helvetica', 'italic'); doc.setFontSize(8); doc.setTextColor(...mid);
       doc.text('Final side dish selections to be confirmed during event planning.', marginL, y); y += 12;
       doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...gold);
@@ -1302,15 +1305,30 @@ class WeddingCart {
 
     // Passed Appetizers
     if (quote.catering.appetizers?.count > 0) {
+      const appRate = config.catering.appetizers?.pricePerPerson || 5;
       checkPageBreak(50);
       doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
-      doc.text('PASSED APPETIZERS  —  $5/person each', marginL, y); y += 13;
+      doc.text(`PASSED APPETIZERS  —  $${appRate}/person each`, marginL, y); y += 13;
       labelValue('Quantity', `${quote.catering.appetizers.count} passed appetizer${quote.catering.appetizers.count !== 1 ? 's' : ''}`);
-      labelValue('Rate', `$6/person × ${quote.catering.guestCount} guests`);
+      labelValue('Rate', `$${appRate}/person × ${quote.catering.guestCount} guests`);
       doc.setFont('helvetica', 'italic'); doc.setFontSize(8); doc.setTextColor(...mid);
       doc.text('Final appetizer selections to be confirmed during event planning.', marginL, y); y += 12;
       doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...gold);
       doc.text(fmt(quote.catering.appetizers.cost), marginL + contentW, y, { align: 'right' });
+      y += 10;
+    }
+
+    // Dessert Course
+    if (quote.catering.dessert && quote.catering.dessertCost > 0) {
+      const dessertRate = config.catering.dessert?.pricePerPerson || 10;
+      checkPageBreak(50);
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...dark);
+      doc.text(`DESSERT COURSE  —  $${dessertRate}/person`, marginL, y); y += 13;
+      labelValue('Rate', `$${dessertRate}/person × ${quote.catering.guestCount} guests`);
+      doc.setFont('helvetica', 'italic'); doc.setFontSize(8); doc.setTextColor(...mid);
+      doc.text('Final dessert selection to be confirmed during event planning.', marginL, y); y += 12;
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...gold);
+      doc.text(fmt(quote.catering.dessertCost), marginL + contentW, y, { align: 'right' });
       y += 10;
     }
 
@@ -1445,9 +1463,10 @@ class WeddingCart {
     const cateringLabel = quote.catering.packageMode
       ? `${quote.catering.packageName || 'Reception'} Package (${quote.catering.packageStyle === 'familyStyle' ? 'Family Style' : 'Plated'}) — All-inclusive`
       : 'Catering (entrées, salad & service)';
-    if (quote.catering.total > 0) summaryRows.push([cateringLabel, fmt(quote.catering.total), 'Taxable']);
+    if (quote.catering.baseCost > 0) summaryRows.push([cateringLabel, fmt(quote.catering.baseCost), 'Taxable']);
     if (quote.catering.sides?.cost > 0) summaryRows.push([`Additional Sides (${quote.catering.sides.count} dish${quote.catering.sides.count !== 1 ? 'es' : ''})`, fmt(quote.catering.sides.cost), 'Taxable']);
     if (quote.catering.appetizers?.cost > 0) summaryRows.push([`Passed Appetizers (${quote.catering.appetizers.count})`, fmt(quote.catering.appetizers.cost), 'Taxable']);
+    if (quote.catering.dessertCost > 0) summaryRows.push(['Dessert Course', fmt(quote.catering.dessertCost), 'Taxable']);
     if (quote.beverages.total > 0) summaryRows.push([`Bar Service — ${quote.beverages.packageName}`, fmt(quote.beverages.total), 'Taxable']);
     if (quote.serviceFee.amount > 0) summaryRows.push(['Service Fee (25% on food & beverage)', fmt(quote.serviceFee.amount), 'Taxable']);
     if (quote.addOns.floral.cost > 0) summaryRows.push([`Floral — ${quote.addOns.floral.packageName}`, fmt(quote.addOns.floral.cost), 'Tax-exempt']);
