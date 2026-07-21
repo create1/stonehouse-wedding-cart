@@ -124,7 +124,7 @@ class WeddingCalculator {
       beverageTotal = bevPackage ? bevPackage.pricePerPerson * cart.guestCount : 0;
     }
 
-    const serviceFee = (cateringTotal + beverageTotal) * 0.20;
+    const serviceFee = (cateringTotal + beverageTotal) * 0.25;
 
     const floralCost = cart.addOns.floral ? [1500, 2500, 5000, 10000][['intimate', 'classic', 'elegant', 'luxury'].indexOf(cart.addOns.floral)] || 0 : 0;
     const photographyCost = cart.addOns.photography ? 4500 : 0;

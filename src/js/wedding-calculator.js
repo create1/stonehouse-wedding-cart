@@ -152,7 +152,7 @@ export class WeddingCalculator {
   }
 
   /**
-   * Calculate service fee (20% on food and beverage)
+   * Calculate service fee (25% on food and beverage)
    */
   calculateServiceFee(cateringTotal, beverageTotal) {
     const feeConfig = WEDDING_PRICING_CONFIG.fees.serviceFee;
@@ -294,7 +294,7 @@ export class WeddingCalculator {
       },
 
       serviceFee: {
-        rate: '20%',
+        rate: '25%',
         appliedTo: catering.total + beverageTotal,
         amount: serviceFee,
         taxable: true
@@ -425,7 +425,7 @@ export class WeddingCalculator {
     if (quote.serviceFee.amount > 0) {
       items.push({
         category: 'Service Fee',
-        description: `20% on food & beverage ($${WeddingPricingHelpers.formatCurrency(quote.serviceFee.appliedTo)})`,
+        description: `25% on food & beverage ($${WeddingPricingHelpers.formatCurrency(quote.serviceFee.appliedTo)})`,
         amount: quote.serviceFee.amount,
         taxable: true,
         formatted: WeddingPricingHelpers.formatCurrency(quote.serviceFee.amount)
