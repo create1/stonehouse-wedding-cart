@@ -79,9 +79,10 @@ export const WEDDING_PRICING_CONFIG = {
         isFlat: true,
         capacity: 300,
         pricing: {
-          offPeak:  { monThu: 5600, friday: 6300, saturday: 7350, sunday: 6850 },
-          shoulder: { monThu: 6850, friday: 8050, saturday: 9100, sunday: 8750 },
-          peak:     { monThu: 7700, friday: 9100, saturday: 9800, sunday: 9450 }
+          // Weekdays $8,000 · Weekends $10,000 (same across seasons)
+          offPeak:  { monThu: 8000, friday: 8000, saturday: 10000, sunday: 10000 },
+          shoulder: { monThu: 8000, friday: 8000, saturday: 10000, sunday: 10000 },
+          peak:     { monThu: 8000, friday: 8000, saturday: 10000, sunday: 10000 }
         }
       }
     }
