@@ -205,7 +205,23 @@ body {
 
 .pricing-table thead th.col-day {
   text-align: left;
-  width: 32%;
+  width: 40%;
+}
+
+.pricing-table-simple {
+  max-width: 480px;
+}
+
+.pricing-table-simple thead th.col-day {
+  width: 45%;
+}
+
+.pricing-table .day-sub {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--cart-gray, #888);
+  margin-top: 0.15rem;
 }
 
 .pricing-table thead th span {
@@ -699,16 +715,29 @@ body {
   gap: 1.5rem;
 }
 
+.venue-grid-single {
+  grid-template-columns: 1fr;
+  max-width: 480px;
+}
+
 .venue-card {
   border: 3px solid var(--cart-light);
   border-radius: 12px;
   padding: 1.5rem;
   background: white;
   transition: all 0.3s ease;
-  cursor: pointer;
+  cursor: default;
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+.venue-grid-single .venue-card {
+  cursor: default;
+}
+
+.venue-grid-single .venue-card:hover {
+  transform: none;
 }
 
 .venue-card:hover {
@@ -2587,14 +2616,21 @@ textarea.form-input {
 
   /* ── VENUE CARDS — horizontal row ──── */
   .venue-grid { grid-template-columns: 1fr; gap: 0.6rem; }
+  .venue-grid-single { max-width: none; }
 
-  .venue-card {
+  .venue-grid:not(.venue-grid-single) .venue-card {
     display: grid !important;
     grid-template-columns: 1fr auto !important;
     grid-template-rows: auto auto auto !important;
     gap: 0.05rem 0.75rem !important;
     align-items: center !important;
     padding: 0.85rem 1rem !important;
+    border-radius: 10px !important;
+  }
+
+  .venue-grid-single .venue-card {
+    display: flex !important;
+    padding: 1.1rem 1.15rem !important;
     border-radius: 10px !important;
   }
   .venue-card.recommended { padding-top: 2.4rem !important; }
@@ -2911,12 +2947,19 @@ textarea.form-input {
     max-width: 100vw !important;
   }
 
-  /* Hide the pricing reference table on mobile — too wide */
+  /* Simple buyout chart fits on mobile; keep the pricing guide link as a secondary path */
   .inline-pricing {
-    display: none !important;
+    display: block !important;
   }
 
-  /* Show a clean "View pricing" link instead */
+  .pricing-table-simple {
+    max-width: none;
+  }
+
+  .pricing-table-simple thead th span {
+    display: block;
+  }
+
   .mobile-pricing-link {
     display: flex !important;
     align-items: center;

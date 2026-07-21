@@ -11,18 +11,9 @@ const WEDDING_PRICING_CONFIG = {
       peak: { months: [5, 6, 7, 8, 9, 10, 12] }
     },
     options: {
-      fullBuilding: {
-        pricing: {
-          offPeak: { monThu: 900, friday: 950, saturday: 1000, sunday: 950 },
-          shoulder: { monThu: 950, friday: 1000, saturday: 1100, sunday: 1000 },
-          peak: { monThu: 1000, friday: 1100, saturday: 1200, sunday: 1100 }
-        },
-        minimumHours: 3,
-        isFlat: false
-      },
       premiumEventCap: {
         pricing: {
-          // Weekdays $8,000 · Weekends $10,000 (same across seasons)
+          // Weekdays $8,000 · Weekends $10,000
           offPeak:  { monThu: 8000, friday: 8000, saturday: 10000, sunday: 10000 },
           shoulder: { monThu: 8000, friday: 8000, saturday: 10000, sunday: 10000 },
           peak:     { monThu: 8000, friday: 8000, saturday: 10000, sunday: 10000 }

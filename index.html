@@ -80,74 +80,25 @@
 
           <!-- Inline Venue Rate Table -->
           <div class="inline-pricing">
-            <div class="inline-pricing-top">
-              <div class="season-tabs">
-                <button class="season-tab active" data-season="offpeak">
-                  <span class="season-tab-name">Off-Peak</span>
-                  <span class="season-tab-dates">Jan–Feb</span>
-                </button>
-                <button class="season-tab" data-season="shoulder">
-                  <span class="season-tab-name">Shoulder</span>
-                  <span class="season-tab-dates">Mar–Apr, Nov</span>
-                </button>
-                <button class="season-tab" data-season="peak">
-                  <span class="season-tab-name">Peak</span>
-                  <span class="season-tab-dates">May–Oct, Dec</span>
-                </button>
-              </div>
-            </div>
             <div class="pricing-table-wrap">
-              <table class="pricing-table">
+              <table class="pricing-table pricing-table-simple">
                 <thead>
                   <tr>
                     <th class="col-day">Day</th>
-                    <th>Single Room <span>(hourly · 3-hr min)</span></th>
-                    <th>Partial Building <span>(hourly · 3-hr min)</span></th>
-                    <th class="col-featured">Partial Building <span>(12 hr block · 40% off · Most Popular)</span></th>
-                    <th>Full Building <span>(12 hr block · all 6 spaces)</span></th>
-                  </tr>
-                  <tr class="col-subtitle-row">
-                    <td></td>
-                    <td class="col-subtitle">One room of your choice</td>
-                    <td class="col-subtitle">Lounge, Dining, Courtyard &amp; Cave</td>
-                    <td class="col-subtitle col-featured">Lounge, Dining, Courtyard &amp; Cave</td>
-                    <td class="col-subtitle">All 6 spaces</td>
+                    <th class="col-featured">Full Building Buyout <span>Exclusive all-day access · all 6 spaces</span></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="day-label">Mon–Thu</td>
-                    <td class="price-cell" data-offpeak="$250/hr" data-shoulder="$300/hr" data-peak="$350/hr">$250/hr</td>
-                    <td class="price-cell" data-offpeak="$550/hr" data-shoulder="$600/hr" data-peak="$650/hr">$550/hr</td>
-                    <td class="price-cell col-featured" data-offpeak="$3,950" data-shoulder="$4,300" data-peak="$4,700">$3,950</td>
-                                        <td class="price-cell" data-offpeak="$8,000" data-shoulder="$8,000" data-peak="$8,000">$8,000</td>
-                  </tr>
-                  <tr>
-                    <td class="day-label">Friday</td>
-                    <td class="price-cell" data-offpeak="$300/hr" data-shoulder="$350/hr" data-peak="$400/hr">$300/hr</td>
-                    <td class="price-cell" data-offpeak="$600/hr" data-shoulder="$650/hr" data-peak="$750/hr">$600/hr</td>
-                    <td class="price-cell col-featured" data-offpeak="$4,300" data-shoulder="$4,700" data-peak="$5,400">$4,300</td>
-                                        <td class="price-cell" data-offpeak="$8,000" data-shoulder="$8,000" data-peak="$8,000">$8,000</td>
+                    <td class="day-label">Weekday <span class="day-sub">Mon–Fri</span></td>
+                    <td class="price-cell col-featured">$8,000</td>
                   </tr>
                   <tr class="saturday-row">
-                    <td class="day-label">Saturday <span class="sat-badge"><i class="fas fa-lock"></i> Block only</span></td>
-                    <td class="na-cell">&mdash;</td>
-                    <td class="na-cell">&mdash;</td>
-                    <td class="price-cell col-featured" data-offpeak="$4,700" data-shoulder="$5,400" data-peak="$6,100">$4,700</td>
-                    <td class="price-cell" data-offpeak="$10,000" data-shoulder="$10,000" data-peak="$10,000">$10,000</td>
-                  </tr>
-                  <tr>
-                    <td class="day-label">Sunday</td>
-                    <td class="price-cell" data-offpeak="$275/hr" data-shoulder="$325/hr" data-peak="$375/hr">$275/hr</td>
-                    <td class="price-cell" data-offpeak="$600/hr" data-shoulder="$700/hr" data-peak="$800/hr">$600/hr</td>
-                    <td class="price-cell col-featured" data-offpeak="$4,300" data-shoulder="$5,050" data-peak="$5,750">$4,300</td>
-                                        <td class="price-cell" data-offpeak="$10,000" data-shoulder="$10,000" data-peak="$10,000">$10,000</td>
+                    <td class="day-label">Weekend <span class="day-sub">Sat–Sun</span></td>
+                    <td class="price-cell col-featured">$10,000</td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-            <div class="pricing-scroll-hint">
-              <i class="fas fa-arrows-alt-h"></i> Swipe to see all pricing options
             </div>
           </div>
 
@@ -232,75 +183,22 @@
             </p>
           </div>
 
-          <!-- Venue Selection -->
+          <!-- Venue Package (Full Building Buyout — only option) -->
           <div class="form-section">
             <label class="form-label">
               <i class="fas fa-building"></i>
-              Venue Selection *
+              Venue Package
             </label>
 
-            <div id="saturday-notice" class="saturday-notice" style="display:none;">
-              <div class="saturday-notice-icon"><i class="fas fa-calendar-times"></i></div>
-              <div class="saturday-notice-text">
-                <strong>Saturdays are block-rental only</strong>
-                <span>Hourly rentals are not available on Saturdays. Choose a 12-hour block package below.</span>
-              </div>
-            </div>
-
-            <div class="venue-grid">
-              <div class="venue-card" data-venue="singleRoom">
+            <div class="venue-grid venue-grid-single">
+              <div class="venue-card selected" data-venue="premiumEventCap">
                 <div class="venue-card-header">
-                  <h3>Single Room</h3>
-                  <div class="venue-price" data-price-display="singleRoom"></div>
+                  <h3>Full Building Buyout</h3>
+                  <div class="venue-price" data-price-display="premiumEventCap">$8,000 – $10,000</div>
                 </div>
-                <p class="venue-description">Hourly rental, 3-hour minimum</p>
-                <p class="venue-capacity">Up to 75 guests</p>
-                <p class="venue-includes">One room of your choice.</p>
-                <div class="venue-duration" id="duration-singleRoom" style="display: none;">
-                  <label>Duration (hours):</label>
-                  <input type="range" class="duration-slider" min="3" max="12" value="5" step="1">
-                  <span class="duration-display">5 hours</span>
-                </div>
-                <button class="venue-select-btn">Select</button>
-              </div>
-
-              <div class="venue-card" data-venue="partialBuilding">
-                <div class="venue-card-header">
-                  <h3>Partial Building</h3>
-                  <div class="venue-price" data-price-display="partialBuilding"></div>
-                </div>
-                <p class="venue-description">Hourly rental, 3-hour minimum</p>
-                <p class="venue-capacity">Up to 150 guests</p>
-                <p class="venue-includes">Includes the Lounge, Dining Room, Courtyard &amp; Cave.</p>
-                <div class="venue-duration" id="duration-partialBuilding" style="display: none;">
-                  <label>Duration (hours):</label>
-                  <input type="range" class="duration-slider" min="3" max="12" value="5" step="1">
-                  <span class="duration-display">5 hours</span>
-                </div>
-                <button class="venue-select-btn">Select</button>
-              </div>
-
-              <div class="venue-card recommended" data-venue="partialBuildingFlat">
-                <div class="recommended-badge">Most Popular</div>
-                <div class="venue-card-header">
-                  <h3>Partial Building — 12 Hour Block</h3>
-                  <div class="venue-price" data-price-display="partialBuildingFlat"></div>
-                </div>
-                <p class="venue-description">All-day flat rate — save 40% vs. hourly</p>
-                <p class="venue-capacity">Up to 150 guests</p>
-                <p class="venue-includes">Includes the Lounge, Dining Room, Courtyard &amp; Cave.</p>
-                <button class="venue-select-btn">Select</button>
-              </div>
-
-              <div class="venue-card" data-venue="premiumEventCap">
-                <div class="venue-card-header">
-                  <h3>Full Building 12 Hour Block</h3>
-                  <div class="venue-price" data-price-display="premiumEventCap"></div>
-                </div>
-                <p class="venue-description">All-day access, full building</p>
+                <p class="venue-description">Exclusive all-day access to the entire building</p>
                 <p class="venue-capacity">Up to 300 guests</p>
-                <p class="venue-includes">Includes our Lounge, Great Hall, Show Room, Courtyard, Cavern and Parlour.</p>
-                <button class="venue-select-btn">Select</button>
+                <p class="venue-includes">Includes Lounge, Great Hall, Show Room, Courtyard, Cavern &amp; Parlour.</p>
               </div>
             </div>
           </div>

@@ -368,9 +368,11 @@ export class WeddingCalculator {
     const items = [];
 
     // Venue
+    const dayTier = WeddingPricingHelpers.getDayTier(quote.venue.date);
+    const rateLabel = (dayTier === 'saturday' || dayTier === 'sunday') ? 'Weekend' : 'Weekday';
     items.push({
       category: 'Venue Rental',
-      description: `${quote.venue.typeName} - ${quote.venue.season.name} ${WeddingPricingHelpers.getDayTier(quote.venue.date)}`,
+      description: `${quote.venue.typeName} — ${rateLabel}`,
       amount: quote.venue.cost,
       taxable: true,
       formatted: WeddingPricingHelpers.formatCurrency(quote.venue.cost)
