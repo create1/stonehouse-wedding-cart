@@ -14,9 +14,9 @@ class WeddingCart {
     // Cart state
     this.cart = {
       venue: {
-        type: null,
+        type: 'premiumEventCap', // Full Building Buyout (only option)
         date: null,
-        hours: 5
+        hours: null
       },
       guestCount: 100,
       catering: {
@@ -45,7 +45,6 @@ class WeddingCart {
   }
 
   init() {
-    this.setupSeasonTabs();
     this.setupDatePicker();
     this.setupGuestCountSlider();
     this.setupVenueSelection();
@@ -61,22 +60,6 @@ class WeddingCart {
     this.setupModals();
     this.setupMobileBar();
     this.updatePriceSummary();
-  }
-
-  // ===================================
-  // SEASON TAB SWITCHER
-  // ===================================
-  setupSeasonTabs() {
-    document.querySelectorAll('.season-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.season-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const season = tab.dataset.season;
-        document.querySelectorAll('.price-cell[data-offpeak]').forEach(cell => {
-          cell.textContent = cell.dataset[season];
-        });
-      });
-    });
   }
 
   // ===================================
@@ -102,11 +85,10 @@ class WeddingCart {
       onChange: (selectedDates) => {
         if (selectedDates.length > 0) {
           this.cart.venue.date = selectedDates[0];
+          this.cart.venue.type = 'premiumEventCap';
           this.updateSeasonDisplay(selectedDates[0]);
-          this.updateVenueAvailability(selectedDates[0]);
           this.updateVenuePricing();
           this.updatePriceSummary();
-          this.updatePricingTableSeason(selectedDates[0]);
         }
       }
     });
@@ -189,140 +171,26 @@ class WeddingCart {
     updateGuestCount(100);
   }
 
-  updatePricingTableSeason(date) {
-    const season = WeddingPricingHelpers.getSeasonForDate(date);
-
-    // Map config season keys to tab data-season values
-    const seasonMap = { offPeak: 'offpeak', shoulder: 'shoulder', peak: 'peak' };
-    const tabSeason = seasonMap[season.key] || 'offpeak';
-
-    // Activate the matching tab
-    const tabs = document.querySelectorAll('.season-tab');
-    tabs.forEach(tab => {
-      tab.classList.toggle('active', tab.dataset.season === tabSeason);
-    });
-
-    // Update all price cells
-    document.querySelectorAll('.price-cell[data-offpeak]').forEach(cell => {
-      cell.textContent = cell.dataset[tabSeason];
-    });
-
-    // Scroll pricing table into view briefly to signal the update
-    const pricingCard = document.querySelector('.pricing-card');
-    if (pricingCard) {
-      pricingCard.style.transition = 'box-shadow 0.3s';
-      pricingCard.style.boxShadow = '0 0 0 3px rgba(212, 175, 55, 0.4)';
-      setTimeout(() => {
-        pricingCard.style.boxShadow = '';
-      }, 800);
-    }
-  }
-
   // ===================================
-  // VENUE AVAILABILITY BY DAY
-  // ===================================
-  updateVenueAvailability(date) {
-    const isSaturday = date.getDay() === 6;
-
-    // Hourly options (hidden on Saturdays — block rental only)
-    const hourlyCards = ['singleRoom', 'partialBuilding'];
-    // Flat/block options (always available)
-    const flatCards   = ['partialBuildingFlat', 'premiumEventCap'];
-
-    const notice = document.getElementById('saturday-notice');
-
-    if (isSaturday) {
-      // Saturday: flat/block rentals only — hide hourly options
-      hourlyCards.forEach(id => {
-        const card = document.querySelector(`.venue-card[data-venue="${id}"]`);
-        if (!card) return;
-        card.style.display = 'none';
-        if (this.cart.venue.type === id) {
-          card.classList.remove('selected');
-          this.cart.venue.type = null;
-        }
-      });
-      flatCards.forEach(id => {
-        const card = document.querySelector(`.venue-card[data-venue="${id}"]`);
-        if (card) card.style.display = '';
-      });
-      if (notice) notice.style.display = 'flex';
-    } else {
-      // All other days: all four options visible
-      [...hourlyCards, ...flatCards].forEach(id => {
-        const card = document.querySelector(`.venue-card[data-venue="${id}"]`);
-        if (card) card.style.display = '';
-      });
-      if (notice) notice.style.display = 'none';
-    }
-  }
-
-  // ===================================
-  // VENUE SELECTION
+  // VENUE SELECTION (Full Building Buyout only)
   // ===================================
   setupVenueSelection() {
-    const venueCards = document.querySelectorAll('.venue-card');
+    this.cart.venue.type = 'premiumEventCap';
+    this.cart.venue.hours = null;
 
-    venueCards.forEach(card => {
-      const venueType = card.dataset.venue;
-      const selectBtn = card.querySelector('.venue-select-btn');
-      const durationSection = document.getElementById(`duration-${venueType}`);
-      const durationSlider = durationSection?.querySelector('.duration-slider');
-      const durationDisplay = durationSection?.querySelector('.duration-display');
-
-      // Duration slider setup for hourly venues
-      if (durationSlider) {
-        durationSlider.addEventListener('input', (e) => {
-          const hours = parseInt(e.target.value);
-          durationDisplay.textContent = `${hours} hours`;
-          
-          if (this.cart.venue.type === venueType) {
-            this.cart.venue.hours = hours;
-            this.updatePriceSummary();
-          }
-        });
-      }
-
-      selectBtn.addEventListener('click', () => {
-        // Deselect all venue cards
-        venueCards.forEach(c => c.classList.remove('selected'));
-        
-        // Select this card
-        card.classList.add('selected');
-        this.cart.venue.type = venueType;
-        
-        // Show/hide duration sliders
-        document.querySelectorAll('.venue-duration').forEach(d => d.style.display = 'none');
-        
-        const venueConfig = WEDDING_PRICING_CONFIG.venue.options[venueType];
-        if (!venueConfig.isFlat && durationSection) {
-          durationSection.style.display = 'block';
-          this.cart.venue.hours = parseInt(durationSlider.value);
-        } else {
-          this.cart.venue.hours = null;
-        }
-
-        this.updatePriceSummary();
-      });
-    });
+    const card = document.querySelector('.venue-card[data-venue="premiumEventCap"]');
+    if (card) card.classList.add('selected');
   }
 
   updateVenuePricing() {
     if (!this.cart.venue.date) return;
 
-    const venueOptions = WEDDING_PRICING_CONFIG.venue.options;
-    
-    for (const [venueId, config] of Object.entries(venueOptions)) {
-      const priceDisplay = document.querySelector(`[data-price-display="${venueId}"]`);
-      if (!priceDisplay) continue;
+    const priceDisplay = document.querySelector('[data-price-display="premiumEventCap"]');
+    if (!priceDisplay) return;
 
-      const rate = WeddingPricingHelpers.getVenueRate(this.cart.venue.date, venueId);
-      
-      if (config.isFlat) {
-        priceDisplay.textContent = WeddingPricingHelpers.formatCurrency(rate);
-      } else {
-        priceDisplay.textContent = `${WeddingPricingHelpers.formatCurrency(rate)}/hr`;
-      }
+    const rate = WeddingPricingHelpers.getVenueRate(this.cart.venue.date, 'premiumEventCap');
+    if (rate != null) {
+      priceDisplay.textContent = WeddingPricingHelpers.formatCurrency(rate);
     }
   }
 
@@ -1284,7 +1152,10 @@ class WeddingCart {
     };
 
     twoColRow('Event Date', eventDate, 'Guest Count', `${quote.catering.guestCount} Guests`);
-    twoColRow('Venue Package', quote.venue.typeName || '—', 'Season', `${quote.venue.season?.name || '—'} Season`);
+    const rateLabel = ['saturday', 'sunday'].includes(WeddingPricingHelpers.getDayTier(new Date(quote.venue.date)))
+      ? 'Weekend Rate'
+      : 'Weekday Rate';
+    twoColRow('Venue Package', quote.venue.typeName || 'Full Building Buyout', 'Rate', rateLabel);
     if (contact.name) {
       doc.setDrawColor(...light); doc.line(leftX, boxY - 6, leftX + contentW - 28, boxY - 6);
       boxY += 4;
@@ -1304,43 +1175,22 @@ class WeddingCart {
     // ─────────────────────────────────
     sectionHeader('VENUE RENTAL');
 
-    const venueConfig = config.venue.options[cart.venue.type];
-    const season = quote.venue.season;
     const dayTier = WeddingPricingHelpers.getDayTier(new Date(quote.venue.date));
-    const dayTierName = { monThu: 'Monday–Thursday', friday: 'Friday', saturday: 'Saturday', sunday: 'Sunday' }[dayTier] || dayTier;
+    const isWeekend = dayTier === 'saturday' || dayTier === 'sunday';
+    const rateName = isWeekend ? 'Weekend' : 'Weekday';
 
-    if (venueConfig?.isFlat) {
-      labelValue('Package', quote.venue.typeName);
-      labelValue('Includes', 'Lounge, Great Hall, Show Room, Courtyard, Cavern & Parlour');
-      labelValue('Duration', '12-Hour Block (all-day access)');
-      labelValue('Day', dayOfWeek + ` (${dayTierName} rate)`);
-      labelValue('Season', `${season?.name} Season (${season?.description})`);
-      y += 4;
-      doc.setFillColor(248, 249, 250);
-      doc.roundedRect(marginL, y, contentW, 26, 4, 4, 'F');
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(...dark);
-      doc.text('Flat Rate — 12 Hour Block', marginL + 12, y + 17);
-      doc.setTextColor(...gold);
-      doc.text(fmt(quote.venue.cost), marginL + contentW - 12, y + 17, { align: 'right' });
-      y += 34;
-    } else {
-      const hourlyRate = venueConfig?.pricing?.[season?.key]?.[dayTier] || 0;
-      const hours = cart.venue.hours || 5;
-      labelValue('Package', quote.venue.typeName);
-      labelValue('Includes', 'Lounge, Great Hall, Show Room, Courtyard, Cavern & Parlour');
-      labelValue('Day', dayOfWeek + ` (${dayTierName} rate)`);
-      labelValue('Season', `${season?.name} Season (${season?.description})`);
-      labelValue('Hourly Rate', `${fmt(hourlyRate)}/hour`);
-      labelValue('Duration', `${hours} hours (3-hour minimum)`);
-      y += 4;
-      doc.setFillColor(248, 249, 250);
-      doc.roundedRect(marginL, y, contentW, 26, 4, 4, 'F');
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(...dark);
-      doc.text(`${fmt(hourlyRate)}/hr  ×  ${hours} hours`, marginL + 12, y + 17);
-      doc.setTextColor(...gold);
-      doc.text(fmt(quote.venue.cost), marginL + contentW - 12, y + 17, { align: 'right' });
-      y += 34;
-    }
+    labelValue('Package', quote.venue.typeName || 'Full Building Buyout');
+    labelValue('Includes', 'Lounge, Great Hall, Show Room, Courtyard, Cavern & Parlour');
+    labelValue('Duration', 'Exclusive all-day access');
+    labelValue('Day', `${dayOfWeek} (${rateName} rate)`);
+    y += 4;
+    doc.setFillColor(248, 249, 250);
+    doc.roundedRect(marginL, y, contentW, 26, 4, 4, 'F');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(...dark);
+    doc.text('Full Building Buyout', marginL + 12, y + 17);
+    doc.setTextColor(...gold);
+    doc.text(fmt(quote.venue.cost), marginL + contentW - 12, y + 17, { align: 'right' });
+    y += 34;
 
     // ─────────────────────────────────
     // SECTION 2 — CATERING

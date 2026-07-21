@@ -10,7 +10,7 @@ export const WEDDING_PRICING_CONFIG = {
   // VENUE PRICING
   // ===================================
   venue: {
-    // Seasonal month classifications
+    // Seasonal month classifications (informational; pricing is weekday/weekend only)
     seasons: {
       offPeak: {
         name: 'Off-Peak',
@@ -32,54 +32,16 @@ export const WEDDING_PRICING_CONFIG = {
       }
     },
 
-    // Venue rental options with pricing by season and day
+    // Full Building buyout only — $8,000 weekdays / $10,000 weekends
     options: {
-      singleRoom: {
-        id: 'singleRoom',
-        name: 'Single Room',
-        description: 'Hourly rental, 3-hour minimum — one room',
-        minimumHours: 3,
-        maximumHours: 12,
-        capacity: 75,
-        pricing: {
-          offPeak:  { monThu: 250, friday: 300, saturday: 350, sunday: 275 },
-          shoulder: { monThu: 300, friday: 350, saturday: 400, sunday: 325 },
-          peak:     { monThu: 350, friday: 400, saturday: 450, sunday: 375 }
-        }
-      },
-      partialBuilding: {
-        id: 'partialBuilding',
-        name: 'Partial Building',
-        description: 'Hourly rental, 3-hour minimum',
-        minimumHours: 3,
-        maximumHours: 12,
-        capacity: 150,
-        pricing: {
-          offPeak: { monThu: 550, friday: 600, saturday: 650, sunday: 600 },
-          shoulder: { monThu: 600, friday: 650, saturday: 750, sunday: 700 },
-          peak: { monThu: 650, friday: 750, saturday: 850, sunday: 800 }
-        }
-      },
-      partialBuildingFlat: {
-        id: 'partialBuildingFlat',
-        name: 'Partial Building — 12 Hour Block',
-        description: 'All-day flat rate, 40% off hourly — dining room, lounge, courtyard & cavern',
-        isFlat: true,
-        capacity: 150,
-        pricing: {
-          offPeak:  { monThu: 3950, friday: 4300, saturday: 4700, sunday: 4300 },
-          shoulder: { monThu: 4300, friday: 4700, saturday: 5400, sunday: 5050 },
-          peak:     { monThu: 4700, friday: 5400, saturday: 6100, sunday: 5750 }
-        }
-      },
       premiumEventCap: {
         id: 'premiumEventCap',
-        name: 'Full Building 12 Hour Block',
-        description: 'All-day access, full building',
+        name: 'Full Building Buyout',
+        description: 'Exclusive all-day access to the entire building',
         isFlat: true,
         capacity: 300,
+        includes: 'Lounge, Great Hall, Show Room, Courtyard, Cavern & Parlour',
         pricing: {
-          // Weekdays $8,000 · Weekends $10,000 (same across seasons)
           offPeak:  { monThu: 8000, friday: 8000, saturday: 10000, sunday: 10000 },
           shoulder: { monThu: 8000, friday: 8000, saturday: 10000, sunday: 10000 },
           peak:     { monThu: 8000, friday: 8000, saturday: 10000, sunday: 10000 }
@@ -505,60 +467,7 @@ export const WEDDING_PRICING_CONFIG = {
       largeEventMessage: 'For weddings with more than 150 guests, please contact us for a custom quote.',
       largeEventContact: 'bookings@stonehouse.io',
       recommendations: {
-        singleRoom: {
-        id: 'singleRoom',
-        name: 'Single Room',
-        description: 'Hourly rental, 3-hour minimum — one room',
-        minimumHours: 3,
-        maximumHours: 12,
-        capacity: 75,
-        pricing: {
-          offPeak:  { monThu: 250, friday: 300, saturday: 350, sunday: 275 },
-          shoulder: { monThu: 300, friday: 350, saturday: 400, sunday: 325 },
-          peak:     { monThu: 350, friday: 400, saturday: 450, sunday: 375 }
-        }
-      },
-      partialBuilding: { min: 20, max: 150, ideal: 80 },
-        partialBuildingFlat: { min: 20, max: 150, ideal: 80 },
-        singleRoom: {
-        id: 'singleRoom',
-        name: 'Single Room',
-        description: 'Hourly rental, 3-hour minimum — one room',
-        minimumHours: 3,
-        maximumHours: 12,
-        capacity: 75,
-        pricing: {
-          offPeak:  { monThu: 250, friday: 300, saturday: 350, sunday: 275 },
-          shoulder: { monThu: 300, friday: 350, saturday: 400, sunday: 325 },
-          peak:     { monThu: 350, friday: 400, saturday: 450, sunday: 375 }
-        }
-      },
-      partialBuilding: {
-        id: 'partialBuilding',
-        name: 'Partial Building',
-        description: 'Hourly rental, 3-hour minimum',
-        minimumHours: 3,
-        maximumHours: 12,
-        capacity: 150,
-        pricing: {
-          offPeak: { monThu: 550, friday: 600, saturday: 650, sunday: 600 },
-          shoulder: { monThu: 600, friday: 650, saturday: 750, sunday: 700 },
-          peak: { monThu: 650, friday: 750, saturday: 850, sunday: 800 }
-        }
-      },
-      partialBuildingFlat: {
-        id: 'partialBuildingFlat',
-        name: 'Partial Building — 12 Hour Block',
-        description: 'All-day flat rate, 40% off hourly — dining room, lounge, courtyard & cavern',
-        isFlat: true,
-        capacity: 150,
-        pricing: {
-          offPeak:  { monThu: 3950, friday: 4300, saturday: 4700, sunday: 4300 },
-          shoulder: { monThu: 4300, friday: 4700, saturday: 5400, sunday: 5050 },
-          peak:     { monThu: 4700, friday: 5400, saturday: 6100, sunday: 5750 }
-        }
-      },
-      premiumEventCap: { min: 100, max: 150, ideal: 125 }
+        premiumEventCap: { min: 20, max: 150, ideal: 125 }
       }
     },
     
@@ -566,14 +475,6 @@ export const WEDDING_PRICING_CONFIG = {
       minimumDays: 90,
       maximumDays: 730,
       message: 'Weddings must be booked at least 90 days in advance'
-    },
-    
-    duration: {
-      minimum: 3,
-      maximum: 12,
-      default: 5,
-      step: 1,
-      note: 'Only applies to hourly venue rentals'
     }
   }
 };

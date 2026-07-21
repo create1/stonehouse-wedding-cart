@@ -175,58 +175,23 @@
       <div class="section-title-icon"><i class="fas fa-building"></i></div>
       Venue Rental
     </div>
-    <p class="section-lead">All rentals include our full AV system, built-in bar, bridal suite, and on-site coordination support. <strong>Saturdays require a full-day block rental.</strong> Select a season to view pricing.</p>
-    <div class="season-tabs">
-      <button class="stab active" data-s="0">Off-Peak <span>Jan &ndash; Feb</span></button>
-      <button class="stab" data-s="1">Shoulder <span>Mar &ndash; Apr, Nov</span></button>
-      <button class="stab" data-s="2">Peak <span>May &ndash; Oct, Dec</span></button>
-    </div>
+    <p class="section-lead">Exclusive full-building buyout includes our full AV system, built-in bar, bridal suite, and on-site coordination support. All 6 spaces: Lounge, Great Hall, Show Room, Courtyard, Cavern &amp; Parlour.</p>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
             <th>Day</th>
-            <th>Single Room <span>Hourly &middot; 3-hr min</span></th>
-            <th>Partial Building <span>Hourly &middot; 3-hr min</span></th>
-            <th class="feat">Partial Building <span>12-Hour Block &middot; save 40% &middot; Most Popular</span></th>
-            <th>Full Building <span>12-Hour Block &middot; All 6 Spaces</span></th>
-          </tr>
-          <tr class="spaces-row">
-            <td></td>
-            <td>One room of your choice</td>
-            <td>Lounge, Dining Room, Courtyard &amp; Cave</td>
-            <td>Lounge, Dining Room, Courtyard &amp; Cave</td>
-            <td>All 6 spaces incl. Great Hall &amp; Parlour</td>
+            <th class="feat">Full Building Buyout <span>Exclusive all-day access &middot; All 6 spaces</span></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="day-col">Mon &ndash; Thu</td>
-            <td class="price-col" data-vals="$250/hr|$300/hr|$350/hr">$250/hr</td>
-            <td class="price-col" data-vals="$550/hr|$600/hr|$650/hr">$550/hr</td>
-            <td class="price-col feat" data-vals="$3,950|$4,300|$4,700">$3,950</td>
-            <td class="price-col" data-vals="$8,000|$8,000|$8,000">$8,000</td>
+            <td class="day-col">Weekday <span style="font-weight:400;color:var(--gray-lt);">Mon &ndash; Fri</span></td>
+            <td class="price-col feat">$8,000</td>
           </tr>
           <tr>
-            <td class="day-col">Friday</td>
-            <td class="price-col" data-vals="$300/hr|$350/hr|$400/hr">$300/hr</td>
-            <td class="price-col" data-vals="$600/hr|$650/hr|$750/hr">$600/hr</td>
-            <td class="price-col feat" data-vals="$4,300|$4,700|$5,400">$4,300</td>
-            <td class="price-col" data-vals="$8,000|$8,000|$8,000">$8,000</td>
-          </tr>
-          <tr>
-            <td class="day-col">Saturday <span class="sat-note"><i class="fas fa-lock"></i> Block only</span></td>
-            <td class="na-col">&mdash;</td>
-            <td class="na-col">&mdash;</td>
-            <td class="price-col feat" data-vals="$4,700|$5,400|$6,100">$4,700</td>
-            <td class="price-col" data-vals="$10,000|$10,000|$10,000">$10,000</td>
-          </tr>
-          <tr>
-            <td class="day-col">Sunday</td>
-            <td class="price-col" data-vals="$275/hr|$325/hr|$375/hr">$275/hr</td>
-            <td class="price-col" data-vals="$600/hr|$700/hr|$800/hr">$600/hr</td>
-            <td class="price-col feat" data-vals="$4,300|$5,050|$5,750">$4,300</td>
-            <td class="price-col" data-vals="$10,000|$10,000|$10,000">$10,000</td>
+            <td class="day-col">Weekend <span style="font-weight:400;color:var(--gray-lt);">Sat &ndash; Sun</span></td>
+            <td class="price-col feat">$10,000</td>
           </tr>
         </tbody>
       </table>
@@ -563,19 +528,5 @@
 
 </div>
 
-<script>
-  const tabs = document.querySelectorAll(".stab");
-  const cells = document.querySelectorAll("[data-vals]");
-  tabs.forEach((tab, i) => {
-    tab.addEventListener("click", () => {
-      tabs.forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-      cells.forEach(cell => {
-        const vals = cell.dataset.vals.split("|");
-        cell.textContent = vals[i] || vals[0];
-      });
-    });
-  });
-</script>
 </body>
 </html>
