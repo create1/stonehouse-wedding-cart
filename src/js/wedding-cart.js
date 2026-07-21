@@ -22,7 +22,7 @@ class WeddingCart {
       catering: {
         mode: 'package',        // 'package' | 'custom'
         package: null,          // 'prospector' | 'brewmaster' | 'motherLode'
-        packageStyle: 'buffet', // 'buffet' | 'plated'
+        packageStyle: 'plated', // 'plated' | 'familyStyle'
         protein1: null,
         protein2: null,
         sidesQty: 0,
@@ -220,9 +220,9 @@ class WeddingCart {
         document.querySelectorAll('.protein-card.selected').forEach(c => c.classList.remove('selected'));
       } else {
         this.cart.catering.package = null;
-        this.cart.catering.packageStyle = 'buffet';
+        this.cart.catering.packageStyle = 'plated';
         document.querySelectorAll('.reception-pkg-card.selected').forEach(c => c.classList.remove('selected'));
-        document.querySelectorAll('.pkg-style-btn').forEach(b => b.classList.toggle('active', b.dataset.style === 'buffet'));
+        document.querySelectorAll('.pkg-style-btn').forEach(b => b.classList.toggle('active', b.dataset.style === 'plated'));
       }
 
       this.updatePriceSummary();
@@ -252,12 +252,12 @@ class WeddingCart {
         this.cart.catering.package = card.dataset.pkg;
         // Sync packageStyle from whichever style btn is active on this card
         const activeStyleBtn = card.querySelector('.pkg-style-btn.active');
-        this.cart.catering.packageStyle = activeStyleBtn?.dataset.style || 'buffet';
+        this.cart.catering.packageStyle = activeStyleBtn?.dataset.style || 'plated';
         this.updatePriceSummary();
       });
     });
 
-    // Style (Buffet / Plated) buttons on each card
+    // Style (Plated / Family Style) buttons on each card
     document.querySelectorAll('.pkg-style-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -1200,7 +1200,7 @@ class WeddingCart {
     if (quote.catering.packageMode) {
       // ── RECEPTION PACKAGE MODE ──────────────────────────────────────
       const pkg = config.receptionPackages?.[quote.catering.packageId] || {};
-      const styleName = quote.catering.packageStyle === 'plated' ? 'Plated' : 'Buffet';
+      const styleName = quote.catering.packageStyle === 'familyStyle' ? 'Family Style' : 'Plated';
       sectionHeader(`CATERING  —  ${pkg.name || 'Reception'} Package (${styleName})`);
 
       labelValue('Package', pkg.name || quote.catering.packageId);
@@ -1443,7 +1443,7 @@ class WeddingCart {
       ['Venue Rental', fmt(quote.venue.cost), 'Non-taxable'],
     ];
     const cateringLabel = quote.catering.packageMode
-      ? `${quote.catering.packageName || 'Reception'} Package (${quote.catering.packageStyle || 'Buffet'}) — All-inclusive`
+      ? `${quote.catering.packageName || 'Reception'} Package (${quote.catering.packageStyle === 'familyStyle' ? 'Family Style' : 'Plated'}) — All-inclusive`
       : 'Catering (entrées, salad & service)';
     if (quote.catering.total > 0) summaryRows.push([cateringLabel, fmt(quote.catering.total), 'Taxable']);
     if (quote.catering.sides?.cost > 0) summaryRows.push([`Additional Sides (${quote.catering.sides.count} dish${quote.catering.sides.count !== 1 ? 'es' : ''})`, fmt(quote.catering.sides.cost), 'Taxable']);

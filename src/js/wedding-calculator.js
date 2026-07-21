@@ -176,8 +176,8 @@ export class WeddingCalculator {
     if (cart.catering?.mode === 'package' && cart.catering?.package) {
       const pkg = WEDDING_PRICING_CONFIG.receptionPackages?.[cart.catering.package];
       if (pkg) {
-        const styleKey = cart.catering.packageStyle === 'plated' ? 'platedPrice' : 'buffetPrice';
-        const pricePerPerson = pkg[styleKey] || pkg.buffetPrice;
+        const styleKey = cart.catering.packageStyle === 'familyStyle' ? 'familyStylePrice' : 'platedPrice';
+        const pricePerPerson = pkg[styleKey] || pkg.platedPrice;
         const baseTotal = pricePerPerson * cart.guestCount;
         catering = {
           total: baseTotal,
@@ -190,7 +190,7 @@ export class WeddingCalculator {
           packageMode: true,
           packageId: cart.catering.package,
           packageName: pkg.name,
-          packageStyle: cart.catering.packageStyle || 'buffet',
+          packageStyle: cart.catering.packageStyle || 'plated',
           pricePerPerson,
         };
       } else {
