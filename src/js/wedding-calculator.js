@@ -179,11 +179,22 @@ export class WeddingCalculator {
         const styleKey = cart.catering.packageStyle === 'familyStyle' ? 'familyStylePrice' : 'platedPrice';
         const pricePerPerson = pkg[styleKey] || pkg.platedPrice;
         const baseTotal = pricePerPerson * cart.guestCount;
+        const sidesQty = cart.catering.sidesQty || 0;
+        const appetizersQty = cart.catering.appetizersQty || 0;
+        const includeDessert = !!cart.catering.dessert;
+        const sidesCost = sidesQty * (WEDDING_PRICING_CONFIG.catering.sides?.pricePerPerson || 6) * cart.guestCount;
+        const appetizersCost = appetizersQty * (WEDDING_PRICING_CONFIG.catering.appetizers?.pricePerPerson || 5) * cart.guestCount;
+        const dessertCost = includeDessert
+          ? (WEDDING_PRICING_CONFIG.catering.dessert?.pricePerPerson || 10) * cart.guestCount
+          : 0;
         catering = {
-          total: baseTotal,
+          total: baseTotal + sidesCost + appetizersCost + dessertCost,
           baseCatering: baseTotal,
-          sidesCount: 0, sidesCost: 0,
-          appetizersCount: 0, appetizersCost: 0,
+          sidesCount: sidesQty,
+          sidesCost,
+          appetizersCount: appetizersQty,
+          appetizersCost,
+          dessertCost,
           avgProteinPrice: pricePerPerson,
           maxProteinPrice: pricePerPerson,
           baseProteinPrice: pricePerPerson,
@@ -194,7 +205,7 @@ export class WeddingCalculator {
           pricePerPerson,
         };
       } else {
-        catering = { total: 0, baseCatering: 0, sidesCount: 0, sidesCost: 0, appetizersCount: 0, appetizersCost: 0, avgProteinPrice: 0 };
+        catering = { total: 0, baseCatering: 0, sidesCount: 0, sidesCost: 0, appetizersCount: 0, appetizersCost: 0, dessertCost: 0, avgProteinPrice: 0 };
       }
     } else {
       catering = this.calculateCateringTotal(
@@ -278,6 +289,8 @@ export class WeddingCalculator {
           count: catering.appetizersCount,
           cost: catering.appetizersCost
         },
+        dessert: !!cart.catering.dessert,
+        dessertCost: catering.dessertCost || 0,
         total: catering.total,
         includesSaladAndDessert: true,
         taxable: true
@@ -379,20 +392,32 @@ export class WeddingCalculator {
     });
 
     // Catering base
-    items.push({
-      category: 'Catering',
-      description: `${quote.catering.protein1Name} ($${quote.catering.protein1Price}) + ${quote.catering.protein2Name} ($${quote.catering.protein2Price})`,
-      subdescription: `Average $${quote.catering.avgProteinPrice}/person × ${quote.catering.guestCount} guests (includes salad & dessert)`,
-      amount: quote.catering.baseCost,
-      taxable: true,
-      formatted: WeddingPricingHelpers.formatCurrency(quote.catering.baseCost)
-    });
+    if (quote.catering.packageMode) {
+      items.push({
+        category: 'Catering',
+        description: `${quote.catering.packageName} Package (${quote.catering.packageStyle === 'familyStyle' ? 'Family Style' : 'Plated'})`,
+        subdescription: `$${quote.catering.pricePerPerson}/person × ${quote.catering.guestCount} guests`,
+        amount: quote.catering.baseCost,
+        taxable: true,
+        formatted: WeddingPricingHelpers.formatCurrency(quote.catering.baseCost)
+      });
+    } else {
+      items.push({
+        category: 'Catering',
+        description: `${quote.catering.protein1Name} ($${quote.catering.protein1Price}) + ${quote.catering.protein2Name} ($${quote.catering.protein2Price})`,
+        subdescription: `Average $${quote.catering.avgProteinPrice}/person × ${quote.catering.guestCount} guests (includes salad)`,
+        amount: quote.catering.baseCost,
+        taxable: true,
+        formatted: WeddingPricingHelpers.formatCurrency(quote.catering.baseCost)
+      });
+    }
 
     // Sides
     if (quote.catering.sides.count > 0) {
+      const sideRate = WEDDING_PRICING_CONFIG.catering.sides?.pricePerPerson || 6;
       items.push({
         category: 'Additional Sides',
-        description: `${quote.catering.sides.count} side dish${quote.catering.sides.count !== 1 ? 'es' : ''} × $5/person × ${quote.catering.guestCount} guests`,
+        description: `${quote.catering.sides.count} side dish${quote.catering.sides.count !== 1 ? 'es' : ''} × $${sideRate}/person × ${quote.catering.guestCount} guests`,
         amount: quote.catering.sides.cost,
         taxable: true,
         formatted: WeddingPricingHelpers.formatCurrency(quote.catering.sides.cost)
@@ -401,12 +426,25 @@ export class WeddingCalculator {
 
     // Appetizers
     if (quote.catering.appetizers.count > 0) {
+      const appRate = WEDDING_PRICING_CONFIG.catering.appetizers?.pricePerPerson || 5;
       items.push({
         category: 'Passed Appetizers',
-        description: `${quote.catering.appetizers.count} passed appetizer${quote.catering.appetizers.count !== 1 ? 's' : ''} × $5/person × ${quote.catering.guestCount} guests`,
+        description: `${quote.catering.appetizers.count} passed appetizer${quote.catering.appetizers.count !== 1 ? 's' : ''} × $${appRate}/person × ${quote.catering.guestCount} guests`,
         amount: quote.catering.appetizers.cost,
         taxable: true,
         formatted: WeddingPricingHelpers.formatCurrency(quote.catering.appetizers.cost)
+      });
+    }
+
+    // Dessert
+    if (quote.catering.dessert && quote.catering.dessertCost > 0) {
+      const dessertRate = WEDDING_PRICING_CONFIG.catering.dessert?.pricePerPerson || 10;
+      items.push({
+        category: 'Dessert Course',
+        description: `$${dessertRate}/person × ${quote.catering.guestCount} guests`,
+        amount: quote.catering.dessertCost,
+        taxable: true,
+        formatted: WeddingPricingHelpers.formatCurrency(quote.catering.dessertCost)
       });
     }
 
