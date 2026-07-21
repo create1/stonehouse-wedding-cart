@@ -336,11 +336,9 @@ export const WEDDING_PRICING_CONFIG = {
       ],
       entrees: [
         'Lemon Chicken Piccata',
-        'Center Cut Sirloin with Demi Glaze',
         'Herb Roasted Chicken',
         'Herb Crusted Tilapia',
         'Braised Beef Short Rib',
-        'Roasted Salmon with Dill Cream Sauce',
       ],
     },
     brewmaster: {
@@ -366,12 +364,14 @@ export const WEDDING_PRICING_CONFIG = {
       entrees: [
         'Brown Ale Steak Medallions',
         'Whiskey Steak with Fried Onions',
+        'Center Cut Sirloin with Demi Glaze',
         'Champagne Chicken',
         'Riesling Chicken',
         'Tri Tip with Zinfandel Sauce',
         'Chicken Madeira',
         'Mahi Mahi with Rum Mango-Pineapple Salsa',
         'Sea Bass with Lemon Chive Beurre Blanc',
+        'Roasted Salmon with Dill Cream Sauce',
       ],
     },
     motherLode: {
