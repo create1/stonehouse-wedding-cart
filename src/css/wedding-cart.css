@@ -3373,6 +3373,44 @@ textarea.form-input {
   .catering-mode-btn i { margin-bottom: 0; font-size: 1.1rem; }
 }
 
+.bloodlines-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.7rem 1.25rem;
+  background: #14110f;
+  color: #f4ecdf;
+  text-decoration: none;
+  text-align: center;
+  border-bottom: 4px solid #d21f18;
+  font-family: "Montserrat", "Open Sans", sans-serif;
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+}
+
+.bloodlines-banner:hover {
+  color: #fff;
+  background: #221c18;
+}
+
+.bloodlines-banner-kicker,
+.bloodlines-banner-go {
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.bloodlines-banner-kicker {
+  color: #d21f18;
+}
+
+.bloodlines-banner-go {
+  border-bottom: 1px solid #d21f18;
+}
+
 @media (max-width: 480px) {
   .reception-pkg-card {
     flex-direction: column;
