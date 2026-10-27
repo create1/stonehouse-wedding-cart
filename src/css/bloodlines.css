@@ -1,0 +1,705 @@
+/* Stone House Halloween Bloodlines
+   Print-shop handbill: charcoal ground, cream paper, blood red.
+   The palette follows the event poster, not a generic Halloween kit. */
+
+:root {
+  --ink: #14110f;
+  --ink-2: #221c18;
+  --paper: #f4ecdf;
+  --paper-2: #e7dcc8;
+  --blood: #d21f18;
+  --blood-deep: #8c140f;
+  --cream: #f7f1e6;
+  --muted: #8d8174;
+  --line: rgba(244, 236, 223, 0.22);
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+  --serif: "Literata", "Iowan Old Style", Palatino, serif;
+  --display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --max: 1120px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(210, 31, 24, 0.16), transparent 28%),
+    linear-gradient(180deg, #1a1512 0%, var(--ink) 220px);
+  color: var(--cream);
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  padding-bottom: 5.5rem;
+}
+
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(45deg, rgba(244, 236, 223, 0.035) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(244, 236, 223, 0.035) 25%, transparent 25%);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(180deg, #000 0%, transparent 70%);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: var(--blood);
+}
+
+:focus-visible {
+  outline: 2px solid var(--blood);
+  outline-offset: 3px;
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 0.6rem 0.9rem;
+  z-index: 20;
+}
+
+.skip:focus {
+  top: 0.6rem;
+}
+
+.diamond {
+  width: 0.45rem;
+  height: 0.45rem;
+  background: var(--blood);
+  transform: rotate(45deg);
+  display: inline-block;
+  flex: 0 0 auto;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(20, 17, 15, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+.presents {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0.55rem 1rem 0;
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: var(--paper-2);
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0.45rem 1.25rem 0.75rem;
+}
+
+.wordmark {
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 1.7rem;
+  color: var(--blood);
+  line-height: 1;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin-left: auto;
+}
+
+.site-nav a {
+  text-decoration: none;
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  color: var(--paper);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.75rem 1.15rem;
+  background: var(--blood-deep);
+  color: var(--paper);
+  text-decoration: none;
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  border: 1px solid #c4483a;
+}
+
+.btn:hover {
+  background: var(--blood);
+  color: #fff;
+}
+
+.btn-small {
+  min-height: 40px;
+  padding: 0.4rem 0.75rem;
+  font-size: 1rem;
+  flex: 0 0 auto;
+}
+
+.hero {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 1.75rem;
+  align-items: end;
+}
+
+.poster {
+  margin: 0;
+  background: var(--ink-2);
+  padding: 0.7rem;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(244, 236, 223, 0.28);
+  position: relative;
+}
+
+.poster::before,
+.poster::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--blood);
+}
+
+.poster::before {
+  top: 4px;
+  left: 4px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.poster::after {
+  right: 4px;
+  bottom: 4px;
+  border-left: 0;
+  border-top: 0;
+}
+
+.poster img {
+  width: 100%;
+  height: auto;
+}
+
+.poster figcaption {
+  margin: 0.7rem 0.15rem 0.15rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-style: italic;
+}
+
+.eyebrow {
+  margin: 0 0 0.2rem;
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--paper-2);
+  font-size: 1rem;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 0.9;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(3.4rem, 18cqw, 6.2rem);
+  color: var(--blood);
+  max-width: 100%;
+}
+
+.hero-copy {
+  container-type: inline-size;
+  min-width: 0;
+}
+
+.hero-start {
+  margin: 1rem 0 0.8rem;
+}
+
+.hero-day,
+.hero-time {
+  display: block;
+}
+
+.hero-day {
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 1.55rem;
+}
+
+.hero-time {
+  font-size: 1.35rem;
+  color: var(--paper);
+}
+
+.lede {
+  margin: 0 0 1.2rem;
+  max-width: 38ch;
+  color: var(--paper-2);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem 1.2rem;
+}
+
+.text-link {
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+
+.band,
+.sheet,
+.lineup-section,
+.tickets,
+.details {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 1.25rem 3rem;
+  scroll-margin-top: 6.5rem;
+}
+
+.band {
+  background: var(--paper);
+  color: var(--ink);
+  max-width: none;
+  padding: 2.5rem 1.25rem 2.75rem;
+}
+
+.band-intro,
+.fact-grid,
+.tickets-head,
+.tier-grid,
+.ticket-notes,
+.detail-grid,
+.lineup-section,
+.sheet {
+  max-width: var(--max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.band h2,
+.sheet h2,
+.lineup-copy h2,
+.tickets h2,
+.details h2 {
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  margin-bottom: 0.6rem;
+}
+
+.band-intro p {
+  margin: 0 0 1.4rem;
+  max-width: 42ch;
+}
+
+.fact-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.3fr 0.9fr;
+  gap: 1rem;
+}
+
+.fact {
+  background: #fffaf3;
+  border-top: 6px solid var(--ink);
+  padding: 1rem 1rem 1.1rem;
+}
+
+.fact-warn {
+  border-top-color: var(--blood);
+  background: #fff4ef;
+}
+
+.fact h3 {
+  font-size: 1.15rem;
+  letter-spacing: 0.16em;
+  color: var(--blood-deep);
+  margin-bottom: 0.55rem;
+}
+
+.fact p,
+.fact li {
+  margin: 0 0 0.55rem;
+}
+
+.fact-lead {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.7rem;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.end-list {
+  margin: 0.4rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.end-list li + li {
+  margin-top: 0.45rem;
+}
+
+.sheet {
+  padding-top: 2.6rem;
+}
+
+.sheet-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.prose {
+  max-width: 68ch;
+}
+
+.prose p {
+  margin: 0 0 0.9rem;
+}
+
+.lineup-section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 2rem;
+  align-items: start;
+  padding-top: 0.5rem;
+}
+
+.aside {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.bloodline {
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0.2rem 0 0.2rem 1.6rem;
+  border-left: 3px solid var(--blood);
+}
+
+.bloodline li {
+  position: relative;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 0.45rem 0 0.45rem 0.4rem;
+}
+
+.bloodline li::before {
+  content: "";
+  position: absolute;
+  left: -1.95rem;
+  top: 50%;
+  width: 0.7rem;
+  height: 0.7rem;
+  background: var(--paper);
+  border: 3px solid var(--blood);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.tickets {
+  background:
+    linear-gradient(180deg, rgba(210, 31, 24, 0.14), transparent 90px),
+    var(--ink-2);
+  max-width: none;
+  padding: 2.6rem 1.25rem 3rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.tickets-head p,
+.ticket-notes p {
+  max-width: 70ch;
+}
+
+.tier-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin: 1.3rem auto;
+}
+
+.tier {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 1.1rem 1rem 1.15rem;
+  min-height: 100%;
+}
+
+.tier-last {
+  background: var(--ink);
+  color: var(--paper);
+  outline: 1px solid rgba(244, 236, 223, 0.3);
+}
+
+.tier h3 {
+  font-size: 1.35rem;
+  letter-spacing: 0.14em;
+}
+
+.tier-last h3 {
+  color: var(--blood);
+}
+
+.allin {
+  margin: 0.7rem 0 0.25rem;
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 1.15rem;
+}
+
+.allin span {
+  display: block;
+  font-size: clamp(3rem, 5vw, 3.8rem);
+  line-height: 0.85;
+  letter-spacing: 0;
+}
+
+.split,
+.limit,
+.flag {
+  margin: 0.25rem 0 0;
+}
+
+.flag {
+  color: var(--blood-deep);
+  font-weight: 650;
+}
+
+.tier-last .flag {
+  color: #f0b2a4;
+}
+
+.ticket-notes p {
+  margin: 0 0 0.8rem;
+  color: var(--paper-2);
+}
+
+.ticket-notes .btn {
+  margin-top: 0.4rem;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.detail-grid div {
+  padding: 1rem 1rem 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.detail-grid div:nth-child(odd) {
+  padding-right: 1.5rem;
+}
+
+.detail-grid dt {
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ff6a5c;
+  font-size: 1rem;
+}
+
+.detail-grid dd {
+  margin: 0.25rem 0 0;
+}
+
+.site-footer {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0.5rem 1.25rem 1.5rem;
+  color: var(--muted);
+}
+
+.footer-name {
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--paper);
+  font-size: 1.4rem;
+  margin: 0 0 0.3rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.1rem;
+}
+
+.footer-links a {
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.sticky-ticket {
+  position: fixed;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 12;
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  min-height: 52px;
+  padding: 0.7rem 1rem;
+  background: var(--blood-deep);
+  color: var(--paper);
+  text-decoration: none;
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow);
+}
+
+.sticky-ticket.is-on {
+  display: flex;
+}
+
+.sticky-ticket:hover {
+  background: var(--blood);
+  color: #fff;
+}
+
+@media (min-width: 860px) {
+  body {
+    padding-bottom: 0;
+  }
+
+  .sticky-ticket {
+    display: none;
+  }
+}
+
+@media (max-width: 859px) {
+  .header-row {
+    flex-wrap: wrap;
+  }
+
+  .site-nav {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .hero,
+  .fact-grid,
+  .lineup-section,
+  .tier-grid,
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-grid div:nth-child(odd) {
+    padding-right: 0;
+  }
+
+  h1 {
+    font-size: clamp(3.1rem, 16vw, 4.6rem);
+  }
+
+  .presents {
+    letter-spacing: 0.12em;
+    font-size: 0.7rem;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 380px) {
+  .btn-small {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

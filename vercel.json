@@ -16,6 +16,10 @@
     {
       "src": "/pricing",
       "dest": "/pricing.html"
+    },
+    {
+      "src": "/bloodlines",
+      "dest": "/bloodlines.html"
     }
   ]
 }
