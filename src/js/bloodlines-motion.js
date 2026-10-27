@@ -1,6 +1,7 @@
-/* Two particle systems in the flyer’s shapes: a drifting field of
-   diamonds, stairs, crescents, and sunbursts, and a dance-floor figure
-   built from the same marks. Nothing here is a listed performer. */
+/* Two particle systems. The field is the Madrone Studios title-card
+   style: sparse, slow, soft bokeh on black, tinted to the flyer’s
+   cream and blood red. The dancers stay built from the flyer’s marks.
+   Nothing here is a listed performer. */
 (function () {
   var RED = "#d21f18";
   var CREAM = "#f4ecdf";
@@ -105,31 +106,47 @@
     else diamond(ctx, x, y, s, rot, fill, stroke);
   }
 
-  /* ---------- field: the flyer drifting across the page ---------- */
+  /* ---------- field: Madrone-style bokeh, slow and sparse ---------- */
 
   var fieldCanvas = document.getElementById("flyer-field");
   var field = [];
 
+  function orb(ctx, x, y, r, rgb, alpha) {
+    var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, "rgba(" + rgb + "," + alpha + ")");
+    g.addColorStop(0.28, "rgba(" + rgb + "," + (alpha * 0.42) + ")");
+    g.addColorStop(1, "rgba(" + rgb + ",0)");
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
   function spawnField(w, h) {
-    var count = w < 700 ? 42 : 86;
+    var count = w < 700 ? 16 : 26;
     field = [];
-    var kinds = ["diamond", "diamond", "diamond", "stair", "crescent", "burst"];
-    var colors = [RED, CREAM, RED, CREAM, "#f0b2a4"];
     for (var i = 0; i < count; i++) {
+      var big = Math.random() < 0.34;
       field.push({
-        kind: kinds[i % kinds.length],
         x: Math.random() * w,
         y: Math.random() * h,
-        s: 4 + Math.random() * (i % 7 === 0 ? 16 : 9),
-        rot: Math.random() * Math.PI,
-        spin: (Math.random() - 0.5) * 0.01,
-        vy: -(0.15 + Math.random() * 0.45),
-        vx: (Math.random() - 0.5) * 0.25,
+        r: big ? 48 + Math.random() * 120 : 1.5 + Math.random() * 5,
+        a: big ? 0.045 + Math.random() * 0.07 : 0.22 + Math.random() * 0.5,
+        vx: (Math.random() - 0.5) * (big ? 0.07 : 0.16),
+        vy: -(big ? 0.015 + Math.random() * 0.03 : 0.03 + Math.random() * 0.08),
         phase: Math.random() * Math.PI * 2,
-        color: colors[i % colors.length],
-        stroke: i % 3 === 0 ? RED : null
+        rgb: Math.random() < 0.62 ? "244,236,223" : "210,80,62",
+        big: big
       });
     }
+  }
+
+  function wrap(p, w, h) {
+    var pad = p.r + 8;
+    if (p.y < -pad) p.y = h + pad * 0.4;
+    if (p.y > h + pad) p.y = -pad * 0.4;
+    if (p.x < -pad) p.x = w + pad * 0.3;
+    if (p.x > w + pad) p.x = -pad * 0.3;
   }
 
   function drawField(time) {
@@ -142,23 +159,17 @@
     if (!field.length) spawnField(w, h);
     ctx.clearRect(0, 0, w, h);
     var t = time * 0.001;
+    ctx.globalCompositeOperation = "lighter";
     for (var i = 0; i < field.length; i++) {
       var p = field[i];
       if (!reduce) {
-        p.x += p.vx + Math.sin(t * 0.7 + p.phase) * 0.15;
+        p.x += p.vx + Math.sin(t * 0.22 + p.phase) * (p.big ? 0.04 : 0.08);
         p.y += p.vy;
-        p.rot += p.spin;
-        if (p.y < -30) {
-          p.y = h + 20;
-          p.x = Math.random() * w;
-        }
-        if (p.x < -30) p.x = w + 20;
-        if (p.x > w + 30) p.x = -20;
+        wrap(p, w, h);
       }
-      ctx.globalAlpha = 0.55 + (i % 5) * 0.08;
-      mark(ctx, p.kind, p.x, p.y, p.s, p.rot, p.color, p.stroke);
+      orb(ctx, p.x, p.y, p.r, p.rgb, p.a);
     }
-    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
   }
 
   /* ---------- dancers: a particle body in the flyer’s marks ---------- */
@@ -382,30 +393,41 @@
   function drawSparks(ctx, hand, time) {
     var beat = (time * Math.PI * 2) / 2.6;
     var kick = Math.max(0, Math.sin(beat));
+    ctx.globalCompositeOperation = "lighter";
     for (var i = 0; i < sparks.length; i++) {
       var p = sparks[i];
       if (!reduce) {
-        p.life -= 0.012;
+        p.life -= 0.008;
         p.x += p.vx;
         p.y += p.vy;
-        p.vy -= 0.02;
+        p.vy -= 0.008;
         if (p.life <= 0) {
-          p.life = 0.4 + Math.random() * 0.8;
+          p.life = 0.55 + Math.random() * 0.9;
           p.x = hand.x;
           p.y = hand.y;
-          p.vx = (Math.random() - 0.5) * 1.4;
-          p.vy = -0.4 - Math.random() * 1.3 * (0.4 + kick);
+          p.vx = (Math.random() - 0.5) * 0.55;
+          p.vy = -0.15 - Math.random() * 0.45 * (0.4 + kick);
         }
       } else if (!p.x) {
-        p.x = hand.x + (i - 9) * 6;
-        p.y = hand.y - i * 3;
-        p.life = 0.8;
+        p.x = hand.x + (i - 9) * 8;
+        p.y = hand.y - i * 4;
+        p.life = 0.7;
       }
-      ctx.globalAlpha = Math.max(0, p.life);
-      if (i % 3 === 0) burst(ctx, p.x, p.y, p.s, time + i, CREAM);
-      else diamond(ctx, p.x, p.y, p.s, time + i, RED, null);
+      var radius = p.s * (2.2 + p.life);
+      orb(ctx, p.x, p.y, radius, i % 4 === 0 ? "210,70,58" : "244,236,223", Math.max(0, p.life) * 0.55);
     }
-    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+  }
+
+  function drawHaze(ctx, w, h, bones, time) {
+    ctx.globalCompositeOperation = "lighter";
+    orb(ctx, w * 0.5, h * 0.42, Math.min(w, h) * 0.28, "210,40,32", 0.05);
+    if (bones) {
+      orb(ctx, bones.hip.x, bones.hip.y + 20, 70, "244,236,223", 0.08);
+      orb(ctx, bones.head.x, bones.head.y, 46, "244,236,223", 0.1);
+      orb(ctx, bones.handL.x, bones.handL.y, 28 + Math.sin(time * 2) * 4, "210,60,48", 0.16);
+    }
+    ctx.globalCompositeOperation = "source-over";
   }
 
   function drawStage(time) {
@@ -420,9 +442,9 @@
     var pair = w >= 760;
     var scale = Math.min(w, h) * (pair ? 0.34 : 0.46);
     var floorY = h * 0.74;
-    drawSnake(ctx, w * 0.5, floorY + Math.min(18, h * 0.03), Math.min(w * 0.86, 920), seconds);
-
     var lead = pose(seconds, pair ? w * 0.36 : w * 0.5, floorY - scale * 0.92, scale, 1);
+    drawHaze(ctx, w, h, lead, seconds);
+    drawSnake(ctx, w * 0.5, floorY + Math.min(18, h * 0.03), Math.min(w * 0.86, 920), seconds);
     drawSkirt(ctx, lead, leadSkirt, 1, seconds);
     drawBody(ctx, lead, leadBits, scale, seconds);
     drawSparks(ctx, lead.handL, seconds);
