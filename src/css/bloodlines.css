@@ -45,11 +45,28 @@ body::before {
   pointer-events: none;
   position: fixed;
   inset: 0;
+  z-index: 0;
   background-image:
     linear-gradient(45deg, rgba(244, 236, 223, 0.035) 25%, transparent 25%),
     linear-gradient(-45deg, rgba(244, 236, 223, 0.035) 25%, transparent 25%);
   background-size: 22px 22px;
   mask-image: linear-gradient(180deg, #000 0%, transparent 70%);
+}
+
+#flyer-field {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.site-header,
+main,
+.site-footer {
+  position: relative;
+  z-index: 2;
 }
 
 img {
@@ -298,6 +315,15 @@ h1 {
   color: var(--paper-2);
 }
 
+.hero-copy .eyebrow,
+.hero-copy .hero-day,
+.hero-copy .hero-time,
+.hero-copy .lede,
+.sheet .prose,
+.lineup-copy p {
+  text-shadow: 0 0 14px #14110f, 0 1px 3px #14110f;
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -435,6 +461,48 @@ h1 {
   gap: 2rem;
   align-items: start;
   padding-top: 0.5rem;
+}
+
+.floor {
+  position: relative;
+  max-width: none;
+  margin: 0;
+  padding: 2.4rem 0 0;
+  background:
+    radial-gradient(ellipse at 50% 80%, rgba(210, 31, 24, 0.22), transparent 55%),
+    linear-gradient(180deg, rgba(20, 17, 15, 0.15), #100d0b 30%, #100d0b);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 6.5rem;
+}
+
+.floor-copy {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.floor-copy h2 {
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  margin-bottom: 0.55rem;
+}
+
+.floor-copy p {
+  margin: 0;
+  color: var(--paper-2);
+  max-width: 62ch;
+}
+
+.floor-copy h2,
+.floor-copy p {
+  text-shadow: 0 0 18px #100d0b, 0 2px 8px #100d0b;
+}
+
+#dancer-stage {
+  display: block;
+  width: 100%;
+  height: min(82vh, 760px);
+  min-height: 460px;
 }
 
 .aside {
@@ -653,7 +721,8 @@ h1 {
     padding-bottom: 0;
   }
 
-  .sticky-ticket {
+  .sticky-ticket,
+  .sticky-ticket.is-on {
     display: none;
   }
 }

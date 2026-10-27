@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="src/css/bloodlines.css">
 </head>
 <body>
+  <canvas id="flyer-field" aria-hidden="true"></canvas>
   <a class="skip" href="#main">Skip to content</a>
 
   <header class="site-header">
@@ -28,6 +29,7 @@
         <a href="#when">When</a>
         <a href="#night">The night</a>
         <a href="#lineup">Lineup</a>
+        <a href="#floor">The floor</a>
         <a href="#tickets">Tickets</a>
         <a href="#details">Details</a>
       </nav>
@@ -122,6 +124,14 @@
       </ul>
     </section>
 
+    <section class="floor" id="floor" aria-labelledby="floor-title">
+      <div class="floor-copy">
+        <h2 id="floor-title">The floor</h2>
+        <p>The flyer, set moving: diamonds, crescents, stairs, and the snake. The listing calls it a dance night. It does not name a choreography, so this figure is the poster, not a performer.</p>
+      </div>
+      <canvas id="dancer-stage" aria-hidden="true"></canvas>
+    </section>
+
     <section class="tickets" id="tickets" aria-labelledby="tickets-title">
       <div class="tickets-head">
         <h2 id="tickets-title">Tickets</h2>
@@ -212,6 +222,7 @@
     <span>Tickets from $33.85</span>
     <span>Eventbrite</span>
   </a>
+  <script src="src/js/bloodlines-motion.js"></script>
   <script>
     (function () {
       var bar = document.querySelector(".sticky-ticket");
